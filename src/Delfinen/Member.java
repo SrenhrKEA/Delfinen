@@ -85,9 +85,11 @@ public class Member {
   public ArrayList<Result> getResults() {
     return results;
   }
+
   public ArrayList<Discipline> getDisciplines() {
     return disciplines;
   }
+
   public Member(int age, String name, String dateRegistration, boolean genderMale, boolean membershipActive, boolean membershipJunior, boolean membershipCompetitive, String nameTrainer, ArrayList<Result> results, ArrayList<Discipline> disciplines) {
     this.age = age;
     this.name = name;
@@ -100,6 +102,7 @@ public class Member {
     this.results = results;
     this.disciplines = disciplines;
   }
+
   public Member(int age, String name, String dateRegistration, boolean genderMale, boolean membershipActive, boolean membershipJunior, boolean membershipCompetitive) {
     this.age = age;
     this.name = name;

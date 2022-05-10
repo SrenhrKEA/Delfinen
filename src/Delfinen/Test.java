@@ -25,10 +25,10 @@ public class Test {
   }
 
   private void runTest() {
-    Member person1 = new Member(31,"Søren", LocalDateTime.now().toString(),true,true,false,true,"john",new ArrayList<>(),new ArrayList<>());
+    Member person1 = new Member(31, "Søren", LocalDateTime.now().toString(), true, true, false, true, "john", new ArrayList<>(), new ArrayList<>());
     person1.getDisciplines().add(Discipline.BRYSTSVØMNING);
     person1.getDisciplines().add(Discipline.CRAWL);
-    Member person2 = new Member(37,"Martin", LocalDateTime.now().toString(),true,true,false,true,"john",new ArrayList<>(),new ArrayList<>());
+    Member person2 = new Member(37, "Martin", LocalDateTime.now().toString(), true, true, false, true, "john", new ArrayList<>(), new ArrayList<>());
     memberList.add(person1);
     memberList.add(person2);
     saveToFile(serializingJson());
@@ -51,10 +51,11 @@ public class Test {
 
   private ArrayList<Member> deserializingJson(String json) {
     Gson gson = new Gson();
-    return gson.fromJson(json, new TypeToken<ArrayList<Member>>(){}.getType());
+    return gson.fromJson(json, new TypeToken<ArrayList<Member>>() {
+    }.getType());
   }
 
-  private void saveToFile( String data) {
+  private void saveToFile(String data) {
     try {
       File fileName = new File("newfile.txt");
       PrintStream out = new PrintStream(fileName);
@@ -69,11 +70,10 @@ public class Test {
     try {
       Path filePath = Path.of("newfile.txt");
       return Files.readString(filePath);
-    }
-     catch (IOException e) {
+    } catch (IOException e) {
       e.printStackTrace();
-       System.out.println("File not found!, try again");
-       return null;
+      System.out.println("File not found!, try again");
+      return null;
     }
   }
 
