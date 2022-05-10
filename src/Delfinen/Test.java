@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 public class Test {
   private ArrayList<Member> memberList = new ArrayList<>();
+  private ArrayList<Team> teams = new ArrayList<>();
 
   public ArrayList<Member> getMemberList() {
     return memberList;

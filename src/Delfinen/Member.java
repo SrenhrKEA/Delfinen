@@ -113,5 +113,19 @@ public class Member {
     this.membershipCompetitive = membershipCompetitive;
   }
 
-
+  @Override
+  public String toString() {
+    return "Member{" +
+        "age=" + age +
+        ", name='" + name + '\'' +
+        ", dateRegistration='" + dateRegistration + '\'' +
+        ", genderMale=" + genderMale +
+        ", membershipActive=" + membershipActive +
+        ", membershipJunior=" + membershipJunior +
+        ", membershipCompetitive=" + membershipCompetitive +
+        ", nameTrainer='" + nameTrainer + '\'' +
+        ", results=" + results +
+        ", disciplines=" + disciplines +
+        '}';
+  }
 }
