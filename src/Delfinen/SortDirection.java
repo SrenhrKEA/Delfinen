@@ -1,5 +1,7 @@
 package Delfinen;
 
 public enum SortDirection {
-    ASC, DESC, TOGGLE
+    ASC,
+    DESC,
+    TOGGLE
 }

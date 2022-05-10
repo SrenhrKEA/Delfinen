@@ -1,6 +1,5 @@
 package Delfinen;
 
-import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
@@ -25,7 +24,7 @@ public class UserInterface {
         case 4 -> create();
         case 5 -> delete();
         //case 6 -> load();
-        //case 7 -> save();
+        case 7 -> save();
       }
     }
   }
@@ -54,7 +53,9 @@ public class UserInterface {
   }
 
   private void exit() {
-    // TODO: Maybe save before exiting???
+    System.out.println("Saving the database ...");
+    application.saveToFile(application.serializingJson());
+    System.out.println("Saving database completed succesfully");
     System.out.println("Thank you for using Dolphinbase 2022");
     System.exit(0);
   }
@@ -69,10 +70,12 @@ public class UserInterface {
   }
 
   private void filter() {
-    System.out.println("-- filter not yet implemented ---");
+    System.out.println("-- filtering not yet implemented ---");
   }
 
   private void sort() {
+    System.out.println("-- sorting not yet implemented ---");
+    /*
     System.out.println("""
                 Sort the list of members by
                 n) Name
@@ -117,6 +120,8 @@ public class UserInterface {
 
     // When sorted, show the list again
     list();
+
+     */
   }
 
   private void create() {
@@ -158,18 +163,22 @@ public class UserInterface {
     }
   }
 
-  /*
-  private void load() throws FileNotFoundException {
-    System.out.println("Loading the database ...");
-    application.loadDatabase();
-  }
 
-  private void save() throws FileNotFoundException {
-    System.out.println("Saving the database ...");
-    application.saveDatabase();
-    System.out.println("Saving database completed succesfully");
-    System.out.println("You can now exit the application");
+  /*
+  private void load() {
+    System.out.println("Loading the database ...");
+    application.getMembers() = application.deserializingJson(application.loadFromFile());
+    System.out.println("Loading database completed successfully");
   }
 
    */
+
+  private void save() {
+    System.out.println("Saving the database ...");
+    application.saveToFile(application.serializingJson());
+    System.out.println("Saving database completed successfully");
+    //System.out.println("You can now exit the application");
+  }
+
+
 }

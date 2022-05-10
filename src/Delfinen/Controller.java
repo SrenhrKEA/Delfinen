@@ -21,7 +21,6 @@ public class Controller {
     teams = new ArrayList<>();
   }
 
-
   public ArrayList<Member> getMembers() {
     return members;
   }
@@ -34,23 +33,22 @@ public class Controller {
     members = deserializingJson(loadFromFile());
     UserInterface ui = new UserInterface(this);
     ui.start();
-    saveToFile(serializingJson());
   }
 
-  private String serializingJson() {
+  public String serializingJson() {
     Gson gson = new GsonBuilder()
         .setPrettyPrinting()
         .create();
     return gson.toJson(members);
   }
 
-  private ArrayList<Member> deserializingJson(String json) {
+  public ArrayList<Member> deserializingJson(String json) {
     Gson gson = new Gson();
     return gson.fromJson(json, new TypeToken<ArrayList<Member>>() {
     }.getType());
   }
 
-  private void saveToFile(String data) {
+  public void saveToFile(String data) {
     try {
       File fileName = new File("newfile.txt");
       PrintStream out = new PrintStream(fileName);
@@ -61,7 +59,7 @@ public class Controller {
     }
   }
 
-  private String loadFromFile() {
+  public String loadFromFile() {
     try {
       Path filePath = Path.of("newfile.txt");
       return Files.readString(filePath);
