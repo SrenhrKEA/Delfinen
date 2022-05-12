@@ -1,19 +1,9 @@
 [
   {
-    "age": 25,
-    "name": "XYXY",
-    "dateRegistration": "2022-05-12T12:11:43.292884500",
-    "id": "4",
-    "genderMale": false,
-    "membershipActive": false,
-    "membershipJunior": false,
-    "membershipCompetitive": false
-  },
-  {
-    "age": 31,
-    "name": "Søren",
-    "dateRegistration": "2022-05-12T12:05:42.009828700",
-    "id": "3",
+    "age": 7,
+    "name": "Ludvig",
+    "dateRegistration": "2022-05-12T12:05:04.027242700",
+    "id": "1",
     "genderMale": false,
     "membershipActive": false,
     "membershipJunior": false,
@@ -30,10 +20,20 @@
     "membershipCompetitive": false
   },
   {
-    "age": 7,
-    "name": "Ludvig",
-    "dateRegistration": "2022-05-12T12:05:04.027242700",
-    "id": "1",
+    "age": 31,
+    "name": "Søren",
+    "dateRegistration": "2022-05-12T12:05:42.009828700",
+    "id": "3",
+    "genderMale": false,
+    "membershipActive": false,
+    "membershipJunior": false,
+    "membershipCompetitive": false
+  },
+  {
+    "age": 25,
+    "name": "XYXY",
+    "dateRegistration": "2022-05-12T12:11:43.292884500",
+    "id": "4",
     "genderMale": false,
     "membershipActive": false,
     "membershipJunior": false,

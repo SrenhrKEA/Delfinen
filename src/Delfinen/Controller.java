@@ -138,6 +138,7 @@ public class Controller {
       }
       members.stream().map(Member::getId).forEach(System.out::print);
     }
+    if (sortDirection!=SortDirection.ASC && toggleCounter==0)
     toggleCounter++;
   }
 
