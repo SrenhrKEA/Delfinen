@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
@@ -15,14 +16,27 @@ import com.google.gson.reflect.TypeToken;
 public class Controller {
   private ArrayList<Member> members;
   private ArrayList<Team> teams;
+  private long idCounter;
 
-  public Controller (){
+  public Controller() {
     members = new ArrayList<>();
     teams = new ArrayList<>();
   }
 
+  public long getIdCounter() {
+    return idCounter;
+  }
+
+  public void setIdCounter(long idCounter) {
+    this.idCounter = idCounter;
+  }
+
   public ArrayList<Member> getMembers() {
     return members;
+  }
+
+  public void setMembers(ArrayList<Member> members) {
+    this.members = members;
   }
 
   public static void main(String[] args) {
@@ -30,9 +44,23 @@ public class Controller {
   }
 
   private void runProgram() {
-    members = deserializingJson(loadFromFile());
+    members = deserializingJson(loadFromFile("MemberList.txt"));
+    idCounter = tryParseLong(loadFromFile("IdCounter.txt"));
+    System.out.println(idCounter);
     UserInterface ui = new UserInterface(this);
     ui.start();
+  }
+
+  public long tryParseLong(String text) {
+    try {
+      return Long.parseLong(text.trim());
+    } catch (NumberFormatException nfe) {
+      return 0;
+    }
+  }
+
+  public synchronized String createID() {
+    return String.valueOf(idCounter++);
   }
 
   public String serializingJson() {
@@ -48,9 +76,9 @@ public class Controller {
     }.getType());
   }
 
-  public void saveToFile(String data) {
+  public void saveToFile(String data, String filePathName) {
     try {
-      File fileName = new File("newfile.txt");
+      File fileName = new File(filePathName);
       PrintStream out = new PrintStream(fileName);
       out.println(data);
       out.close();
@@ -59,9 +87,9 @@ public class Controller {
     }
   }
 
-  public String loadFromFile() {
+  public String loadFromFile(String filePathName) {
     try {
-      Path filePath = Path.of("newfile.txt");
+      Path filePath = Path.of(filePathName);
       return Files.readString(filePath);
     } catch (IOException e) {
       e.printStackTrace();
@@ -81,12 +109,34 @@ public class Controller {
   public void sortBy(String sortBy, SortDirection sortDirection) {
     // TODO: Implement sorting!
     System.out.println("TODO: Sort the list of members by: " + sortBy);
-    Collections.sort(members,new MemberSortingName());
-    members.stream().map(Member::getName).forEach(System.out::print);
+    if (Objects.equals(sortBy, "name")) {
+      if (sortDirection == SortDirection.ASC) {
+        members.sort(new MemberNameComparator());
+      } else if (sortDirection == SortDirection.DESC) {
+        members.sort(Collections.reverseOrder());
+      }
+      members.stream().map(Member::getName).forEach(System.out::print);
+    }
+    if (Objects.equals(sortBy, "age")) {
+      if (sortDirection == SortDirection.ASC) {
+        members.sort(new MemberAgeComparator());
+      } else if (sortDirection == SortDirection.DESC) {
+        members.sort(Collections.reverseOrder());
+      }
+      members.stream().map(Member::getAge).forEach(System.out::print);
+    }
+    if (Objects.equals(sortBy, "id")) {
+      if (sortDirection == SortDirection.ASC) {
+        members.sort(new MemberIdComparator());
+      } else if (sortDirection == SortDirection.DESC) {
+        members.sort(Collections.reverseOrder());
+      }
+      members.stream().map(Member::getId).forEach(System.out::print);
+    }
   }
 
-  public void createNewMember (int age, String name, String dateRegistration, boolean genderMale, boolean membershipActive, boolean membershipJunior, boolean membershipCompetitive) {
-    Member member = new Member(age, name, dateRegistration, genderMale, membershipActive, membershipJunior, membershipCompetitive);
+  public void createNewMember(int age, String name, String dateRegistration, String ID, boolean genderMale, boolean membershipActive, boolean membershipJunior, boolean membershipCompetitive) {
+    Member member = new Member(age, name, dateRegistration, ID, genderMale, membershipActive, membershipJunior, membershipCompetitive);
     members.add(member);
   }
 

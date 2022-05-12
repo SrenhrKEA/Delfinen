@@ -7,6 +7,7 @@ public class Member {
   private int age;
   private String name;
   private String dateRegistration;
+  private String id;
   //private String dateWithdrawal;
   private boolean genderMale;
   private boolean membershipActive;
@@ -15,8 +16,8 @@ public class Member {
 
   //only for competitive swimmers
   private String nameTrainer;
-  private ArrayList<Result> results;// = new ArrayList<>();
-  private ArrayList<Discipline> disciplines;// = new ArrayList<>();
+  private ArrayList<Result> results;
+  private ArrayList<Discipline> disciplines;
 
   public int getAge() {
     return age;
@@ -40,6 +41,14 @@ public class Member {
 
   public void setDateRegistration(String dateRegistration) {
     this.dateRegistration = dateRegistration;
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
   }
 
   public boolean isGenderMale() {
@@ -90,10 +99,11 @@ public class Member {
     return disciplines;
   }
 
-  public Member(int age, String name, String dateRegistration, boolean genderMale, boolean membershipActive, boolean membershipJunior, boolean membershipCompetitive, String nameTrainer, ArrayList<Result> results, ArrayList<Discipline> disciplines) {
+  public Member(int age, String name, String dateRegistration, String id, boolean genderMale, boolean membershipActive, boolean membershipJunior, boolean membershipCompetitive, String nameTrainer, ArrayList<Result> results, ArrayList<Discipline> disciplines) {
     this.age = age;
     this.name = name;
     this.dateRegistration = dateRegistration;
+    this.id = id;
     this.genderMale = genderMale;
     this.membershipActive = membershipActive;
     this.membershipJunior = membershipJunior;
@@ -103,10 +113,11 @@ public class Member {
     this.disciplines = disciplines;
   }
 
-  public Member(int age, String name, String dateRegistration, boolean genderMale, boolean membershipActive, boolean membershipJunior, boolean membershipCompetitive) {
+  public Member(int age, String name, String dateRegistration, String id, boolean genderMale, boolean membershipActive, boolean membershipJunior, boolean membershipCompetitive) {
     this.age = age;
     this.name = name;
     this.dateRegistration = dateRegistration;
+    this.id = id;
     this.genderMale = genderMale;
     this.membershipActive = membershipActive;
     this.membershipJunior = membershipJunior;
@@ -119,6 +130,7 @@ public class Member {
         "age=" + age +
         ", name='" + name + '\'' +
         ", dateRegistration='" + dateRegistration + '\'' +
+        ", ID='" + id + '\'' +
         ", genderMale=" + genderMale +
         ", membershipActive=" + membershipActive +
         ", membershipJunior=" + membershipJunior +

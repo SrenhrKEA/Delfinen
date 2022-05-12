@@ -23,7 +23,7 @@ public class UserInterface {
         case 3 -> sort();
         case 4 -> create();
         case 5 -> delete();
-        //case 6 -> load();
+        case 6 -> load();
         case 7 -> save();
       }
     }
@@ -54,7 +54,8 @@ public class UserInterface {
 
   private void exit() {
     System.out.println("Saving the database ...");
-    application.saveToFile(application.serializingJson());
+    application.saveToFile(application.serializingJson(),"MemberList.txt");
+    application.saveToFile(String.valueOf(application.getIdCounter()),"IdCounter.txt");
     System.out.println("Saving database completed succesfully");
     System.out.println("Thank you for using Dolphinbase 2022");
     System.exit(0);
@@ -75,18 +76,18 @@ public class UserInterface {
 
   private void sort() {
     System.out.println("-- sorting not yet implemented ---");
-    /*
+
+
     System.out.println("""
                 Sort the list of members by
                 n) Name
-                t) Type
                 a) Age
-                w) Weight
+                i) ID
                 """);
     Scanner input = new Scanner(System.in);
     char sortBy = input.next().trim().toLowerCase().charAt(0);
-    while (sortBy != 'n' && sortBy != 't' && sortBy != 'a' && sortBy != 'w') {
-      System.out.println("Please type 'n', 't', 'a' or 'w'");
+    while (sortBy != 'n' && sortBy != 'a' && sortBy != 'i') {
+      System.out.println("Please type 'n', 'a' or 'i'");
       sortBy = input.next().trim().toLowerCase().charAt(0);
     }
 
@@ -112,16 +113,16 @@ public class UserInterface {
 
     if (sortBy == 'n') {
       application.sortBy("name", direction);
-    } else if (sortBy == 't') {
-      application.sortBy("type", direction);
     } else if (sortBy == 'a') {
       application.sortBy("age", direction);
+    } else if (sortBy == 'i') {
+      application.sortBy("id", direction);
     }
 
     // When sorted, show the list again
     list();
 
-     */
+
   }
 
   private void create() {
@@ -141,8 +142,9 @@ public class UserInterface {
     boolean membershipJunior = Boolean.parseBoolean(input.nextLine());
     System.out.print("Competitive membership (true/false): ");
     boolean membershipCompetitive = Boolean.parseBoolean(input.nextLine());
+    String ID = application.createID();
 
-    application.createNewMember(age, name, dateRegistration, genderMale, membershipActive, membershipJunior, membershipCompetitive);
+    application.createNewMember(age, name, dateRegistration, ID,genderMale, membershipActive, membershipJunior, membershipCompetitive);
 
     // When created a new member, show the list again
     list();
@@ -164,18 +166,17 @@ public class UserInterface {
   }
 
 
-  /*
   private void load() {
     System.out.println("Loading the database ...");
-    application.getMembers() = application.deserializingJson(application.loadFromFile());
+    application.setMembers(application.deserializingJson(application.loadFromFile("MemberList.txt")));
+    application.setIdCounter(application.tryParseLong(application.loadFromFile("IdCounter.txt")));
     System.out.println("Loading database completed successfully");
   }
 
-   */
-
   private void save() {
     System.out.println("Saving the database ...");
-    application.saveToFile(application.serializingJson());
+    application.saveToFile(application.serializingJson(),"MemberList.txt");
+    application.saveToFile(String.valueOf(application.getIdCounter()),"IdCounter.txt");
     System.out.println("Saving database completed successfully");
     //System.out.println("You can now exit the application");
   }
