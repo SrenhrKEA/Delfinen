@@ -25,6 +25,7 @@ public class UserInterface {
         case 5 -> delete();
         case 6 -> load();
         case 7 -> save();
+        case 8 -> makeResult();
       }
     }
   }
@@ -40,6 +41,7 @@ public class UserInterface {
                 5) Delete member
                 6) Load members from file
                 7) Save members to file
+                8) Add a result to a member
                 0) Exit application
                 """);
     Scanner input = new Scanner(System.in);
@@ -181,5 +183,40 @@ public class UserInterface {
     //System.out.println("You can now exit the application");
   }
 
+  //TODO
+  private void makeResult() {
+    System.out.println("Create a result for a member");
+    System.out.println("----------------------------");
+    System.out.printf("""
+        Please select the Discipline in which the result was made.
+        1) Butterfly
+        2) Crawl
+        3) Rygcrawl
+        4) Brystsvømning
+        """);
+    Discipline discipline;
+    Scanner in = new Scanner(System.in);
+    switch (in.nextLine()) {
+      case "1" -> discipline = Discipline.BUTTERFLY;
+      case "2" -> discipline = Discipline.CRAWL;
+      case "3" -> discipline = Discipline.RYGCRAWL;
+      case "4" -> discipline = Discipline.BRYSTSVØMNING;
+    }
 
+    boolean isConvention = true;
+    System.out.printf("""
+        Was the result made within a convention?
+        1) Yes
+        2) No
+        """);
+    switch (in.nextLine()) {
+      case "1" -> isConvention = true;
+      case "2" -> isConvention = false;
+    }
+
+    if (isConvention) {
+      System.out.println("");
+    }
+
+  }
 }
