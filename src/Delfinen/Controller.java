@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
+import java.util.UUID;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
@@ -17,6 +18,7 @@ public class Controller {
   private ArrayList<Member> members;
   private ArrayList<Team> teams;
   private long idCounter;
+  private int toggleCounter = 0;
 
   public Controller() {
     members = new ArrayList<>();
@@ -63,6 +65,10 @@ public class Controller {
     return String.valueOf(idCounter++);
   }
 
+  public synchronized String createUID() {
+    return UUID.randomUUID().toString();
+  }
+
   public String serializingJson() {
     Gson gson = new GsonBuilder()
         .setPrettyPrinting()
@@ -107,32 +113,32 @@ public class Controller {
   }
 
   public void sortBy(String sortBy, SortDirection sortDirection) {
-    // TODO: Implement sorting!
     System.out.println("TODO: Sort the list of members by: " + sortBy);
     if (Objects.equals(sortBy, "name")) {
-      if (sortDirection == SortDirection.ASC) {
+      if (sortDirection == SortDirection.ASC || (sortDirection == SortDirection.TOGGLE && toggleCounter % 2 != 0)) {
         members.sort(new MemberNameComparator());
-      } else if (sortDirection == SortDirection.DESC) {
-        members.sort(Collections.reverseOrder());
+      } else if (sortDirection == SortDirection.DESC || sortDirection == SortDirection.TOGGLE) {
+        members.sort(Collections.reverseOrder(new MemberNameComparator()));
       }
       members.stream().map(Member::getName).forEach(System.out::print);
     }
     if (Objects.equals(sortBy, "age")) {
-      if (sortDirection == SortDirection.ASC) {
+      if (sortDirection == SortDirection.ASC || (sortDirection == SortDirection.TOGGLE && toggleCounter % 2 != 0)) {
         members.sort(new MemberAgeComparator());
-      } else if (sortDirection == SortDirection.DESC) {
-        members.sort(Collections.reverseOrder());
+      } else if (sortDirection == SortDirection.DESC || sortDirection == SortDirection.TOGGLE) {
+        members.sort(Collections.reverseOrder(new MemberAgeComparator()));
       }
       members.stream().map(Member::getAge).forEach(System.out::print);
     }
     if (Objects.equals(sortBy, "id")) {
-      if (sortDirection == SortDirection.ASC) {
+      if (sortDirection == SortDirection.ASC || (sortDirection == SortDirection.TOGGLE && toggleCounter % 2 != 0)) {
         members.sort(new MemberIdComparator());
-      } else if (sortDirection == SortDirection.DESC) {
-        members.sort(Collections.reverseOrder());
+      } else if (sortDirection == SortDirection.DESC || sortDirection == SortDirection.TOGGLE) {
+        members.sort(Collections.reverseOrder(new MemberIdComparator()));
       }
       members.stream().map(Member::getId).forEach(System.out::print);
     }
+    toggleCounter++;
   }
 
   public void createNewMember(int age, String name, String dateRegistration, String ID, boolean genderMale, boolean membershipActive, boolean membershipJunior, boolean membershipCompetitive) {

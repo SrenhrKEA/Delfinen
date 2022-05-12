@@ -99,20 +99,6 @@ public class Member {
     return disciplines;
   }
 
-  public Member(int age, String name, String dateRegistration, String id, boolean genderMale, boolean membershipActive, boolean membershipJunior, boolean membershipCompetitive, String nameTrainer, ArrayList<Result> results, ArrayList<Discipline> disciplines) {
-    this.age = age;
-    this.name = name;
-    this.dateRegistration = dateRegistration;
-    this.id = id;
-    this.genderMale = genderMale;
-    this.membershipActive = membershipActive;
-    this.membershipJunior = membershipJunior;
-    this.membershipCompetitive = membershipCompetitive;
-    this.nameTrainer = nameTrainer;
-    this.results = results;
-    this.disciplines = disciplines;
-  }
-
   public Member(int age, String name, String dateRegistration, String id, boolean genderMale, boolean membershipActive, boolean membershipJunior, boolean membershipCompetitive) {
     this.age = age;
     this.name = name;

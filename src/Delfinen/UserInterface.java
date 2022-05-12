@@ -56,7 +56,7 @@ public class UserInterface {
     System.out.println("Saving the database ...");
     application.saveToFile(application.serializingJson(),"MemberList.txt");
     application.saveToFile(String.valueOf(application.getIdCounter()),"IdCounter.txt");
-    System.out.println("Saving database completed succesfully");
+    System.out.println("Saving database completed successfully");
     System.out.println("Thank you for using Dolphinbase 2022");
     System.exit(0);
   }
@@ -75,7 +75,7 @@ public class UserInterface {
   }
 
   private void sort() {
-    System.out.println("-- sorting not yet implemented ---");
+    //System.out.println("-- sorting not yet implemented ---");
 
 
     System.out.println("""
@@ -110,7 +110,7 @@ public class UserInterface {
       case 't' -> SortDirection.TOGGLE;
       default -> SortDirection.ASC;
     };
-
+/*
     if (sortBy == 'n') {
       application.sortBy("name", direction);
     } else if (sortBy == 'a') {
@@ -119,20 +119,26 @@ public class UserInterface {
       application.sortBy("id", direction);
     }
 
+ */
+    switch (sortBy) {
+      case 'n' -> application.sortBy("name", direction);
+      case 'a' -> application.sortBy("age", direction);
+      case 'i' -> application.sortBy("id", direction);
+      default -> application.sortBy("name", direction);
+    }
+
     // When sorted, show the list again
     list();
-
-
   }
 
   private void create() {
     System.out.println("Create new member\n-----------------");
     Scanner input = new Scanner(System.in);
+    System.out.print("Name: ");
+    String name = input.nextLine();
     System.out.print("Age: ");
     int age = input.nextInt();
     input.nextLine(); // ScannerBug fix
-    System.out.print("Name: ");
-    String name = input.nextLine();
     String dateRegistration = LocalDateTime.now().toString();
     System.out.print("Male Gender (true/false): ");
     boolean genderMale = Boolean.parseBoolean(input.nextLine());
