@@ -1,6 +1,7 @@
 package Delfinen;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -31,17 +32,17 @@ public class UserInterface {
 
   public int mainMenu() {
     System.out.println("""
-                Main menu
-                ---------
-                1) List all members
-                2) Filter list of members
-                3) Sort list of members
-                4) Create new member
-                5) Delete member
-                6) Load members from file
-                7) Save members to file
-                0) Exit application
-                """);
+        Main menu
+        ---------
+        1) List all members
+        2) Filter list of members
+        3) Sort list of members
+        4) Create new member
+        5) Delete member
+        6) Load members from file
+        7) Save members to file
+        0) Exit application
+        """);
     Scanner input = new Scanner(System.in);
     int choice = input.nextInt();
     while (choice < 0 || choice > 7) {
@@ -54,8 +55,8 @@ public class UserInterface {
 
   private void exit() {
     System.out.println("Saving the database ...");
-    application.saveToFile(application.serializingJson(),"MemberList.txt");
-    application.saveToFile(String.valueOf(application.getIdCounter()),"IdCounter.txt");
+    application.saveToFile(application.serializingJson(), "MemberList.txt");
+    application.saveToFile(String.valueOf(application.getIdCounter()), "IdCounter.txt");
     System.out.println("Saving database completed successfully");
     System.out.println("Thank you for using Dolphinbase 2022");
     System.exit(0);
@@ -79,11 +80,11 @@ public class UserInterface {
 
 
     System.out.println("""
-                Sort the list of members by
-                n) Name
-                a) Age
-                i) ID
-                """);
+        Sort the list of members by
+        n) Name
+        a) Age
+        i) ID
+        """);
     Scanner input = new Scanner(System.in);
     char sortBy = input.next().trim().toLowerCase().charAt(0);
     while (sortBy != 'n' && sortBy != 'a' && sortBy != 'i') {
@@ -92,11 +93,11 @@ public class UserInterface {
     }
 
     System.out.println("""
-                Set the sort direction:
-                a) Ascending (0-9 a-z)
-                d) Descending (9-0 z-a)
-                t) Toggle (The opposite of what it was last time)
-                """);
+        Set the sort direction:
+        a) Ascending (0-9 a-z)
+        d) Descending (9-0 z-a)
+        t) Toggle (The opposite of what it was last time)
+        """);
 
     char ch = input.next().trim().toLowerCase().charAt(0);
     while (ch != 'a' && ch != 'd' && ch != 't') {
@@ -144,13 +145,16 @@ public class UserInterface {
     boolean genderMale = Boolean.parseBoolean(input.nextLine());
     System.out.print("Active membership (true/false): ");
     boolean membershipActive = Boolean.parseBoolean(input.nextLine());
-    System.out.print("Junior membership (true/false): ");
-    boolean membershipJunior = Boolean.parseBoolean(input.nextLine());
     System.out.print("Competitive membership (true/false): ");
     boolean membershipCompetitive = Boolean.parseBoolean(input.nextLine());
     String ID = application.createID();
 
-    application.createNewMember(age, name, dateRegistration, ID,genderMale, membershipActive, membershipJunior, membershipCompetitive);
+    if (membershipCompetitive && membershipActive) {
+      application.createNewCompetitiveMember(age, name, dateRegistration, ID, genderMale, new ArrayList<Result>(), new ArrayList<Discipline>());
+    } else if (membershipActive) {
+      application.createNewActiveMember(age, name, dateRegistration, ID, genderMale);
+    } else
+      application.createNewMember(age, name, dateRegistration, ID, genderMale);
 
     // When created a new member, show the list again
     list();
@@ -181,8 +185,8 @@ public class UserInterface {
 
   private void save() {
     System.out.println("Saving the database ...");
-    application.saveToFile(application.serializingJson(),"MemberList.txt");
-    application.saveToFile(String.valueOf(application.getIdCounter()),"IdCounter.txt");
+    application.saveToFile(application.serializingJson(), "MemberList.txt");
+    application.saveToFile(String.valueOf(application.getIdCounter()), "IdCounter.txt");
     System.out.println("Saving database completed successfully");
     //System.out.println("You can now exit the application");
   }
