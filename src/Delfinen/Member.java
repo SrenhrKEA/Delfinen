@@ -8,16 +8,15 @@ public class Member {
   private String name;
   private String dateRegistration;
   private String id;
+  private String email;
+  private String phone;
   //private String dateWithdrawal;
   private boolean genderMale;
-  private boolean membershipActive;
-  private boolean membershipJunior;
-  private boolean membershipCompetitive;
+  //private boolean membershipActive;
+  //private boolean membershipJunior;
+  //private boolean membershipCompetitive;
 
-  //only for competitive swimmers
-  private String nameTrainer;
-  private ArrayList<Result> results;
-  private ArrayList<Discipline> disciplines;
+
 
   public int getAge() {
     return age;
@@ -59,6 +58,7 @@ public class Member {
     this.genderMale = genderMale;
   }
 
+/*
   public boolean isMembershipActive() {
     return membershipActive;
   }
@@ -83,31 +83,14 @@ public class Member {
     this.membershipCompetitive = membershipCompetitive;
   }
 
-  public String getNameTrainer() {
-    return nameTrainer;
-  }
+   */
 
-  public void setNameTrainer(String nameTrainer) {
-    this.nameTrainer = nameTrainer;
-  }
-
-  public ArrayList<Result> getResults() {
-    return results;
-  }
-
-  public ArrayList<Discipline> getDisciplines() {
-    return disciplines;
-  }
-
-  public Member(int age, String name, String dateRegistration, String id, boolean genderMale, boolean membershipActive, boolean membershipJunior, boolean membershipCompetitive) {
+  public Member(int age, String name, String dateRegistration, String id, boolean genderMale) {
     this.age = age;
     this.name = name;
     this.dateRegistration = dateRegistration;
     this.id = id;
     this.genderMale = genderMale;
-    this.membershipActive = membershipActive;
-    this.membershipJunior = membershipJunior;
-    this.membershipCompetitive = membershipCompetitive;
   }
 
   @Override
@@ -118,12 +101,6 @@ public class Member {
         ", dateRegistration='" + dateRegistration + '\'' +
         ", ID='" + id + '\'' +
         ", genderMale=" + genderMale +
-        ", membershipActive=" + membershipActive +
-        ", membershipJunior=" + membershipJunior +
-        ", membershipCompetitive=" + membershipCompetitive +
-        ", nameTrainer='" + nameTrainer + '\'' +
-        ", results=" + results +
-        ", disciplines=" + disciplines +
         '}';
   }
 }
