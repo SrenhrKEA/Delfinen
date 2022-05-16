@@ -142,19 +142,18 @@ public class Controller {
     toggleCounter++;
   }
 
-  public void createNewMember(int age, String name, String dateRegistration, String ID, boolean genderMale) {
-    Member member = new Member(age, name, dateRegistration, ID, genderMale);
+  public void createNewMember(int age, String name, String address, String email, String telephone, String dateRegistration, String ID, boolean genderMale) {
+    Member member = new Member(age, name, address,email,telephone,dateRegistration, ID, genderMale);
     members.add(member);
   }
 
-  public void createNewActiveMember(int age, String name, String dateRegistration, String ID, boolean genderMale) {
-    ActiveMember member = new ActiveMember(age, name, dateRegistration, ID, genderMale);
+  public void createNewActiveMember(int age, String name,String address,String email, String telephone, String dateRegistration, String ID, boolean genderMale) {
+    ActiveMember member = new ActiveMember(age, name, address,email,telephone,dateRegistration, ID, genderMale);
     members.add(member);
   }
 
-  public void createNewCompetitiveMember (int age, String name, String dateRegistration, String ID, boolean genderMale,
-                                          ArrayList<Result> results, ArrayList<Discipline> disciplines) {
-    CompetitiveMember member = new CompetitiveMember(age, name, dateRegistration, ID, genderMale, results,disciplines);
+  public void createNewCompetitiveMember (int age, String name, String address, String email, String telephone, String dateRegistration, String ID, boolean genderMale, ArrayList<Result> results, ArrayList<Discipline> disciplines) {
+    CompetitiveMember member = new CompetitiveMember(age, name,address, email, telephone, dateRegistration, ID, genderMale, results,disciplines);
     members.add(member);
   }
 

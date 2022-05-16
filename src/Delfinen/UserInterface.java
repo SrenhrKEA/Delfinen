@@ -106,23 +106,12 @@ public class UserInterface {
     }
 
     SortDirection direction = switch (ch) {
-      case 'a' -> SortDirection.ASC;
       case 'd' -> SortDirection.DESC;
       case 't' -> SortDirection.TOGGLE;
       default -> SortDirection.ASC;
     };
-/*
-    if (sortBy == 'n') {
-      application.sortBy("name", direction);
-    } else if (sortBy == 'a') {
-      application.sortBy("age", direction);
-    } else if (sortBy == 'i') {
-      application.sortBy("id", direction);
-    }
 
- */
     switch (sortBy) {
-      case 'n' -> application.sortBy("name", direction);
       case 'a' -> application.sortBy("age", direction);
       case 'i' -> application.sortBy("id", direction);
       default -> application.sortBy("name", direction);
@@ -133,6 +122,8 @@ public class UserInterface {
   }
 
   private void create() {
+    String ID = application.createID();
+    String dateRegistration = LocalDateTime.now().toString();
     System.out.println("Create new member\n-----------------");
     Scanner input = new Scanner(System.in);
     System.out.print("Name: ");
@@ -140,21 +131,25 @@ public class UserInterface {
     System.out.print("Age: ");
     int age = input.nextInt();
     input.nextLine(); // ScannerBug fix
-    String dateRegistration = LocalDateTime.now().toString();
+    System.out.print("Address: ");
+    String address = input.nextLine();
+    System.out.print("Email: ");
+    String email = input.nextLine();
+    System.out.print("Telephone number: ");
+    String telephone = input.nextLine();
     System.out.print("Male Gender (true/false): ");
     boolean genderMale = Boolean.parseBoolean(input.nextLine());
     System.out.print("Active membership (true/false): ");
     boolean membershipActive = Boolean.parseBoolean(input.nextLine());
     System.out.print("Competitive membership (true/false): ");
     boolean membershipCompetitive = Boolean.parseBoolean(input.nextLine());
-    String ID = application.createID();
 
     if (membershipCompetitive && membershipActive) {
-      application.createNewCompetitiveMember(age, name, dateRegistration, ID, genderMale, new ArrayList<Result>(), new ArrayList<Discipline>());
+      application.createNewCompetitiveMember(age, name, address, email, telephone, dateRegistration, ID, genderMale, new ArrayList<>(), new ArrayList<>());
     } else if (membershipActive) {
-      application.createNewActiveMember(age, name, dateRegistration, ID, genderMale);
+      application.createNewActiveMember(age, name, address, email, telephone, dateRegistration, ID, genderMale);
     } else
-      application.createNewMember(age, name, dateRegistration, ID, genderMale);
+      application.createNewMember(age, name, address, email, telephone, dateRegistration, ID, genderMale);
 
     // When created a new member, show the list again
     list();

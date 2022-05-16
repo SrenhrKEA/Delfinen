@@ -4,24 +4,15 @@ import java.util.ArrayList;
 
 public class CompetitiveMember extends Member {
   //only for competitive swimmers
-  private String nameTrainer;
   private ArrayList<Result> results;
   private ArrayList<Discipline> disciplines;
 
-  public CompetitiveMember(int age, String name, String dateRegistration, String id, boolean genderMale,
-                           ArrayList<Result> results, ArrayList<Discipline> disciplines) {
-    super(age, name, dateRegistration, id, genderMale);
+  public CompetitiveMember(int age, String name, String address, String email, String telephone, String dateRegistration, String id, boolean genderMale, ArrayList<Result> results, ArrayList<Discipline> disciplines) {
+    super(age, name, address, email, telephone, dateRegistration, id, genderMale);
     this.results = results;
     this.disciplines = disciplines;
   }
 
-  public String getNameTrainer() {
-    return nameTrainer;
-  }
-
-  public void setNameTrainer(String nameTrainer) {
-    this.nameTrainer = nameTrainer;
-  }
 
   public ArrayList<Result> getResults() {
     return results;

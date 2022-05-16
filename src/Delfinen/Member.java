@@ -1,7 +1,5 @@
 package Delfinen;
 
-import java.util.ArrayList;
-
 public class Member {
   //For all swimmers
   private int age;
@@ -9,14 +7,9 @@ public class Member {
   private String dateRegistration;
   private String id;
   private String email;
-  private String phone;
-  //private String dateWithdrawal;
+  private String telephone;
+  private String address;
   private boolean genderMale;
-  //private boolean membershipActive;
-  //private boolean membershipJunior;
-  //private boolean membershipCompetitive;
-
-
 
   public int getAge() {
     return age;
@@ -58,36 +51,12 @@ public class Member {
     this.genderMale = genderMale;
   }
 
-/*
-  public boolean isMembershipActive() {
-    return membershipActive;
-  }
-
-  public void setMembershipActive(boolean membershipActive) {
-    this.membershipActive = membershipActive;
-  }
-
-  public boolean isMembershipJunior() {
-    return membershipJunior;
-  }
-
-  public void setMembershipJunior(boolean membershipJunior) {
-    this.membershipJunior = membershipJunior;
-  }
-
-  public boolean isMembershipCompetitive() {
-    return membershipCompetitive;
-  }
-
-  public void setMembershipCompetitive(boolean membershipCompetitive) {
-    this.membershipCompetitive = membershipCompetitive;
-  }
-
-   */
-
-  public Member(int age, String name, String dateRegistration, String id, boolean genderMale) {
+  public Member(int age, String name, String address, String email, String telephone, String dateRegistration, String id, boolean genderMale) {
     this.age = age;
     this.name = name;
+    this.address = address;
+    this.email = email;
+    this.telephone = telephone;
     this.dateRegistration = dateRegistration;
     this.id = id;
     this.genderMale = genderMale;
