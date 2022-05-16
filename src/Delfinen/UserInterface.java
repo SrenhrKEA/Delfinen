@@ -19,6 +19,40 @@ public class UserInterface {
     while (true) {
       switch (mainMenu()) {
         case 0 -> exit();
+        case 1 -> startMemberDatabase();
+        case 2 -> System.out.println("PLACEHOLDER: VIEW FINANCIAL DATA");
+        case 3 -> System.out.println("PLACEHOLDER: EDIT TRAINING/COMPETITIVE DATA");
+      }
+    }
+  }
+
+  public int mainMenu() {
+    System.out.println("""
+        Main menu
+        ---------
+        1) Edit member-database
+        2) View financial data
+        3) Edit training/competitive data
+        0) Exit application
+        """);
+    Scanner input = new Scanner(System.in);
+    int choice = input.nextInt();
+    while (choice < 0 || choice > 3) {
+      System.out.println("Only values 0-3 allowed");
+      choice = input.nextInt();
+    }
+
+    return choice;
+  }
+
+  public void startMemberDatabase() {
+    boolean loop = true;
+    //System.out.println("Welcome to Dolphinbase 2022");
+    System.out.println("==========================");
+
+    while (loop) {
+      switch (menuMemberDatabase()) {
+        case 0 -> loop = exitMemberDatabase();
         case 1 -> list();
         case 2 -> filter();
         case 3 -> sort();
@@ -30,9 +64,9 @@ public class UserInterface {
     }
   }
 
-  public int mainMenu() {
+  public int menuMemberDatabase() {
     System.out.println("""
-        Main menu
+        Menu
         ---------
         1) List all members
         2) Filter list of members
@@ -41,7 +75,7 @@ public class UserInterface {
         5) Delete member
         6) Load members from file
         7) Save members to file
-        0) Exit application
+        0) Exit to main menu
         """);
     Scanner input = new Scanner(System.in);
     int choice = input.nextInt();
@@ -53,11 +87,22 @@ public class UserInterface {
     return choice;
   }
 
-  private void exit() {
+  private boolean exitMemberDatabase() {
     System.out.println("Saving the database ...");
     application.saveToFile(application.serializingJson(), "MemberList.txt");
     application.saveToFile(String.valueOf(application.getIdCounter()), "IdCounter.txt");
     System.out.println("Saving database completed successfully");
+    return false;
+  }
+
+  private void exit() {
+    /*
+    System.out.println("Saving the database ...");
+    application.saveToFile(application.serializingJson(), "MemberList.txt");
+    application.saveToFile(String.valueOf(application.getIdCounter()), "IdCounter.txt");
+    System.out.println("Saving database completed successfully");
+
+     */
     System.out.println("Thank you for using Dolphinbase 2022");
     System.exit(0);
   }
