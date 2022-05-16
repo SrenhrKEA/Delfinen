@@ -26,6 +26,7 @@ public class UserInterface {
         case 5 -> delete();
         case 6 -> load();
         case 7 -> save();
+        case 8 -> createResult((CompetitiveMember) findMember());
       }
     }
   }
@@ -41,11 +42,12 @@ public class UserInterface {
         5) Delete member
         6) Load members from file
         7) Save members to file
+        8) Create result
         0) Exit application
         """);
     Scanner input = new Scanner(System.in);
     int choice = input.nextInt();
-    while (choice < 0 || choice > 7) {
+    while (choice < 0 || choice > 8) {
       System.out.println("Only values 0-7 allowed");
       choice = input.nextInt();
     }
@@ -191,5 +193,76 @@ public class UserInterface {
     //System.out.println("You can now exit the application");
   }
 
+  //TODO Find a member by name or ID
+  private Member findMember() {
+    System.out.println("Enter a name");
+    Scanner in = new Scanner(System.in);
+    String name = in.nextLine();
+    Member member;
+    member = application.findMemberByName(name);
+    return member;
+  }
 
+  //TODO Needs a member attached
+  private void createResult(CompetitiveMember member) {
+    System.out.println("Create a result for a member");
+    System.out.println("----------------------------");
+    System.out.printf("""
+        Please select the Discipline in which the result was made.
+        1) Butterfly
+        2) Crawl
+        3) Rygcrawl
+        4) Brystsvømning
+        """);
+    Discipline discipline;
+    discipline = null;
+    Scanner in = new Scanner(System.in);
+    switch (in.nextLine()) {
+      case "1" -> discipline = Discipline.BUTTERFLY;
+      case "2" -> discipline = Discipline.CRAWL;
+      case "3" -> discipline = Discipline.RYGCRAWL;
+      case "4" -> discipline = Discipline.BRYSTSVØMNING;
+    }
+
+    System.out.printf("""
+        Was the result made within a convention?
+        1) Yes
+        2) No
+        """);
+
+    boolean isConvention = true;
+    switch (in.nextLine()) {
+      case "1" -> isConvention = true;
+      case "2" -> isConvention = false;
+    }
+
+    String convention;
+    convention = null;
+    String placement;
+    placement = null;
+    if (isConvention) {
+      System.out.println("in which convention did the contestant participate?");
+      convention = in.nextLine();
+
+      System.out.println("Which place did the contestant make in the convention?");
+      placement = in.nextLine();
+    }
+
+    System.out.println("Insert time [m:s]");
+    String time;
+    time = in.nextLine();
+
+    System.out.println("Insert date [d/m/y]");
+    String date;
+    date = in.nextLine();
+
+    //discipline, convention, placement, time
+    Result result;
+    if (isConvention)
+      result = new Result(discipline, convention, placement, time, date);
+    else
+      result = new Result(discipline, time, date);
+
+    member.addResult(result);
+  }
 }

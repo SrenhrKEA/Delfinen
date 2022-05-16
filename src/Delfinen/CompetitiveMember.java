@@ -27,6 +27,9 @@ public class CompetitiveMember extends Member {
     return results;
   }
 
+  public void addResult(Result result) {
+    this.results.add(result);
+  }
   public ArrayList<Discipline> getDisciplines() {
     return disciplines;
   }

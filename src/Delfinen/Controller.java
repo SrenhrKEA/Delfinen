@@ -169,7 +169,7 @@ public class Controller {
     }
   }
 
-  private Member findMemberByName(String name) {
+  public Member findMemberByName(String name) {
     for (Member member : members) {
       if (member.getName().equalsIgnoreCase(name)) {
         return member;
