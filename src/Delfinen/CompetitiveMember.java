@@ -18,6 +18,7 @@ public class CompetitiveMember extends Member {
     this.disciplines = disciplines;
   }
 
+
   public ArrayList<Result> getResults() {
     return results;
   }
