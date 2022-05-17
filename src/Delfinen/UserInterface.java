@@ -18,12 +18,13 @@ public class UserInterface {
 
   public void start() {
     System.out.println("Welcome to Dolphinbase 2022");
-    System.out.println("==========================");
+    System.out.println("==================================================");
     System.out.println("Java edition\n");
+    boolean loop = true;
 
-    while (true) {
+    while (loop) {
       switch (mainMenu()) {
-        case 0 -> exit();
+        case 0 -> loop = exit();
         case 1 -> startMemberDatabase();
         case 2 -> System.out.println("PLACEHOLDER: VIEW FINANCIAL DATA");
         case 3 -> System.out.println("PLACEHOLDER: EDIT TRAINING/COMPETITIVE DATA");
@@ -35,9 +36,9 @@ public class UserInterface {
     System.out.println("""
         Main menu
         ---------
-        1) Edit member-database
+        1) View member-database
         2) View financial data
-        3) Edit training/competitive data
+        3) View training/competitive data
         0) Exit application
         """);
     Scanner input = new Scanner(System.in);
@@ -52,8 +53,7 @@ public class UserInterface {
 
   public void startMemberDatabase() {
     boolean loop = true;
-    //System.out.println("Welcome to Dolphinbase 2022");
-    System.out.println("==========================");
+    System.out.println("==================================================");
 
     while (loop) {
       switch (menuMemberDatabase()) {
@@ -96,26 +96,28 @@ public class UserInterface {
     System.out.println("Saving the database ...");
     application.saveToFile(application.serializingJson(), "MemberList.txt");
     System.out.println("Saving database completed successfully");
+    System.out.println("--------------------------------------------------");
     return false;
   }
 
-  private void exit() {
+  private boolean exit() {
     System.out.println("Thank you for using Dolphinbase 2022");
-    System.exit(0);
+    return false;
   }
 
   private void list() {
     System.out.println("List of all the members");
-    System.out.println("-----------------------");
+    System.out.println("-------------------------");
     for (Member member : application.getAllMembers()) {
-      System.out.println(member);
+      displayMemberData(member, true, false, false);
     }
     System.out.println("There are " + application.getMemberCount() + " members in the list.");
+    System.out.println("--------------------------------------------------");
   }
 
   private void edit() {
     System.out.println("Edit member");
-    System.out.println("-------------");
+    System.out.println("-------------------------");
     System.out.println("Please enter the ID of the member to be edited: ");
     Scanner console = new Scanner(System.in);
     String id = console.nextLine();
@@ -123,17 +125,17 @@ public class UserInterface {
 
     for (Member member : application.getMembers()) {
       if (member.getId().equals(id)) {
-        System.out.println(member);
+        displayMemberData(member,true,false, false);
         System.out.println("""
-        Editable data:
-        1) Name
-        2) Age
-        3) Email
-        4) Telephone
-        5) Address
-        6) Gender
-        7) Type (Membership)
-        8) Status (Membership)""");
+            Editable data:
+            1) Name
+            2) Age
+            3) Email
+            4) Telephone
+            5) Address
+            6) Gender
+            7) Type (Membership)
+            8) Status (Membership)""");
 
         System.out.println("Please enter the data to be edited: ");
         String data = console.nextLine().trim().toLowerCase();
@@ -145,17 +147,21 @@ public class UserInterface {
           case "2", "age" -> {
             System.out.print("Age: ");
             Integer tempAge = application.tryParseInt(console.nextLine());
-            if(tempAge!=null)
+            if (tempAge != null)
               member.setAge(tempAge);
           }
           case "3", "email" -> {
             System.out.print("Email: ");
             member.setEmail(console.nextLine());
           }
-          case "4", "telephone" -> {    System.out.print("Telephone: ");
-            member.setTelephone(console.nextLine());}
-          case "5", "address" -> {    System.out.print("Address: ");
-            member.setAddress(console.nextLine());}
+          case "4", "telephone" -> {
+            System.out.print("Telephone: ");
+            member.setTelephone(console.nextLine());
+          }
+          case "5", "address" -> {
+            System.out.print("Address: ");
+            member.setAddress(console.nextLine());
+          }
           case "6", "gender" -> {
             System.out.print("Gender (Male/Female): ");
             char genderChar = console.nextLine().toLowerCase().trim().charAt(0);
@@ -190,6 +196,7 @@ public class UserInterface {
     }
     if (!editable)
       System.out.println("Member with ID '" + id + "' does not exist, and cannot be edited");
+    System.out.println("--------------------------------------------------");
   }
 
   private void sort() {
@@ -242,7 +249,8 @@ public class UserInterface {
     MembershipStatus status = null;
     MembershipType type = null;
 
-    System.out.println("Create new member\n-----------------");
+    System.out.println("Create new member");
+    System.out.println("-------------------------");
     Scanner input = new Scanner(System.in);
     System.out.print("Name: ");
     String name = input.nextLine();
@@ -288,7 +296,7 @@ public class UserInterface {
 
   private void delete() {
     System.out.println("Delete member");
-    System.out.println("-------------");
+    System.out.println("-------------------------");
     System.out.println("Please enter the ID of the member to be deleted: ");
     Scanner input = new Scanner(System.in);
     String id = input.nextLine();
@@ -299,6 +307,7 @@ public class UserInterface {
     } else {
       System.out.println("Member with ID '" + id + "' does not exist, and cannot be deleted");
     }
+    System.out.println("--------------------------------------------------");
   }
 
 
@@ -306,13 +315,42 @@ public class UserInterface {
     System.out.println("Loading the database ...");
     application.setMembers(application.deserializingJson(application.loadFromFile("MemberList.txt")));
     System.out.println("Loading database completed successfully");
+    System.out.println("--------------------------------------------------");
   }
 
   private void save() {
     System.out.println("Saving the database ...");
     application.saveToFile(application.serializingJson(), "MemberList.txt");
     System.out.println("Saving database completed successfully");
-    //System.out.println("You can now exit the application");
+    System.out.println("--------------------------------------------------");
   }
 
+  private void displayMemberData(Member member, boolean viewNormal, boolean viewCompetitive, boolean viewRestance) {
+    System.out.printf("""
+        ID:                      %s
+        Name:                    %s
+        Age:                     %s
+        Gender:                  %s
+        """, member.getId(), member.getName(), member.getAge(), member.getGender());
+    if (viewNormal) {
+      System.out.printf("""
+          Date of registration:    %s
+          Membership Type:         %s
+          Membership Status:       %s
+          Email:                   %s
+          Telephone:               %s
+          Address:                 %s
+          """, member.getDateRegistration(), member.getType(), member.getStatus(), member.getEmail(), member.getTelephone(), member.getAddress());
+    }
+    if (viewCompetitive) {
+      System.out.printf("""
+          Attending disciplines:   %s
+          Results:                 %s
+          """, member.getDisciplines(), member.getResults());
+    }
+    if (viewRestance) {
+      System.out.println("NOT IMPLEMENTED YET!");
+    }
+    System.out.println();
+  }
 }

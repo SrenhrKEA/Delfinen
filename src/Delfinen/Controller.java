@@ -17,6 +17,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class Controller {
   private ArrayList<Member> members;
+  private ArrayList<Staff> staff;
   private int toggleCounter = 0;
 
   public Controller() {
@@ -153,7 +154,7 @@ public class Controller {
     try {
       return Integer.parseInt(text);
     } catch (NumberFormatException nfe) {
-      System.out.println("Input not an integer!");
+      System.out.println("Input is not an integer!");
       return null;
     }
   }
