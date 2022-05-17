@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
 public class UserInterface {
   private final Controller application;
 
@@ -61,6 +62,7 @@ public class UserInterface {
         case 6 -> load();
         case 7 -> save();
         case 8 -> createResult((CompetitiveMember) findMember());
+        case 9 -> showResult((CompetitiveMember) findMember());
       }
     }
   }
@@ -80,7 +82,8 @@ public class UserInterface {
         """);
     Scanner input = new Scanner(System.in);
     int choice = input.nextInt();
-    while (choice < 0 || choice > 7) {
+    //Change number below to fit final amount of options
+    while (choice < 0 || choice > 9) {
       System.out.println("Only values 0-7 allowed");
       choice = input.nextInt();
     }
@@ -232,7 +235,7 @@ public class UserInterface {
     //System.out.println("You can now exit the application");
   }
 
-  //TODO Find a member by name or ID
+  //TODO Find a member by name
   private Member findMember() {
     System.out.println("Enter a name");
     Scanner in = new Scanner(System.in);
@@ -287,7 +290,8 @@ public class UserInterface {
       placement = in.nextLine();
     }
 
-    System.out.println("Insert time [m:s]");
+    System.out.println("Insert time [m:s.ms]");
+    System.out.println("Ex. 9:30.08");
     String time;
     time = in.nextLine();
 
@@ -295,4 +299,75 @@ public class UserInterface {
     String date;
     date = in.nextLine();
 
+    Result result;
+    if (isConvention)
+      result = new Result(discipline, convention, placement, time, date);
+    else
+      result = new Result(discipline, time, date);
+
+    member.addResult(result);
+  }
+  //TODO showResult()
+  public void showResult(CompetitiveMember member) {
+    System.out.println(member.getName());
+    for (int i = 0; i < member.getResults().size(); i++) {
+      System.out.println(member.getResults().get(i).getTime());
+    }
+  }
+  //TODO find top5
+  public void findTop5() {
+    System.out.printf("""
+        Choose a discipline for which you want to show the top 5 swimmers
+        1) Butterfly
+        2) Crawl
+        3) Rygcrawl
+        4) Brystsvømning
+        """);
+    Scanner in = new Scanner(System.in);
+    Discipline discipline;
+    switch (in.nextLine()) {
+      case "1" -> discipline = Discipline.BUTTERFLY;
+      case "2" -> discipline = Discipline.CRAWL;
+      case "3" -> discipline = Discipline.RYGCRAWL;
+      case "4" -> discipline = Discipline.BRYSTSVØMNING;
+    }
+
+    ArrayList<Member> swimmers = new ArrayList<>();
+    ArrayList<Result> bestResult = new ArrayList<>();
+
+    for (int i = 0; i < application.getMembers().size(); i++) {
+      CompetitiveMember member = (CompetitiveMember) application.getMembers().get(i);
+      swimmers.add(member);
+      for (int j = 0; j < member.getResults().size(); j++) {
+        Result result = member.getResults().get(j);
+
+      }
+    }
+
+  }
+
+  //TODO maybe implement methods
+  /*
+  public Discipline chooseDiscipline() {
+    Scanner in = new Scanner(System.in);
+    Discipline discipline;
+    switch (in.nextLine()) {
+      case "1" -> discipline = Discipline.BUTTERFLY;
+      case "2" -> discipline = Discipline.CRAWL;
+      case "3" -> discipline = Discipline.RYGCRAWL;
+      case "4" -> discipline = Discipline.BRYSTSVØMNING;
+    }
+    return discipline;
+  }
+   */
+  /*
+  public int checkNumberIsWithinRange(int min, int max, int choice) {
+    while (choice < min || choice > max) {
+      System.out.println("Only values 0-7 allowed"); //setup to fit min + max
+      Scanner in = new Scanner(System.in);
+      choice = in.nextInt();
+    }
+    return choice;
+  }
+   */
 }

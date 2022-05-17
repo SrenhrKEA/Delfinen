@@ -33,5 +33,25 @@
     "dateRegistration": "2022-05-13T12:55:32.213673200",
     "id": "8",
     "genderMale": false
+  },
+  {
+    "results": [
+      {
+        "discipline": "BUTTERFLY",
+        "date": "1/2/2022",
+        "time": "9:30",
+        "convention": "Speed",
+        "placement": "3"
+      }
+    ],
+    "disciplines": [],
+    "age": 23,
+    "name": "Per",
+    "dateRegistration": "2022-05-17T12:47:28.934002200",
+    "id": "9",
+    "email": "none",
+    "telephone": "none",
+    "address": "none",
+    "genderMale": true
   }
 ]
