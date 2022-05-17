@@ -6,31 +6,21 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
+import Delfinen.Comparators.MemberAgeComparator;
+import Delfinen.Comparators.MemberIdComparator;
+import Delfinen.Comparators.MemberNameComparator;
+import Delfinen.Enums.*;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 
 public class Controller {
   private ArrayList<Member> members;
-  private ArrayList<Team> teams;
-  private long idCounter;
   private int toggleCounter = 0;
 
   public Controller() {
     members = new ArrayList<>();
-    teams = new ArrayList<>();
-  }
-
-  public long getIdCounter() {
-    return idCounter;
-  }
-
-  public void setIdCounter(long idCounter) {
-    this.idCounter = idCounter;
   }
 
   public ArrayList<Member> getMembers() {
@@ -47,26 +37,12 @@ public class Controller {
 
   private void runProgram() {
     members = deserializingJson(loadFromFile("MemberList.txt"));
-    idCounter = tryParseLong(loadFromFile("IdCounter.txt"));
-    System.out.println(idCounter);
     UserInterface ui = new UserInterface(this);
     ui.start();
   }
 
-  public long tryParseLong(String text) {
-    try {
-      return Long.parseLong(text.trim());
-    } catch (NumberFormatException nfe) {
-      return 0;
-    }
-  }
-
-  public synchronized String createID() {
-    return String.valueOf(idCounter++);
-  }
-
   public synchronized String createUID() {
-    return UUID.randomUUID().toString();
+    return UUID.randomUUID().toString().substring(0, 8);
   }
 
   public String serializingJson() {
@@ -138,22 +114,17 @@ public class Controller {
       }
       members.stream().map(Member::getId).forEach(System.out::print);
     }
-    if (sortDirection!=SortDirection.ASC && toggleCounter==0)
-    toggleCounter++;
+    if (sortDirection != SortDirection.ASC && toggleCounter == 0)
+      toggleCounter++;
   }
 
-  public void createNewMember(int age, String name, String address, String email, String telephone, String dateRegistration, String ID, boolean genderMale) {
-    Member member = new Member(age, name, address,email,telephone,dateRegistration, ID, genderMale);
+  public void createNewExerciseMember(int age, String name, String address, String email, String telephone, String dateRegistration, String ID, Gender gender, MembershipType type, MembershipStatus status) {
+    ExerciseMember member = new ExerciseMember(age, name, address, email, telephone, dateRegistration, ID, gender, type, status);
     members.add(member);
   }
 
-  public void createNewActiveMember(int age, String name,String address,String email, String telephone, String dateRegistration, String ID, boolean genderMale) {
-    ActiveMember member = new ActiveMember(age, name, address,email,telephone,dateRegistration, ID, genderMale);
-    members.add(member);
-  }
-
-  public void createNewCompetitiveMember (int age, String name, String address, String email, String telephone, String dateRegistration, String ID, boolean genderMale, ArrayList<Result> results, ArrayList<Discipline> disciplines) {
-    CompetitiveMember member = new CompetitiveMember(age, name,address, email, telephone, dateRegistration, ID, genderMale, results,disciplines);
+  public void createNewCompetitiveMember(int age, String name, String address, String email, String telephone, String dateRegistration, String ID, Gender gender, MembershipType type, MembershipStatus status, ArrayList<Result> results, ArrayList<Discipline> disciplines) {
+    CompetitiveMember member = new CompetitiveMember(age, name, address, email, telephone, dateRegistration, ID, gender, type, status, results, disciplines);
     members.add(member);
   }
 
@@ -175,5 +146,15 @@ public class Controller {
       }
     }
     return null;
+  }
+
+  //Utilities
+  public Integer tryParseInt(String text) {
+    try {
+      return Integer.parseInt(text);
+    } catch (NumberFormatException nfe) {
+      System.out.println("Input not an integer!");
+      return null;
+    }
   }
 }

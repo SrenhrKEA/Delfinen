@@ -1,4 +1,4 @@
-package Delfinen;
+package Delfinen.Enums;
 
 public enum Discipline {
   BUTTERFLY,
