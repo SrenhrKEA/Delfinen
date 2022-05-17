@@ -1,5 +1,10 @@
 package Delfinen;
 
+import Delfinen.Enums.Gender;
+import Delfinen.Enums.MembershipStatus;
+import Delfinen.Enums.MembershipType;
+import Delfinen.Enums.SortDirection;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -54,7 +59,7 @@ public class UserInterface {
       switch (menuMemberDatabase()) {
         case 0 -> loop = exitMemberDatabase();
         case 1 -> list();
-        case 2 -> filter();
+        case 2 -> edit();
         case 3 -> sort();
         case 4 -> create();
         case 5 -> delete();
@@ -69,7 +74,7 @@ public class UserInterface {
         Menu
         ---------
         1) List all members
-        2) Filter list of members
+        2) Edit master data
         3) Sort list of members
         4) Create new member
         5) Delete member
@@ -90,19 +95,11 @@ public class UserInterface {
   private boolean exitMemberDatabase() {
     System.out.println("Saving the database ...");
     application.saveToFile(application.serializingJson(), "MemberList.txt");
-    application.saveToFile(String.valueOf(application.getIdCounter()), "IdCounter.txt");
     System.out.println("Saving database completed successfully");
     return false;
   }
 
   private void exit() {
-    /*
-    System.out.println("Saving the database ...");
-    application.saveToFile(application.serializingJson(), "MemberList.txt");
-    application.saveToFile(String.valueOf(application.getIdCounter()), "IdCounter.txt");
-    System.out.println("Saving database completed successfully");
-
-     */
     System.out.println("Thank you for using Dolphinbase 2022");
     System.exit(0);
   }
@@ -116,14 +113,86 @@ public class UserInterface {
     System.out.println("There are " + application.getMemberCount() + " members in the list.");
   }
 
-  private void filter() {
-    System.out.println("-- filtering not yet implemented ---");
+  private void edit() {
+    System.out.println("Edit member");
+    System.out.println("-------------");
+    System.out.println("Please enter the ID of the member to be edited: ");
+    Scanner console = new Scanner(System.in);
+    String id = console.nextLine();
+    boolean editable = false;
+
+    for (Member member : application.getMembers()) {
+      if (member.getId().equals(id)) {
+        System.out.println(member);
+        System.out.println("""
+        Editable data:
+        1) Name
+        2) Age
+        3) Email
+        4) Telephone
+        5) Address
+        6) Gender
+        7) Type (Membership)
+        8) Status (Membership)""");
+
+        System.out.println("Please enter the data to be edited: ");
+        String data = console.nextLine().trim().toLowerCase();
+        switch (data) {
+          case "1", "name" -> {
+            System.out.print("Name: ");
+            member.setName(console.nextLine());
+          }
+          case "2", "age" -> {
+            System.out.print("Age: ");
+            Integer tempAge = application.tryParseInt(console.nextLine());
+            if(tempAge!=null)
+              member.setAge(tempAge);
+          }
+          case "3", "email" -> {
+            System.out.print("Email: ");
+            member.setEmail(console.nextLine());
+          }
+          case "4", "telephone" -> {    System.out.print("Telephone: ");
+            member.setTelephone(console.nextLine());}
+          case "5", "address" -> {    System.out.print("Address: ");
+            member.setAddress(console.nextLine());}
+          case "6", "gender" -> {
+            System.out.print("Gender (Male/Female): ");
+            char genderChar = console.nextLine().toLowerCase().trim().charAt(0);
+            if (genderChar == 'f') {
+              member.setGender(Gender.FEMALE);
+            } else if (genderChar == 'm') {
+              member.setGender(Gender.MALE);
+            }
+          }
+          case "7", "type" -> {
+            System.out.print("Membership type (Competitive/Exercise): ");
+            char typeChar = console.nextLine().toLowerCase().trim().charAt(0);
+            if (typeChar == 'c') {
+              member.setType(MembershipType.COMPETITIVE);
+            } else if (typeChar == 'e') {
+              member.setType(MembershipType.EXERCISE);
+            }
+          }
+          case "8", "status" -> {
+            System.out.print("Membership status (Active/Passive): ");
+            char statusChar = console.nextLine().toLowerCase().trim().charAt(0);
+            if (statusChar == 'a') {
+              member.setStatus(MembershipStatus.ACTIVE);
+            } else if (statusChar == 'p') {
+              member.setStatus(MembershipStatus.PASSIVE);
+            }
+          }
+        }
+        System.out.println("The member with ID '" + id + "' has been edited");
+        editable = true;
+      }
+    }
+    if (!editable)
+      System.out.println("Member with ID '" + id + "' does not exist, and cannot be edited");
   }
 
   private void sort() {
-    //System.out.println("-- sorting not yet implemented ---");
-
-
     System.out.println("""
         Sort the list of members by
         n) Name
@@ -167,34 +236,51 @@ public class UserInterface {
   }
 
   private void create() {
-    String ID = application.createID();
+    String ID = application.createUID();
     String dateRegistration = LocalDateTime.now().toString();
+    Gender gender = null;
+    MembershipStatus status = null;
+    MembershipType type = null;
+
     System.out.println("Create new member\n-----------------");
     Scanner input = new Scanner(System.in);
     System.out.print("Name: ");
     String name = input.nextLine();
     System.out.print("Age: ");
-    int age = input.nextInt();
-    input.nextLine(); // ScannerBug fix
+    Integer age = application.tryParseInt(input.nextLine());
     System.out.print("Address: ");
     String address = input.nextLine();
     System.out.print("Email: ");
     String email = input.nextLine();
     System.out.print("Telephone number: ");
     String telephone = input.nextLine();
-    System.out.print("Male Gender (true/false): ");
-    boolean genderMale = Boolean.parseBoolean(input.nextLine());
-    System.out.print("Active membership (true/false): ");
-    boolean membershipActive = Boolean.parseBoolean(input.nextLine());
-    System.out.print("Competitive membership (true/false): ");
-    boolean membershipCompetitive = Boolean.parseBoolean(input.nextLine());
+    System.out.print("Gender (Male/Female): ");
+    char genderChar = input.nextLine().toLowerCase().trim().charAt(0);
+    if (genderChar == 'f') {
+      gender = Gender.FEMALE;
+    } else if (genderChar == 'm') {
+      gender = Gender.MALE;
+    }
+    System.out.print("Membership type (Competitive/Exercise): ");
+    char typeChar = input.nextLine().toLowerCase().trim().charAt(0);
+    if (typeChar == 'c') {
+      type = MembershipType.COMPETITIVE;
+    } else if (typeChar == 'e') {
+      type = MembershipType.EXERCISE;
+    }
+    System.out.print("Membership status (Active/Passive): ");
+    char statusChar = input.nextLine().toLowerCase().trim().charAt(0);
+    if (statusChar == 'a') {
+      status = MembershipStatus.ACTIVE;
+    } else if (statusChar == 'p') {
+      status = MembershipStatus.PASSIVE;
+    }
 
-    if (membershipCompetitive && membershipActive) {
-      application.createNewCompetitiveMember(age, name, address, email, telephone, dateRegistration, ID, genderMale, new ArrayList<>(), new ArrayList<>());
-    } else if (membershipActive) {
-      application.createNewActiveMember(age, name, address, email, telephone, dateRegistration, ID, genderMale);
-    } else
-      application.createNewMember(age, name, address, email, telephone, dateRegistration, ID, genderMale);
+    if (type == MembershipType.COMPETITIVE) {
+      application.createNewCompetitiveMember(age, name, address, email, telephone, dateRegistration, ID, gender, type, status, new ArrayList<>(), new ArrayList<>());
+    } else {
+      application.createNewExerciseMember(age, name, address, email, telephone, dateRegistration, ID, gender, type, status);
+    }
 
     // When created a new member, show the list again
     list();
@@ -203,15 +289,15 @@ public class UserInterface {
   private void delete() {
     System.out.println("Delete member");
     System.out.println("-------------");
-    System.out.println("Please enter the name of the member to be deleted: ");
+    System.out.println("Please enter the ID of the member to be deleted: ");
     Scanner input = new Scanner(System.in);
-    String name = input.nextLine();
+    String id = input.nextLine();
 
-    boolean success = application.deleteMember(name);
+    boolean success = application.deleteMember(id);
     if (success) {
-      System.out.println("The member with name '" + name + "' has been deleted");
+      System.out.println("The member with ID '" + id + "' has been deleted");
     } else {
-      System.out.println("Member with name '" + name + "' does not exist, and cannot be deleted");
+      System.out.println("Member with ID '" + id + "' does not exist, and cannot be deleted");
     }
   }
 
@@ -219,17 +305,14 @@ public class UserInterface {
   private void load() {
     System.out.println("Loading the database ...");
     application.setMembers(application.deserializingJson(application.loadFromFile("MemberList.txt")));
-    application.setIdCounter(application.tryParseLong(application.loadFromFile("IdCounter.txt")));
     System.out.println("Loading database completed successfully");
   }
 
   private void save() {
     System.out.println("Saving the database ...");
     application.saveToFile(application.serializingJson(), "MemberList.txt");
-    application.saveToFile(String.valueOf(application.getIdCounter()), "IdCounter.txt");
     System.out.println("Saving database completed successfully");
     //System.out.println("You can now exit the application");
   }
-
 
 }
