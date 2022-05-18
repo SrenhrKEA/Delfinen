@@ -1,11 +1,8 @@
 package Delfinen;
 
-import Delfinen.Enums.Discipline;
 import Delfinen.Enums.Gender;
 import Delfinen.Enums.MembershipStatus;
 import Delfinen.Enums.MembershipType;
-
-import java.util.ArrayList;
 
 public class Member {
   //For all swimmers

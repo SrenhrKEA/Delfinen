@@ -18,5 +18,17 @@
     "gender": "MALE",
     "type": "COMPETITIVE",
     "status": "ACTIVE"
+  },
+  {
+    "age": 30,
+    "name": "Nanna",
+    "dateRegistration": "2022-05-18T10:32:27.618658400",
+    "id": "135bb22b",
+    "email": "nanna@",
+    "telephone": "2020",
+    "address": "frederiksborgvej",
+    "gender": "FEMALE",
+    "type": "EXERCISE",
+    "status": "PASSIVE"
   }
 ]
