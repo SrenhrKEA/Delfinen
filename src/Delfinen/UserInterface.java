@@ -388,7 +388,7 @@ public class UserInterface {
     return choice;
   }
   //TODO Find a member by name
-  private Member findMember() {
+  public Member findMember() {
     System.out.println("Enter a name");
     Scanner in = new Scanner(System.in);
     String name = in.nextLine();
@@ -398,7 +398,7 @@ public class UserInterface {
   }
 
   //TODO Needs a member attached
-  private void createResult(CompetitiveMember member) {
+  public void createResult(CompetitiveMember member) {
     System.out.println("Create a result for a member");
     System.out.println("----------------------------");
     System.out.printf("""
