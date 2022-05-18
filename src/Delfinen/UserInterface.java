@@ -266,27 +266,27 @@ public class UserInterface {
     }
 
     System.out.printf("""
-        Was the result made within a convention?
+        Was the result made within a tournament?
         1) Yes
         2) No
         """);
 
-    boolean isConvention = true;
+    boolean isTournament = true;
     switch (in.nextLine()) {
-      case "1" -> isConvention = true;
-      case "2" -> isConvention = false;
+      case "1" -> isTournament = true;
+      case "2" -> isTournament = false;
     }
 
-    String convention;
-    convention = null;
-    String placement;
-    placement = null;
-    if (isConvention) {
-      System.out.println("in which convention did the contestant participate?");
-      convention = in.nextLine();
+    String tournament;
+    tournament = null;
+    String ranking;
+    ranking = null;
+    if (isTournament) {
+      System.out.println("in which tournament did the contestant participate?");
+      tournament = in.nextLine();
 
-      System.out.println("Which place did the contestant make in the convention?");
-      placement = in.nextLine();
+      System.out.println("Which place did the contestant make in the tournament?");
+      ranking = in.nextLine();
     }
 
     System.out.println("Insert time [Minutes:Seconds.Milliseconds]");
@@ -299,8 +299,8 @@ public class UserInterface {
     date = in.nextLine();
 
     Result result;
-    if (isConvention)
-      result = new Result(discipline, convention, placement, time, date);
+    if (isTournament)
+      result = new Result(discipline, tournament, ranking, time, date);
     else
       result = new Result(discipline, time, date);
 

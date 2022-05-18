@@ -5,11 +5,7 @@ public class Result {
   private String result;
   private String date;
   private String time;
-
-  private String convention;
   private String tournament;
-
-  private String placement;
   private String ranking;
 
   public Discipline getDiscipline() {
@@ -65,7 +61,6 @@ public class Result {
     this.result = result;
     this.date = date;
   }
-   */
 
   public Result(Discipline discipline, String tournament, String ranking, String time) {
     this.discipline = discipline;
@@ -73,17 +68,18 @@ public class Result {
     this.ranking = ranking;
     this.time = time;
   }
+   */
 
   //new constructors
-  //constructor for conventions
-  public Result(Discipline discipline, String convention, String placement, String time, String date) {
+  //constructor for tournament results
+  public Result(Discipline discipline, String tournament, String ranking, String time, String date) {
     this.discipline = discipline;
-    this.convention = convention;
-    this.placement = placement;
+    this.tournament = tournament;
+    this.ranking = ranking;
     this.time = time;
     this.date = date;
   }
-  //constructor for training
+  //constructor for training results
   public Result(Discipline discipline, String time, String date) {
     this.discipline = discipline;
     this.time = time;
