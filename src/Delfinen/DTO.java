@@ -1,12 +1,13 @@
 package Delfinen;
 
+import Delfinen.Enums.Discipline;
 import Delfinen.Enums.Gender;
 import Delfinen.Enums.MembershipStatus;
 import Delfinen.Enums.MembershipType;
 
+import java.util.ArrayList;
 
-public abstract class Member {
-  //For all swimmers
+public class DTO {
   private int age;
   private String name;
   private String dateRegistration;
@@ -17,12 +18,45 @@ public abstract class Member {
   private Gender gender;
   private MembershipType type;
   private MembershipStatus status;
+  private ArrayList<Result> results;
+  private ArrayList<Discipline> disciplines;
 
-  public Integer getAge() {
+  public DTO() {
+  }
+
+  public DTO(int age, String name, String dateRegistration, String id, String email, String telephone, String address, Gender gender, MembershipType type, MembershipStatus status) {
+    this.age = age;
+    this.name = name;
+    this.dateRegistration = dateRegistration;
+    this.id = id;
+    this.email = email;
+    this.telephone = telephone;
+    this.address = address;
+    this.gender = gender;
+    this.type = type;
+    this.status = status;
+  }
+
+  public DTO(int age, String name, String dateRegistration, String id, String email, String telephone, String address, Gender gender, MembershipType type, MembershipStatus status, ArrayList<Result> results, ArrayList<Discipline> disciplines) {
+    this.age = age;
+    this.name = name;
+    this.dateRegistration = dateRegistration;
+    this.id = id;
+    this.email = email;
+    this.telephone = telephone;
+    this.address = address;
+    this.gender = gender;
+    this.type = type;
+    this.status = status;
+    this.results = results;
+    this.disciplines = disciplines;
+  }
+
+  public int getAge() {
     return age;
   }
 
-  public void setAge(Integer age) {
+  public void setAge(int age) {
     this.age = age;
   }
 
@@ -98,37 +132,19 @@ public abstract class Member {
     this.status = status;
   }
 
-
-  public Member(int age, String name, String address, String email, String telephone, String dateRegistration, String id, Gender gender, MembershipType type, MembershipStatus status) {
-    this.age = age;
-    this.name = name;
-    this.address = address;
-    this.email = email;
-    this.telephone = telephone;
-    this.dateRegistration = dateRegistration;
-    this.id = id;
-    this.gender = gender;
-    this.type = type;
-    this.status = status;
+  public ArrayList<Result> getResults() {
+    return results;
   }
 
-  @Override
-  public String toString() {
-    return "Member{" +
-        "age=" + age +
-        ", name='" + name + '\'' +
-        ", dateRegistration='" + dateRegistration + '\'' +
-        ", id='" + id + '\'' +
-        ", email='" + email + '\'' +
-        ", telephone='" + telephone + '\'' +
-        ", address='" + address + '\'' +
-        ", gender=" + gender +
-        ", type=" + type +
-        ", status=" + status +
-        '}';
+  public void setResults(ArrayList<Result> results) {
+    this.results = results;
   }
 
-  public DTO convertToDTO() {
-    return new DTO(this.age,this.name,this.dateRegistration,this.id,this.email,this.telephone,this.address,this.gender,this.type,this.status);
+  public ArrayList<Discipline> getDisciplines() {
+    return disciplines;
+  }
+
+  public void setDisciplines(ArrayList<Discipline> disciplines) {
+    this.disciplines = disciplines;
   }
 }

@@ -353,6 +353,7 @@ public class UserInterface {
     if (viewArrears) {
       System.out.println("NOT IMPLEMENTED YET!");
     }
+    System.out.println("-------------------------");
   }
   //TODO Find a member by name
   private Member findMember() {

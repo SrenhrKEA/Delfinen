@@ -1,32 +1,46 @@
 [
   {
+    "age": 36,
+    "name": "Martin",
+    "dateRegistration": "2022-05-18T13:05:45.059703800",
+    "id": "e3f0eea8",
+    "email": "john@",
+    "telephone": "7575",
+    "address": "brønshøj",
+    "gender": "MALE",
+    "type": "COMPETITIVE",
+    "status": "ACTIVE",
     "results": [
       {
         "discipline": "BUTTERFLY",
-        "date": "1/2/2022",
-        "time": "9:30.08"
+        "date": "18/05/2022",
+        "time": "1:30:08",
+        "tournament": "brønhøj svømmekokurrence",
+        "ranking": "1"
       }
     ],
-    "disciplines": [],
-    "age": 22,
-    "name": "test",
-    "dateRegistration": "2022-05-18T10:39:48.014368800",
-    "id": "7a2492f9",
-    "email": "",
-    "telephone": "",
-    "address": "",
+    "disciplines": []
+  },
+  {
+    "age": 31,
+    "name": "Søren",
+    "dateRegistration": "2022-05-18T13:13:50.778852900",
+    "id": "9a636881",
+    "email": "søren@",
+    "telephone": "208585",
+    "address": "Frederiksborgvej 193",
     "gender": "MALE",
-    "type": "COMPETITIVE",
-    "status": "ACTIVE"
+    "type": "EXERCISE",
+    "status": "PASSIVE"
   },
   {
     "age": 30,
     "name": "Nanna",
-    "dateRegistration": "2022-05-18T10:32:27.618658400",
-    "id": "135bb22b",
-    "email": "nanna@",
-    "telephone": "2020",
-    "address": "frederiksborgvej",
+    "dateRegistration": "2022-05-18T13:28:18.513906500",
+    "id": "331dd735",
+    "email": "kdfkdf",
+    "telephone": "kdkf",
+    "address": "jfjfj",
     "gender": "FEMALE",
     "type": "EXERCISE",
     "status": "PASSIVE"

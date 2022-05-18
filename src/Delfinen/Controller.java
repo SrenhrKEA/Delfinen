@@ -37,7 +37,7 @@ public class Controller {
   }
 
   private void runProgram() {
-    //members = deserializingJson(loadFromFile("MemberList.txt"));
+    members = deserializingJson(loadFromFile("MemberList.txt"));
     UserInterface ui = new UserInterface(this);
     ui.start();
   }
@@ -47,16 +47,40 @@ public class Controller {
   }
 
   public String serializingJson() {
+    ArrayList<DTO> temp = new ArrayList<>();
+    for (Member member : members) {
+      temp.add(member.convertToDTO());
+    }
     Gson gson = new GsonBuilder()
         .setPrettyPrinting()
         .create();
-    return gson.toJson(members);
+    return gson.toJson(temp);
   }
 
   public ArrayList<Member> deserializingJson(String json) {
     Gson gson = new Gson();
-    return gson.fromJson(json, new TypeToken<ArrayList<Member>>() {
-    }.getType());
+    return convertFromDTO(gson.fromJson(json, new TypeToken<ArrayList<DTO>>() {
+    }.getType()));
+  }
+
+  public ArrayList<Member> convertFromDTO(ArrayList<DTO> dtos) {
+    ArrayList<Member> temp = new ArrayList<>();
+    for (DTO dto : dtos) {
+      MembershipType classname = dto.getType();
+      if (classname == null) {
+        continue;
+      }
+      if (classname==(MembershipType.COMPETITIVE)) {
+        temp.add(new CompetitiveMember(dto.getAge(), dto.getName(), dto.getAddress(), dto.getEmail(),
+            dto.getTelephone(), dto.getDateRegistration(), dto.getId(), dto.getGender(), dto.getType(),
+            dto.getStatus(), dto.getResults(), dto.getDisciplines()));
+      } else {
+        temp.add(new ExerciseMember(dto.getAge(), dto.getName(), dto.getAddress(), dto.getEmail(),
+            dto.getTelephone(), dto.getDateRegistration(), dto.getId(), dto.getGender(), dto.getType(),
+            dto.getStatus()));
+      }
+    }
+    return temp;
   }
 
   public void saveToFile(String data, String filePathName) {
@@ -157,6 +181,7 @@ public class Controller {
     }
     return null;
   }
+
   //Utilities
   public Integer tryParseInt(String text) {
     try {

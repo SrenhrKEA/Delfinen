@@ -19,7 +19,6 @@ public class CompetitiveMember extends Member {
     this.disciplines = disciplines;
   }
 
-
   public ArrayList<Result> getResults() {
     return results;
   }
@@ -47,4 +46,8 @@ public class CompetitiveMember extends Member {
     return bestResult;
   }
 
+  @Override
+  public DTO convertToDTO() {
+    return new DTO(super.getAge(),super.getName(),super.getDateRegistration(),super.getId(),super.getEmail(),super.getTelephone(),super.getAddress(),super.getGender(),super.getType(),super.getStatus(),this.getResults(),this.getDisciplines());
+  }
 }
