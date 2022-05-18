@@ -24,7 +24,7 @@ public class UserInterface {
         case 0 -> loop = exit();
         case 1 -> startMemberDatabase();
         case 2 -> System.out.println("PLACEHOLDER: VIEW FINANCIAL DATA");
-        case 3 -> System.out.println("PLACEHOLDER: EDIT TRAINING/COMPETITIVE DATA");
+        case 3 -> startCompetetiveDatabase();
       }
     }
   }
@@ -62,8 +62,6 @@ public class UserInterface {
         case 5 -> delete();
         case 6 -> load();
         case 7 -> save();
-        case 8 -> createResult((CompetitiveMember) findMember());
-        case 9 -> showResult((CompetitiveMember) findMember());
       }
     }
   }
@@ -83,7 +81,7 @@ public class UserInterface {
         """);
     Scanner input = new Scanner(System.in);
     int choice = input.nextInt();
-    while (choice < 0 || choice > 9) {
+    while (choice < 0 || choice > 7) {
       System.out.println("Only values 0-7 allowed");
       choice = input.nextInt();
     }
@@ -355,8 +353,43 @@ public class UserInterface {
     }
     System.out.println("-------------------------");
   }
+
+  public void startCompetetiveDatabase() {
+    boolean loop = true;
+    System.out.println("==================================================");
+
+    while (loop) {
+      switch (menuCompetetiveDatabase()) {
+        case 0 -> loop = false; //Insert exit method with save
+        case 1 -> System.out.println("Show result yet to be implemented"); //showResult((CompetitiveMember) findMember());
+        case 2 -> System.out.println("Show top 5 yet to be implemented");
+        case 3 -> createResult((CompetitiveMember) findMember());
+        case 4 -> System.out.println("Delete result yet to be implemented");
+      }
+    }
+  }
+
+  public int menuCompetetiveDatabase() {
+    System.out.println("""
+        Menu
+        ---------
+        1) Show all results specific to a member
+        2) Show top 5 results specific to a discipline
+        3) Create a result
+        4) Delete a result
+        0) Exit to main menu
+        """);
+    Scanner input = new Scanner(System.in);
+    int choice = input.nextInt();
+    while (choice < 0 || choice > 4) {
+      System.out.println("Only values 0-4 allowed");
+      choice = input.nextInt();
+    }
+
+    return choice;
+  }
   //TODO Find a member by name
-  private Member findMember() {
+  public Member findMember() {
     System.out.println("Enter a name");
     Scanner in = new Scanner(System.in);
     String name = in.nextLine();
@@ -366,7 +399,7 @@ public class UserInterface {
   }
 
   //TODO Needs a member attached
-  private void createResult(CompetitiveMember member) {
+  public void createResult(CompetitiveMember member) {
     System.out.println("Create a result for a member");
     System.out.println("----------------------------");
     System.out.printf("""
