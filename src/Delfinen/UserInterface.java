@@ -61,7 +61,13 @@ public class UserInterface {
         case 5 -> delete();
         case 6 -> load();
         case 7 -> save();
-        case 8 -> createResult((CompetitiveMember) findMember());
+        case 8 -> {
+          Member member = findMember();
+          if (member instanceof CompetitiveMember) {
+            createResult((CompetitiveMember) member);
+            System.out.println(member.getClass());
+          }
+        }
         case 9 -> showResult((CompetitiveMember) findMember());
       }
     }
@@ -290,12 +296,12 @@ public class UserInterface {
       placement = in.nextLine();
     }
 
-    System.out.println("Insert time [m:s.ms]");
+    System.out.println("Insert time [Minutes:Seconds.Milliseconds]");
     System.out.println("Ex. 9:30.08");
     String time;
     time = in.nextLine();
 
-    System.out.println("Insert date [d/m/y]");
+    System.out.println("Insert date [Day/Month/Year]");
     String date;
     date = in.nextLine();
 
