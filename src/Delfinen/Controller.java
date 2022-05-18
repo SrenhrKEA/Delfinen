@@ -149,6 +149,14 @@ public class Controller {
     return null;
   }
 
+  public Member findMemberByName(String name) {
+    for (Member member : members) {
+      if (member.getName().equalsIgnoreCase(name)) {
+        return member;
+      }
+    }
+    return null;
+  }
   //Utilities
   public Integer tryParseInt(String text) {
     try {

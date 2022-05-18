@@ -2,6 +2,8 @@ package Delfinen;
 
 import Delfinen.Enums.Discipline;
 
+import static java.lang.Double.parseDouble;
+
 public class Result {
   private Discipline discipline;
   private String result;
@@ -56,6 +58,15 @@ public class Result {
 
   public void setTime(String time) {
     this.time = time;
+  }
+
+  public double getTimeInSeconds() {
+    String[] substrings = getTime().split(":");
+    double minutes = parseDouble(substrings[0]);
+    Double seconds = parseDouble(substrings[1]);
+
+    double time = minutes * 60 + seconds;
+    return time;
   }
   /*
   public Result(Discipline discipline, String result, String date) {
