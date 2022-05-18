@@ -33,6 +33,7 @@ public class CompetitiveMember extends Member {
   //TODO make error proof if null
   public Result getBestResult() {
     Result bestResult = null;
+    //BestResultInSeconds is set to max value so that the first result is always lower
     Double bestResultInSeconds = Double.MAX_VALUE;
     for (Result result : results) {
       //Only change bestResult if the new result is lower in seconds than previous bestResult
