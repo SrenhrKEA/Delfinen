@@ -6,7 +6,7 @@ public class Team {
   private String name;
   private Integer minAge;
   private Integer maxAge;
-  private ArrayList<Member> members;// = new ArrayList<>();
+  private ArrayList<Member> members;
 
   public String getName() {
     return name;

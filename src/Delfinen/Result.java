@@ -1,5 +1,7 @@
 package Delfinen;
 
+import Delfinen.Enums.Discipline;
+
 public class Result {
   private Discipline discipline;
   private String result;

@@ -1,21 +1,15 @@
 [
   {
-    "age": 7,
-    "name": "Ludvig",
-    "dateRegistration": "2022-05-12T12:05:04.027242700",
-    "id": "1",
-    "genderMale": false
-  },
-  {
-    "age": 30,
-    "name": "Nanna",
-    "dateRegistration": "2022-05-12T12:05:24.158255300",
-    "id": "2",
-    "genderMale": false
-  },
-  {
     "age": 31,
     "name": "Søren",
+    "dateRegistration": "2022-05-17T17:50:23.937369",
+    "id": "a12aaff2",
+    "email": "soer53k0@stud.kea.dk",
+    "telephone": "20847530",
+    "address": "Frederiksborgvej 193A",
+    "gender": "MALE",
+    "type": "EXERCISE",
+    "status": "ACTIVE"
     "dateRegistration": "2022-05-12T12:05:42.009828700",
     "id": "3",
     "genderMale": false

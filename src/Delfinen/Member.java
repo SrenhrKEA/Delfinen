@@ -1,5 +1,12 @@
 package Delfinen;
 
+import Delfinen.Enums.Discipline;
+import Delfinen.Enums.Gender;
+import Delfinen.Enums.MembershipStatus;
+import Delfinen.Enums.MembershipType;
+
+import java.util.ArrayList;
+
 public class Member {
   //For all swimmers
   private int age;
@@ -9,13 +16,17 @@ public class Member {
   private String email;
   private String telephone;
   private String address;
-  private boolean genderMale;
+  private Gender gender;
+  private MembershipType type;
+  private MembershipStatus status;
+  private ArrayList<Result> results;
+  private ArrayList<Discipline> disciplines;
 
-  public int getAge() {
+  public Integer getAge() {
     return age;
   }
 
-  public void setAge(int age) {
+  public void setAge(Integer age) {
     this.age = age;
   }
 
@@ -43,15 +54,63 @@ public class Member {
     this.id = id;
   }
 
-  public boolean isGenderMale() {
-    return genderMale;
+  public String getEmail() {
+    return email;
   }
 
-  public void setGenderMale(boolean genderMale) {
-    this.genderMale = genderMale;
+  public void setEmail(String email) {
+    this.email = email;
   }
 
-  public Member(int age, String name, String address, String email, String telephone, String dateRegistration, String id, boolean genderMale) {
+  public String getTelephone() {
+    return telephone;
+  }
+
+  public void setTelephone(String telephone) {
+    this.telephone = telephone;
+  }
+
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
+  }
+
+  public Gender getGender() {
+    return gender;
+  }
+
+  public void setGender(Gender gender) {
+    this.gender = gender;
+  }
+
+  public MembershipType getType() {
+    return type;
+  }
+
+  public void setType(MembershipType type) {
+    this.type = type;
+  }
+
+  public MembershipStatus getStatus() {
+    return status;
+  }
+
+  public void setStatus(MembershipStatus status) {
+    this.status = status;
+  }
+
+  public ArrayList<Result> getResults() {
+    return results;
+  }
+
+  public ArrayList<Discipline> getDisciplines() {
+    return disciplines;
+  }
+
+  public Member(int age, String name, String address, String email, String telephone, String dateRegistration, String id, Gender gender, MembershipType type, MembershipStatus status) {
     this.age = age;
     this.name = name;
     this.address = address;
@@ -59,7 +118,9 @@ public class Member {
     this.telephone = telephone;
     this.dateRegistration = dateRegistration;
     this.id = id;
-    this.genderMale = genderMale;
+    this.gender = gender;
+    this.type = type;
+    this.status = status;
   }
 
   @Override
@@ -68,8 +129,13 @@ public class Member {
         "age=" + age +
         ", name='" + name + '\'' +
         ", dateRegistration='" + dateRegistration + '\'' +
-        ", ID='" + id + '\'' +
-        ", genderMale=" + genderMale +
+        ", id='" + id + '\'' +
+        ", email='" + email + '\'' +
+        ", telephone='" + telephone + '\'' +
+        ", address='" + address + '\'' +
+        ", gender=" + gender +
+        ", type=" + type +
+        ", status=" + status +
         '}';
   }
 }
