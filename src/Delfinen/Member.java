@@ -1,4 +1,5 @@
 package Delfinen;
+
 public class Member {
   //For all swimmers
   private int age;

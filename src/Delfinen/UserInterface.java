@@ -61,13 +61,7 @@ public class UserInterface {
         case 5 -> delete();
         case 6 -> load();
         case 7 -> save();
-        case 8 -> {
-          Member member = findMember();
-          if (member instanceof CompetitiveMember) {
-            createResult((CompetitiveMember) member);
-            System.out.println(member.getClass());
-          }
-        }
+        case 8 -> createResult((CompetitiveMember) findMember());
         case 9 -> showResult((CompetitiveMember) findMember());
       }
     }
@@ -88,8 +82,7 @@ public class UserInterface {
         """);
     Scanner input = new Scanner(System.in);
     int choice = input.nextInt();
-    //Change number below to fit final amount of options
-    while (choice < 0 || choice > 9) {
+    while (choice < 0 || choice > 7) {
       System.out.println("Only values 0-7 allowed");
       choice = input.nextInt();
     }

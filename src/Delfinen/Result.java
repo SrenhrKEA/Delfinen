@@ -1,7 +1,5 @@
 package Delfinen;
 
-import static java.lang.Double.parseDouble;
-
 public class Result {
   private Discipline discipline;
   private String result;
@@ -61,17 +59,6 @@ public class Result {
   public void setTime(String time) {
     this.time = time;
   }
-
-  public double getTimeInSeconds() {
-    //Seperate Time into subsrings (minutes and seconds) based off of ":"
-    String[] substrings = this.getTime().split(":");
-    double minutes = parseDouble(substrings[0]);
-    double seconds = parseDouble(substrings[1]);
-    //Calculate total amount of seconds
-    double secondsPerMinute = 60;
-    double timeInSeconds = minutes * secondsPerMinute + seconds;
-    return timeInSeconds;
-  }
   /*
   public Result(Discipline discipline, String result, String date) {
     this.discipline = discipline;
@@ -102,4 +89,5 @@ public class Result {
     this.time = time;
     this.date = date;
   }
+
 }

@@ -46,7 +46,6 @@ public class Controller {
   }
 
   private void runProgram() {
-    System.out.println(createUID());
     members = deserializingJson(loadFromFile("MemberList.txt"));
     idCounter = tryParseLong(loadFromFile("IdCounter.txt"));
     System.out.println(idCounter);

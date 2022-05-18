@@ -21,22 +21,7 @@ public class CompetitiveMember extends Member {
   public void addResult(Result result) {
     this.results.add(result);
   }
-
   public ArrayList<Discipline> getDisciplines() {
     return disciplines;
-  }
-
-  public Result getBestResult() {
-    Result bestResult = null;
-    //Set double to max value so that the first result is always lower
-    Double bestTimeInSeconds = Double.MAX_VALUE;
-    for (Result result : results) {
-      //Change only bestResult if current result is lower
-      if (result.getTimeInSeconds() < bestTimeInSeconds) {
-        bestTimeInSeconds = result.getTimeInSeconds();
-        bestResult = result;
-      }
-    }
-    return bestResult;
   }
 }
