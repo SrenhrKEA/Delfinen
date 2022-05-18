@@ -37,7 +37,7 @@ public class Controller {
   }
 
   private void runProgram() {
-    members = deserializingJson(loadFromFile("MemberList.txt"));
+    //members = deserializingJson(loadFromFile("MemberList.txt"));
     UserInterface ui = new UserInterface(this);
     ui.start();
   }

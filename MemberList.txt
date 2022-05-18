@@ -1,59 +1,22 @@
 [
   {
-    "age": 31,
-    "name": "Søren",
-    "dateRegistration": "2022-05-17T17:50:23.937369",
-    "id": "a12aaff2",
-    "email": "soer53k0@stud.kea.dk",
-    "telephone": "20847530",
-    "address": "Frederiksborgvej 193A",
-    "gender": "MALE",
-    "type": "EXERCISE",
-    "status": "ACTIVE"
-    "dateRegistration": "2022-05-12T12:05:42.009828700",
-    "id": "3",
-    "genderMale": false
-  },
-  {
-    "age": 25,
-    "name": "XYXY",
-    "dateRegistration": "2022-05-12T12:11:43.292884500",
-    "id": "4",
-    "genderMale": false
-  },
-  {
-    "age": 53,
-    "name": "Stig",
-    "dateRegistration": "2022-05-13T12:55:32.213673200",
-    "id": "8",
-    "genderMale": false
-  },
-  {
-    "age": 23,
-    "name": "Per",
-    "dateRegistration": "2022-05-17T12:47:28.934002200",
-    "id": "9",
-    "email": "none",
-    "telephone": "none",
-    "address": "none",
-    "genderMale": true
-  },
-  {
     "results": [
       {
         "discipline": "BUTTERFLY",
-        "date": "12/12/2022",
+        "date": "1/2/2022",
         "time": "9:30.08"
       }
     ],
     "disciplines": [],
-    "age": 20,
-    "name": "John",
-    "dateRegistration": "2022-05-18T08:39:55.408048500",
-    "id": "10",
-    "email": "none",
-    "telephone": "none",
-    "address": "none",
-    "genderMale": true
+    "age": 22,
+    "name": "test",
+    "dateRegistration": "2022-05-18T10:39:48.014368800",
+    "id": "7a2492f9",
+    "email": "",
+    "telephone": "",
+    "address": "",
+    "gender": "MALE",
+    "type": "COMPETITIVE",
+    "status": "ACTIVE"
   }
 ]

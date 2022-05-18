@@ -19,8 +19,6 @@ public class Member {
   private Gender gender;
   private MembershipType type;
   private MembershipStatus status;
-  private ArrayList<Result> results;
-  private ArrayList<Discipline> disciplines;
 
   public Integer getAge() {
     return age;
@@ -102,13 +100,6 @@ public class Member {
     this.status = status;
   }
 
-  public ArrayList<Result> getResults() {
-    return results;
-  }
-
-  public ArrayList<Discipline> getDisciplines() {
-    return disciplines;
-  }
 
   public Member(int age, String name, String address, String email, String telephone, String dateRegistration, String id, Gender gender, MembershipType type, MembershipStatus status) {
     this.age = age;

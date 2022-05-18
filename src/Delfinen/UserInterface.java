@@ -83,7 +83,7 @@ public class UserInterface {
         """);
     Scanner input = new Scanner(System.in);
     int choice = input.nextInt();
-    while (choice < 0 || choice > 7) {
+    while (choice < 0 || choice > 9) {
       System.out.println("Only values 0-7 allowed");
       choice = input.nextInt();
     }
@@ -341,12 +341,15 @@ public class UserInterface {
           Address:                 %s
           """, member.getDateRegistration(), member.getType(), member.getStatus(), member.getEmail(), member.getTelephone(), member.getAddress());
     }
+    /*
     if (viewCompetitive) {
       System.out.printf("""
           Attending disciplines:   %s
           Results:                 %s
           """, member.getDisciplines(), member.getResults());
     }
+
+     */
     if (viewRestance) {
       System.out.println("NOT IMPLEMENTED YET!");
     }
