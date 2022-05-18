@@ -1,9 +1,6 @@
 package Delfinen;
 
-import Delfinen.Enums.Gender;
-import Delfinen.Enums.MembershipStatus;
-import Delfinen.Enums.MembershipType;
-import Delfinen.Enums.SortDirection;
+import Delfinen.Enums.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
