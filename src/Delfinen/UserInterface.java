@@ -125,7 +125,7 @@ public class UserInterface {
 
     for (Member member : application.getMembers()) {
       if (member.getId().equals(id)) {
-        displayMemberData(member,true,false, false);
+        displayMemberData(member, true, false, false);
         System.out.println("""
             Editable data:
             1) Name
@@ -325,7 +325,7 @@ public class UserInterface {
     System.out.println("--------------------------------------------------");
   }
 
-  private void displayMemberData(Member member, boolean viewNormal, boolean viewCompetitive, boolean viewRestance) {
+  public void displayMemberData(Member member, boolean viewNormal, boolean viewCompetitive, boolean viewArrears) {
     System.out.printf("""
         ID:                      %s
         Name:                    %s
@@ -342,15 +342,17 @@ public class UserInterface {
           Address:                 %s
           """, member.getDateRegistration(), member.getType(), member.getStatus(), member.getEmail(), member.getTelephone(), member.getAddress());
     }
+    /*
     if (viewCompetitive) {
       System.out.printf("""
           Attending disciplines:   %s
           Results:                 %s
-          """, member.getDisciplines(), member.getResults());
+          """, CompetitiveMember.getDisciplines(), CompetitiveMember.getResults());
     }
-    if (viewRestance) {
+
+     */
+    if (viewArrears) {
       System.out.println("NOT IMPLEMENTED YET!");
     }
-    System.out.println();
   }
 }

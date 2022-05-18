@@ -1,11 +1,8 @@
 package Delfinen;
 
-import Delfinen.Enums.Discipline;
 import Delfinen.Enums.Gender;
 import Delfinen.Enums.MembershipStatus;
 import Delfinen.Enums.MembershipType;
-
-import java.util.ArrayList;
 
 public class Member {
   //For all swimmers
@@ -19,8 +16,6 @@ public class Member {
   private Gender gender;
   private MembershipType type;
   private MembershipStatus status;
-  private ArrayList<Result> results;
-  private ArrayList<Discipline> disciplines;
 
   public Integer getAge() {
     return age;
@@ -100,14 +95,6 @@ public class Member {
 
   public void setStatus(MembershipStatus status) {
     this.status = status;
-  }
-
-  public ArrayList<Result> getResults() {
-    return results;
-  }
-
-  public ArrayList<Discipline> getDisciplines() {
-    return disciplines;
   }
 
   public Member(int age, String name, String address, String email, String telephone, String dateRegistration, String id, Gender gender, MembershipType type, MembershipStatus status) {
