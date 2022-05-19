@@ -6,12 +6,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class UserInterface {
-  private final Controller application;
-
-  public UserInterface(Controller application) {
-    this.application = application;
-  }
+public record UserInterface(Controller application) {
 
   public void start() {
     System.out.println("Welcome to Dolphinbase 2022");
@@ -25,6 +20,7 @@ public class UserInterface {
         case 1 -> startMemberDatabase();
         case 2 -> System.out.println("PLACEHOLDER: VIEW FINANCIAL DATA");
         case 3 -> startCompetetiveDatabase();
+        default -> System.out.println("==================================================");
       }
     }
   }
@@ -39,10 +35,12 @@ public class UserInterface {
         0) Exit application
         """);
     Scanner input = new Scanner(System.in);
-    int choice = input.nextInt();
+    Integer choice = application.tryParseInt(input.nextLine());
+    if (choice==null)
+      choice = 99;
     while (choice < 0 || choice > 3) {
       System.out.println("Only values 0-3 allowed");
-      choice = input.nextInt();
+      choice = application.tryParseInt(input.nextLine());
     }
 
     return choice;
@@ -54,7 +52,7 @@ public class UserInterface {
 
     while (loop) {
       switch (menuMemberDatabase()) {
-        case 0 -> loop = exitMemberDatabase();
+        case 0 -> loop = exitDatabase();
         case 1 -> list();
         case 2 -> edit();
         case 3 -> sort();
@@ -62,6 +60,7 @@ public class UserInterface {
         case 5 -> delete();
         case 6 -> load();
         case 7 -> save();
+        default -> System.out.println("==================================================");
       }
     }
   }
@@ -75,21 +74,23 @@ public class UserInterface {
         3) Sort list of members
         4) Create new member
         5) Delete member
-        6) Load members from file
+        6) Reload members from file
         7) Save members to file
         0) Exit to main menu
         """);
     Scanner input = new Scanner(System.in);
-    int choice = input.nextInt();
+    Integer choice = application.tryParseInt(input.nextLine());
+    if (choice==null)
+      choice = 99;
     while (choice < 0 || choice > 7) {
       System.out.println("Only values 0-7 allowed");
-      choice = input.nextInt();
+      choice = application.tryParseInt(input.nextLine());
     }
 
     return choice;
   }
 
-  private boolean exitMemberDatabase() {
+  private boolean exitDatabase() {
     System.out.println("Saving the database ...");
     application.saveToFile(application.serializingJson(), "MemberList.txt");
     System.out.println("Saving database completed successfully");
@@ -106,7 +107,7 @@ public class UserInterface {
     System.out.println("List of all the members");
     System.out.println("-------------------------");
     for (Member member : application.getAllMembers()) {
-      displayMemberData(member, true, false, false);
+      displayMemberData(member, true, false);
     }
     System.out.println("There are " + application.getMemberCount() + " members in the list.");
     System.out.println("--------------------------------------------------");
@@ -122,7 +123,7 @@ public class UserInterface {
 
     for (Member member : application.getMembers()) {
       if (member.getId().equals(id)) {
-        displayMemberData(member, true, false, false);
+        displayMemberData(member, true, false);
         System.out.println("""
             Editable data:
             1) Name
@@ -280,12 +281,13 @@ public class UserInterface {
     } else if (statusChar == 'p') {
       status = MembershipStatus.PASSIVE;
     }
-
+    Member member;
     if (type == MembershipType.COMPETITIVE) {
-      application.createNewCompetitiveMember(age, name, address, email, telephone, dateRegistration, ID, gender, type, status, new ArrayList<>(), new ArrayList<>());
+      member = application.createCompetitiveMember(age, name, address, email, telephone, dateRegistration, ID, gender, type, status, new ArrayList<>(), new ArrayList<>());
     } else {
-      application.createNewExerciseMember(age, name, address, email, telephone, dateRegistration, ID, gender, type, status);
+      member = application.createExerciseMember(age, name, address, email, telephone, dateRegistration, ID, gender, type, status);
     }
+    application.getMembers().add(member);
 
     // When created a new member, show the list again
     list();
@@ -322,7 +324,7 @@ public class UserInterface {
     System.out.println("--------------------------------------------------");
   }
 
-  public void displayMemberData(Member member, boolean viewNormal, boolean viewCompetitive, boolean viewArrears) {
+  public void displayMemberData(Member member, boolean viewNormal, boolean viewArrears) {
     System.out.printf("""
         ID:                      %s
         Name:                    %s
@@ -339,15 +341,6 @@ public class UserInterface {
           Address:                 %s
           """, member.getDateRegistration(), member.getType(), member.getStatus(), member.getEmail(), member.getTelephone(), member.getAddress());
     }
-    /*
-    if (viewCompetitive) {
-      System.out.printf("""
-          Attending disciplines:   %s
-          Results:                 %s
-          """, CompetitiveMember.getDisciplines(), CompetitiveMember.getResults());
-    }
-
-     */
     if (viewArrears) {
       System.out.println("NOT IMPLEMENTED YET!");
     }
@@ -360,7 +353,7 @@ public class UserInterface {
 
     while (loop) {
       switch (menuCompetetiveDatabase()) {
-        case 0 -> loop = false; //Insert exit method with save
+        case 0 -> loop = exitDatabase();//loop = false; //Insert exit method with save
         case 1 -> System.out.println("Show result yet to be implemented"); //showResult((CompetitiveMember) findMember());
         case 2 -> System.out.println("Show top 5 yet to be implemented");
         case 3 -> createResult((CompetitiveMember) findMember());
@@ -388,6 +381,7 @@ public class UserInterface {
 
     return choice;
   }
+
   //TODO Find a member by name
   public Member findMember() {
     System.out.println("Enter a name");
@@ -460,6 +454,7 @@ public class UserInterface {
 
     member.addResult(result);
   }
+
   //TODO showResult()
   public void showResult(CompetitiveMember member) {
     System.out.println(member.getName());
@@ -467,6 +462,7 @@ public class UserInterface {
       System.out.println(member.getResults().get(i).getTime());
     }
   }
+
   //TODO find top5
   public void findTop5() {
     System.out.printf("""

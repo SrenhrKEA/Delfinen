@@ -6,7 +6,7 @@ import Delfinen.Enums.MembershipType;
 
 
 public abstract class Member {
-  //For all swimmers
+  //Replace attributes with MasterData object!
   private int age;
   private String name;
   private String dateRegistration;
@@ -15,6 +15,8 @@ public abstract class Member {
   private String telephone;
   private String address;
   private Gender gender;
+
+  //Keep as attributes
   private MembershipType type;
   private MembershipStatus status;
 

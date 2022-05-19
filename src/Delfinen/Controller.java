@@ -66,19 +66,21 @@ public class Controller {
   public ArrayList<Member> convertFromDTO(ArrayList<DTO> dtos) {
     ArrayList<Member> temp = new ArrayList<>();
     for (DTO dto : dtos) {
-      MembershipType classname = dto.getType();
-      if (classname == null) {
+      MembershipType className = dto.getType();
+      if (className == null) {
         continue;
       }
-      if (classname==(MembershipType.COMPETITIVE)) {
-        temp.add(new CompetitiveMember(dto.getAge(), dto.getName(), dto.getAddress(), dto.getEmail(),
+      Member member;
+      if (className == (MembershipType.COMPETITIVE)) {
+        member = createCompetitiveMember(dto.getAge(), dto.getName(), dto.getAddress(), dto.getEmail(),
             dto.getTelephone(), dto.getDateRegistration(), dto.getId(), dto.getGender(), dto.getType(),
-            dto.getStatus(), dto.getResults(), dto.getDisciplines()));
+            dto.getStatus(), dto.getResults(), dto.getDisciplines());
       } else {
-        temp.add(new ExerciseMember(dto.getAge(), dto.getName(), dto.getAddress(), dto.getEmail(),
+        member = createExerciseMember(dto.getAge(), dto.getName(), dto.getAddress(), dto.getEmail(),
             dto.getTelephone(), dto.getDateRegistration(), dto.getId(), dto.getGender(), dto.getType(),
-            dto.getStatus()));
+            dto.getStatus());
       }
+      temp.add(member);
     }
     return temp;
   }
@@ -90,7 +92,7 @@ public class Controller {
       out.println(data);
       out.close();
     } catch (FileNotFoundException fnfe) {
-      System.out.println("File not found!, try again");
+      System.out.println("File not found!");
     }
   }
 
@@ -100,7 +102,7 @@ public class Controller {
       return Files.readString(filePath);
     } catch (IOException e) {
       e.printStackTrace();
-      System.out.println("File not found!, try again");
+      System.out.println("File not found!");
       return null;
     }
   }
@@ -143,14 +145,12 @@ public class Controller {
       toggleCounter++;
   }
 
-  public void createNewExerciseMember(int age, String name, String address, String email, String telephone, String dateRegistration, String ID, Gender gender, MembershipType type, MembershipStatus status) {
-    ExerciseMember member = new ExerciseMember(age, name, address, email, telephone, dateRegistration, ID, gender, type, status);
-    members.add(member);
+  public ExerciseMember createExerciseMember(int age, String name, String address, String email, String telephone, String dateRegistration, String ID, Gender gender, MembershipType type, MembershipStatus status) {
+    return new ExerciseMember(age, name, address, email, telephone, dateRegistration, ID, gender, type, status);
   }
 
-  public void createNewCompetitiveMember(int age, String name, String address, String email, String telephone, String dateRegistration, String ID, Gender gender, MembershipType type, MembershipStatus status, ArrayList<Result> results, ArrayList<Discipline> disciplines) {
-    CompetitiveMember member = new CompetitiveMember(age, name, address, email, telephone, dateRegistration, ID, gender, type, status, results, disciplines);
-    members.add(member);
+  public CompetitiveMember createCompetitiveMember(int age, String name, String address, String email, String telephone, String dateRegistration, String ID, Gender gender, MembershipType type, MembershipStatus status, ArrayList<Result> results, ArrayList<Discipline> disciplines) {
+    return new CompetitiveMember(age, name, address, email, telephone, dateRegistration, ID, gender, type, status, results, disciplines);
   }
 
   public boolean deleteMember(String name) {
@@ -186,7 +186,7 @@ public class Controller {
   public Integer tryParseInt(String text) {
     try {
       return Integer.parseInt(text);
-    } catch (NumberFormatException nfe) {
+    } catch (Exception e) {
       System.out.println("Input is not an integer!");
       return null;
     }
