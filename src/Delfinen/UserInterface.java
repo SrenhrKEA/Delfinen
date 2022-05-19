@@ -228,11 +228,13 @@ public class UserInterface {
     // When sorted, show the list again
     list();
   }
-
+  /*
   private void sortResults() {
     CompetitiveMember member = (CompetitiveMember) findMember();
     application.sortResults(member);
+    showResult(member);
   }
+   */
 
   private SortDirection sortDirection() {
     Scanner input = new Scanner(System.in);
@@ -369,12 +371,11 @@ public class UserInterface {
 
     while (loop) {
       switch (menuCompetetiveDatabase()) {
-        case 0 -> loop = exitDatabase();//loop = false; //Insert exit method with save
-        case 1 -> System.out.println("Show result yet to be implemented"); //showResult((CompetitiveMember) findMember());
-        case 2 -> System.out.println("Show top 5 yet to be implemented");
+        case 0 -> loop = exitDatabase();
+        case 1 -> chooseDiscipline((CompetitiveMember) findMember()); //printResults((CompetitiveMember) findMember());
+        case 2 -> findTop5();
         case 3 -> createResult((CompetitiveMember) findMember());
         case 4 -> System.out.println("Delete result yet to be implemented");
-        case 5 -> findTop5();
       }
     }
   }
@@ -387,20 +388,20 @@ public class UserInterface {
         2) Show top 5 results specific to a discipline
         3) Create a result
         4) Delete a result
-        5) Top 5 results
         0) Exit to main menu
         """);
     Scanner input = new Scanner(System.in);
-    int choice = input.nextInt();
-    while (choice < 0 || choice > 5) {
-      System.out.println("Only values 0-5 allowed");
+    Integer choice = application.tryParseInt(input.nextLine());
+    if (choice == null)
+      choice = 99;
+    while (choice < 0 || choice > 4) {
+      System.out.println("Only values 0-4 allowed");
       choice = input.nextInt();
     }
 
     return choice;
   }
 
-  //TODO Find a member by name
   public Member findMember() {
     System.out.println("Enter a name");
     Scanner in = new Scanner(System.in);
@@ -410,7 +411,6 @@ public class UserInterface {
     return member;
   }
 
-  //TODO Needs a member attached
   public void createResult(CompetitiveMember member) {
     System.out.println("Create a result for a member");
     System.out.println("----------------------------");
@@ -473,12 +473,50 @@ public class UserInterface {
     member.addResult(result);
   }
 
-  //TODO showResult()
-  public void showResult(CompetitiveMember member) {
-    System.out.println(member.getName());
-    for (int i = 0; i < member.getResults().size(); i++) {
-      System.out.println(member.getResults().get(i).getTime());
+  //TODO working on
+  public void chooseDiscipline(CompetitiveMember member) {
+    System.out.print("""
+        For which discipline do you wish to show results?
+        1) Butterfly
+        2) Crawl
+        3) Rygcrawl
+        4) Brystsvømning
+        5) Show all results
+        """);
+
+    Scanner in = new Scanner(System.in);
+    Discipline discipline = null;
+    switch (in.nextLine()) {
+      case "1" -> discipline = Discipline.BUTTERFLY;
+      case "2" -> discipline = Discipline.CRAWL;
+      case "3" -> discipline = Discipline.RYGCRAWL;
+      case "4" -> discipline = Discipline.BRYSTSVØMNING;
+      case "5" -> discipline = null;
     }
+    printResults(member, discipline);
+  }
+
+  public void printResults(CompetitiveMember member, Discipline discipline) {
+    //Sort results from fastest to slowest time
+    application.sortResults(member);
+
+    System.out.println("Name: " + member.getName());
+    System.out.printf("%-20s %-20s %-20s %-20s %-20s\n\n"
+        , "Time", "Discipline" ,"Date", "Tournament", "Ranking");
+
+    for (int i = 0; i < member.getResults().size(); i++) {
+      Result result = member.getResults().get(i);
+      if (discipline == null || discipline == result.getDiscipline()) {
+        if (result.getTournament() == null) {
+          System.out.printf("%-20s %-20s %-20s\n"
+              , result.getTime(), result.getDiscipline(), result.getDate());
+        } else {
+          System.out.printf("%-20s %-20s %-20s %-20s %-20s\n"
+              , result.getTime(), result.getDiscipline(), result.getDate(), result.getTournament(), result.getRanking());
+        }
+      }
+    }
+    System.out.println();
   }
 
   //TODO find top5
