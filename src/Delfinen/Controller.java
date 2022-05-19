@@ -147,7 +147,7 @@ public class Controller {
   }
 
   /*
-  public void sortResults( SortDirection sortDirection) {
+  public void sortBestResults( SortDirection sortDirection) {
     ArrayList<Result> results = new ArrayList<>();
     for (Member member : members) {
       if (member instanceof CompetitiveMember) {
@@ -167,16 +167,9 @@ public class Controller {
 
    */
 
-  public void sortResults( CompetitiveMember member, SortDirection sortDirection) {
-    ArrayList<Result> temp = member.getResults();
-    if (sortDirection == SortDirection.ASC || (sortDirection == SortDirection.TOGGLE && toggleCounter % 2 != 0)) {
-      temp.sort(new ResultTimeComparator());
-    } else if (sortDirection == SortDirection.DESC || sortDirection == SortDirection.TOGGLE) {
-      temp.sort(Collections.reverseOrder(new ResultTimeComparator()));
-    }
-    temp.stream().map(Result::getTimeInSeconds).forEach(System.out::print);
-    if (sortDirection != SortDirection.ASC && toggleCounter == 0)
-      toggleCounter++;
+  public void sortResults( CompetitiveMember member) {
+    member.getResults().sort(new ResultTimeComparator());
+    member.getResults().stream().map(Result::getTimeInSeconds).forEach(System.out::print);
   }
 
   public ExerciseMember createExerciseMember(int age, String name, String address, String email, String telephone, String dateRegistration, String ID, Gender gender, MembershipType type, MembershipStatus status) {
@@ -187,9 +180,9 @@ public class Controller {
     return new CompetitiveMember(age, name, address, email, telephone, dateRegistration, ID, gender, type, status, results, disciplines);
   }
 
-  public boolean deleteMember(String name) {
-    // find member with this name
-    Member member = findMemberById(name);
+  public boolean deleteMember(String id) {
+    // find member with this id
+    Member member = findMemberById(id);
     if (member == null) {
       return false;
     } else {
