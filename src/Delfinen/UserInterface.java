@@ -222,11 +222,12 @@ public record UserInterface(Controller application) {
     // When sorted, show the list again
     list();
   }
-
+  //TODO
   private void sortResults () {
     CompetitiveMember member = (CompetitiveMember) findMember();
     SortDirection direction = sortDirection();
     application.sortResults(member,direction);
+    showResult(member);
   }
 
   private SortDirection sortDirection () {
@@ -369,6 +370,7 @@ public record UserInterface(Controller application) {
         case 2 -> System.out.println("Show top 5 yet to be implemented");
         case 3 -> createResult((CompetitiveMember) findMember());
         case 4 -> System.out.println("Delete result yet to be implemented");
+        case 5 -> sortResults();
       }
     }
   }
@@ -385,7 +387,7 @@ public record UserInterface(Controller application) {
         """);
     Scanner input = new Scanner(System.in);
     int choice = input.nextInt();
-    while (choice < 0 || choice > 4) {
+    while (choice < 0 || choice > 5) {
       System.out.println("Only values 0-4 allowed");
       choice = input.nextInt();
     }
