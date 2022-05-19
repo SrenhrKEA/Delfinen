@@ -36,7 +36,7 @@ public record UserInterface(Controller application) {
         """);
     Scanner input = new Scanner(System.in);
     Integer choice = application.tryParseInt(input.nextLine());
-    if (choice==null)
+    if (choice == null)
       choice = 99;
     while (choice < 0 || choice > 3) {
       System.out.println("Only values 0-3 allowed");
@@ -80,7 +80,7 @@ public record UserInterface(Controller application) {
         """);
     Scanner input = new Scanner(System.in);
     Integer choice = application.tryParseInt(input.nextLine());
-    if (choice==null)
+    if (choice == null)
       choice = 99;
     while (choice < 0 || choice > 7) {
       System.out.println("Only values 0-7 allowed");
@@ -222,15 +222,13 @@ public record UserInterface(Controller application) {
     // When sorted, show the list again
     list();
   }
-  //TODO
-  private void sortResults () {
+
+  private void sortResults() {
     CompetitiveMember member = (CompetitiveMember) findMember();
-    SortDirection direction = sortDirection();
-    application.sortResults(member,direction);
-    showResult(member);
+    application.sortResults(member);
   }
 
-  private SortDirection sortDirection () {
+  private SortDirection sortDirection() {
     Scanner input = new Scanner(System.in);
     System.out.println("""
         Set the sort direction:
@@ -486,7 +484,7 @@ public record UserInterface(Controller application) {
 
   //TODO find top5
   public void findTop5() {
-    System.out.printf("""
+    System.out.println("""
         Choose a discipline for which you want to show the top 5 swimmers
         1) Butterfly
         2) Crawl
@@ -494,7 +492,7 @@ public record UserInterface(Controller application) {
         4) Brystsvømning
         """);
     Scanner in = new Scanner(System.in);
-    Discipline discipline;
+    Discipline discipline = null;
     switch (in.nextLine()) {
       case "1" -> discipline = Discipline.BUTTERFLY;
       case "2" -> discipline = Discipline.CRAWL;
@@ -502,6 +500,10 @@ public record UserInterface(Controller application) {
       case "4" -> discipline = Discipline.BRYSTSVØMNING;
     }
 
+    displayTop5(discipline);
+  }
+
+  private void displayTop5(Discipline discipline) {
     ArrayList<Member> swimmers = new ArrayList<>();
     ArrayList<Result> bestResult = new ArrayList<>();
 
@@ -510,13 +512,11 @@ public record UserInterface(Controller application) {
       swimmers.add(member);
       for (int j = 0; j < member.getResults().size(); j++) {
         Result result = member.getResults().get(j);
-
       }
     }
-
   }
 
-  //TODO maybe implement methods
+//TODO maybe implement methods
   /*
   public Discipline chooseDiscipline() {
     Scanner in = new Scanner(System.in);

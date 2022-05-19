@@ -63,10 +63,9 @@ public class Result {
   public double getTimeInSeconds() {
     String[] substrings = getTime().split(":");
     double minutes = parseDouble(substrings[0]);
-    Double seconds = parseDouble(substrings[1]);
+    double seconds = parseDouble(substrings[1]);
 
-    double time = minutes * 60 + seconds;
-    return time;
+    return minutes * 60 + seconds;
   }
   /*
   public Result(Discipline discipline, String result, String date) {
