@@ -1,12 +1,18 @@
 package Delfinen;
 
 import Delfinen.Enums.*;
+import dnl.utils.text.table.TextTable;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public record UserInterface(Controller application) {
+public class UserInterface {
+  private final Controller application;
+
+  public UserInterface(Controller application) {
+    this.application = application;
+  }
 
   public void start() {
     System.out.println("Welcome to Dolphinbase 2022");
@@ -368,6 +374,7 @@ public record UserInterface(Controller application) {
         case 2 -> System.out.println("Show top 5 yet to be implemented");
         case 3 -> createResult((CompetitiveMember) findMember());
         case 4 -> System.out.println("Delete result yet to be implemented");
+        case 5 -> findTop5();
       }
     }
   }
@@ -380,12 +387,13 @@ public record UserInterface(Controller application) {
         2) Show top 5 results specific to a discipline
         3) Create a result
         4) Delete a result
+        5) Top 5 results
         0) Exit to main menu
         """);
     Scanner input = new Scanner(System.in);
     int choice = input.nextInt();
-    while (choice < 0 || choice > 4) {
-      System.out.println("Only values 0-4 allowed");
+    while (choice < 0 || choice > 5) {
+      System.out.println("Only values 0-5 allowed");
       choice = input.nextInt();
     }
 
@@ -406,7 +414,7 @@ public record UserInterface(Controller application) {
   public void createResult(CompetitiveMember member) {
     System.out.println("Create a result for a member");
     System.out.println("----------------------------");
-    System.out.printf("""
+    System.out.println("""
         Please select the Discipline in which the result was made.
         1) Butterfly
         2) Crawl
@@ -423,7 +431,7 @@ public record UserInterface(Controller application) {
       case "4" -> discipline = Discipline.BRYSTSVØMNING;
     }
 
-    System.out.printf("""
+    System.out.println("""
         Was the result made within a tournament?
         1) Yes
         2) No
@@ -491,20 +499,19 @@ public record UserInterface(Controller application) {
       case "4" -> discipline = Discipline.BRYSTSVØMNING;
     }
 
-    displayTop5(discipline);
+    TextTable tt = application.pickBestResults(discipline);
+    displayTop5(discipline, tt);
   }
 
-  private void displayTop5(Discipline discipline) {
-    ArrayList<Member> swimmers = new ArrayList<>();
-    ArrayList<Result> bestResult = new ArrayList<>();
+  private void displayTop5(Discipline discipline, TextTable tt) {
+    System.out.println("=======================TOP5=======================");
+    System.out.println("Top 5 i disciplinen - "+discipline);
+    // this adds the numbering on the left
+    tt.setAddRowNumbering(true);
+    // sort by the second column
+    tt.printTable();
+    System.out.println("=======================TOP5=======================");
 
-    for (int i = 0; i < application.getMembers().size(); i++) {
-      CompetitiveMember member = (CompetitiveMember) application.getMembers().get(i);
-      swimmers.add(member);
-      for (int j = 0; j < member.getResults().size(); j++) {
-        Result result = member.getResults().get(j);
-      }
-    }
   }
 
 //TODO maybe implement methods

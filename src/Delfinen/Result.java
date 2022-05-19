@@ -67,6 +67,7 @@ public class Result {
 
     return minutes * 60 + seconds;
   }
+
   /*
   public Result(Discipline discipline, String result, String date) {
     this.discipline = discipline;

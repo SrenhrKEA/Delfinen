@@ -1,27 +1,5 @@
 [
   {
-    "age": 36,
-    "name": "Martin",
-    "dateRegistration": "2022-05-18T13:05:45.059703800",
-    "id": "e3f0eea8",
-    "email": "john@",
-    "telephone": "7575",
-    "address": "brønshøj",
-    "gender": "MALE",
-    "type": "COMPETITIVE",
-    "status": "ACTIVE",
-    "results": [
-      {
-        "discipline": "BUTTERFLY",
-        "date": "18/05/2022",
-        "time": "1:30:08",
-        "tournament": "brønhøj svømmekokurrence",
-        "ranking": "1"
-      }
-    ],
-    "disciplines": []
-  },
-  {
     "age": 31,
     "name": "Søren",
     "dateRegistration": "2022-05-18T13:13:50.778852900",
@@ -44,5 +22,181 @@
     "gender": "FEMALE",
     "type": "EXERCISE",
     "status": "PASSIVE"
+  },
+  {
+    "age": 36,
+    "name": "Martin",
+    "dateRegistration": "2022-05-18T13:05:45.059703800",
+    "id": "e3f0eea8",
+    "email": "john@",
+    "telephone": "7575",
+    "address": "brønshøj",
+    "gender": "MALE",
+    "type": "COMPETITIVE",
+    "status": "ACTIVE",
+    "results": [
+      {
+        "discipline": "BUTTERFLY",
+        "date": "18/05/2022",
+        "time": "1:30:08",
+        "tournament": "brønhøj svømmekokurrence",
+        "ranking": "1"
+      }
+    ],
+    "disciplines": []
+  },
+  {
+    "age": 36,
+    "name": "Toby",
+    "dateRegistration": "2022-05-18T13:05:45.059703800",
+    "id": "e3f0eea8",
+    "email": "john@",
+    "telephone": "7575",
+    "address": "brønshøj",
+    "gender": "MALE",
+    "type": "COMPETITIVE",
+    "status": "ACTIVE",
+    "results": [
+      {
+        "discipline": "BUTTERFLY",
+        "date": "18/05/2022",
+        "time": "1:75:08",
+        "tournament": "brønhøj svømmekokurrence",
+        "ranking": "2"
+      }
+    ],
+    "disciplines": []
+  },
+  {
+    "age": 36,
+    "name": "John",
+    "dateRegistration": "2022-05-18T13:05:45.059703800",
+    "id": "e3f0eea8",
+    "email": "john@",
+    "telephone": "7575",
+    "address": "brønshøj",
+    "gender": "MALE",
+    "type": "COMPETITIVE",
+    "status": "ACTIVE",
+    "results": [
+      {
+        "discipline": "BUTTERFLY",
+        "date": "18/05/2022",
+        "time": "1:50:08",
+        "tournament": "brønhøj svømmekokurrence",
+        "ranking": "3"
+      }
+    ],
+    "disciplines": []
+  },
+  {
+    "age": 36,
+    "name": "Medusa",
+    "dateRegistration": "2022-05-18T13:05:45.059703800",
+    "id": "e3f0eea8",
+    "email": "john@",
+    "telephone": "7575",
+    "address": "brønshøj",
+    "gender": "MALE",
+    "type": "COMPETITIVE",
+    "status": "ACTIVE",
+    "results": [
+      {
+        "discipline": "BUTTERFLY",
+        "date": "18/05/2022",
+        "time": "5:50:08",
+        "tournament": "brønhøj svømmekokurrence",
+        "ranking": "3"
+      }
+    ],
+    "disciplines": []
+  },
+  {
+    "age": 36,
+    "name": "Fister",
+    "dateRegistration": "2022-05-18T13:05:45.059703800",
+    "id": "e3f0eea8",
+    "email": "john@",
+    "telephone": "7575",
+    "address": "brønshøj",
+    "gender": "MALE",
+    "type": "COMPETITIVE",
+    "status": "ACTIVE",
+    "results": [
+      {
+        "discipline": "BUTTERFLY",
+        "date": "18/05/2022",
+        "time": "4:50:08",
+        "tournament": "brønhøj svømmekokurrence",
+        "ranking": "3"
+      }
+    ],
+    "disciplines": []
+  },
+  {
+    "age": 36,
+    "name": "Bruno",
+    "dateRegistration": "2022-05-18T13:05:45.059703800",
+    "id": "e3f0eea8",
+    "email": "john@",
+    "telephone": "7575",
+    "address": "brønshøj",
+    "gender": "MALE",
+    "type": "COMPETITIVE",
+    "status": "ACTIVE",
+    "results": [
+      {
+        "discipline": "BUTTERFLY",
+        "date": "18/05/2022",
+        "time": "3:50:08",
+        "tournament": "brønhøj svømmekokurrence",
+        "ranking": "3"
+      }
+    ],
+    "disciplines": []
+  },
+  {
+    "age": 36,
+    "name": "Tanja",
+    "dateRegistration": "2022-05-18T13:05:45.059703800",
+    "id": "e3f0eea8",
+    "email": "john@",
+    "telephone": "7575",
+    "address": "brønshøj",
+    "gender": "MALE",
+    "type": "COMPETITIVE",
+    "status": "ACTIVE",
+    "results": [
+      {
+        "discipline": "BUTTERFLY",
+        "date": "18/05/2022",
+        "time": "2:50:08",
+        "tournament": "brønhøj svømmekokurrence",
+        "ranking": "3"
+      }
+    ],
+    "disciplines": []
+  },
+  {
+    "age": 36,
+    "name": "AltidFørst!",
+    "dateRegistration": "2022-05-18T13:05:45.059703800",
+    "id": "e3f0eea8",
+    "email": "john@",
+    "telephone": "7575",
+    "address": "brønshøj",
+    "gender": "MALE",
+    "type": "COMPETITIVE",
+    "status": "ACTIVE",
+    "results": [
+      {
+        "discipline": "BUTTERFLY",
+        "date": "18/05/2022",
+        "time": "0:22:08",
+        "tournament": "brønhøj svømmekokurrence",
+        "ranking": "3"
+      }
+    ],
+    "disciplines": []
   }
 ]

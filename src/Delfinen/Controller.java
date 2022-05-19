@@ -15,6 +15,10 @@ import Delfinen.Comparators.ResultTimeComparator;
 import Delfinen.Enums.*;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+import dnl.utils.text.table.TextTable;
+
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 public class Controller {
   private ArrayList<Member> members;
@@ -146,30 +150,50 @@ public class Controller {
       toggleCounter++;
   }
 
-  /*
-  public void sortBestResults( SortDirection sortDirection) {
-    ArrayList<Result> results = new ArrayList<>();
+  public TextTable pickBestResults(Discipline discipline) {
+    String[] columnNames = {"Name", "Time"};
+    //Object[][] data = new Object[50][2];
+    ArrayList<String> names = new ArrayList<>();
+    ArrayList<Double> times = new ArrayList<>();
+
+    int i = 0;
     for (Member member : members) {
       if (member instanceof CompetitiveMember) {
-        ArrayList<Result>  temp = ((CompetitiveMember) member).getResults();
-        results.addAll(temp);
+        ArrayList<Result> Results = ((CompetitiveMember) member).getResults();
+        for (Result result : Results) {
+          if (result.getDiscipline() == discipline) {
+            names.add(member.getName());
+            times.add(result.getTimeInSeconds());
+          }
+          i++;
+        }
       }
     }
-    if (sortDirection == SortDirection.ASC || (sortDirection == SortDirection.TOGGLE && toggleCounter % 2 != 0)) {
-      results.sort(new ResultTimeComparator());
-    } else if (sortDirection == SortDirection.DESC || sortDirection == SortDirection.TOGGLE) {
-      results.sort(Collections.reverseOrder(new ResultTimeComparator()));
+    Object[][] data = new Object[names.size()][2];
+    for (int j = 0; j < names.size(); j++) {
+      data[j][0] = names.get(j);
+      data[j][1] = times.get(j);
     }
-    results.stream().map(Result::getTimeInSeconds).forEach(System.out::print);
-    if (sortDirection != SortDirection.ASC && toggleCounter == 0)
-      toggleCounter++;
+
+    Arrays.sort(data, Comparator.comparingDouble(o -> (Double) o[1]));
+    Object[][] copy = new Object[5][2];
+    System.arraycopy(data, 0, copy, 0, Math.min(data.length, 5));
+
+
+    TableModel model = new DefaultTableModel(copy, columnNames) {
+      @Override
+      public Class<?> getColumnClass(int columnIndex) {
+        if (columnIndex != 0) return Integer.class;
+        return super.getColumnClass(columnIndex);
+      }
+    };
+
+    return new TextTable(model);
   }
 
-   */
 
-  public void sortResults( CompetitiveMember member) {
+  public void sortResults(CompetitiveMember member) {
     member.getResults().sort(new ResultTimeComparator());
-    member.getResults().stream().map(Result::getTimeInSeconds).forEach(System.out::print);
   }
 
   public ExerciseMember createExerciseMember(int age, String name, String address, String email, String telephone, String dateRegistration, String ID, Gender gender, MembershipType type, MembershipStatus status) {
