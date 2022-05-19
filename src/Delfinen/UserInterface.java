@@ -211,6 +211,26 @@ public record UserInterface(Controller application) {
       sortBy = input.next().trim().toLowerCase().charAt(0);
     }
 
+    SortDirection direction = sortDirection();
+
+    switch (sortBy) {
+      case 'a' -> application.sortBy("age", direction);
+      case 'i' -> application.sortBy("id", direction);
+      default -> application.sortBy("name", direction);
+    }
+
+    // When sorted, show the list again
+    list();
+  }
+
+  private void sortResults () {
+    CompetitiveMember member = (CompetitiveMember) findMember();
+    SortDirection direction = sortDirection();
+    application.sortResults(member,direction);
+  }
+
+  private SortDirection sortDirection () {
+    Scanner input = new Scanner(System.in);
     System.out.println("""
         Set the sort direction:
         a) Ascending (0-9 a-z)
@@ -224,20 +244,11 @@ public record UserInterface(Controller application) {
       ch = input.next().trim().toLowerCase().charAt(0);
     }
 
-    SortDirection direction = switch (ch) {
+    return switch (ch) {
       case 'd' -> SortDirection.DESC;
       case 't' -> SortDirection.TOGGLE;
       default -> SortDirection.ASC;
     };
-
-    switch (sortBy) {
-      case 'a' -> application.sortBy("age", direction);
-      case 'i' -> application.sortBy("id", direction);
-      default -> application.sortBy("name", direction);
-    }
-
-    // When sorted, show the list again
-    list();
   }
 
   private void create() {

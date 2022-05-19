@@ -11,6 +11,7 @@ import java.util.*;
 import Delfinen.Comparators.MemberAgeComparator;
 import Delfinen.Comparators.MemberIdComparator;
 import Delfinen.Comparators.MemberNameComparator;
+import Delfinen.Comparators.ResultTimeComparator;
 import Delfinen.Enums.*;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
@@ -141,6 +142,39 @@ public class Controller {
       }
       members.stream().map(Member::getId).forEach(System.out::print);
     }
+    if (sortDirection != SortDirection.ASC && toggleCounter == 0)
+      toggleCounter++;
+  }
+
+  /*
+  public void sortResults( SortDirection sortDirection) {
+    ArrayList<Result> results = new ArrayList<>();
+    for (Member member : members) {
+      if (member instanceof CompetitiveMember) {
+        ArrayList<Result>  temp = ((CompetitiveMember) member).getResults();
+        results.addAll(temp);
+      }
+    }
+    if (sortDirection == SortDirection.ASC || (sortDirection == SortDirection.TOGGLE && toggleCounter % 2 != 0)) {
+      results.sort(new ResultTimeComparator());
+    } else if (sortDirection == SortDirection.DESC || sortDirection == SortDirection.TOGGLE) {
+      results.sort(Collections.reverseOrder(new ResultTimeComparator()));
+    }
+    results.stream().map(Result::getTimeInSeconds).forEach(System.out::print);
+    if (sortDirection != SortDirection.ASC && toggleCounter == 0)
+      toggleCounter++;
+  }
+
+   */
+
+  public void sortResults( CompetitiveMember member, SortDirection sortDirection) {
+    ArrayList<Result> temp = member.getResults();
+    if (sortDirection == SortDirection.ASC || (sortDirection == SortDirection.TOGGLE && toggleCounter % 2 != 0)) {
+      temp.sort(new ResultTimeComparator());
+    } else if (sortDirection == SortDirection.DESC || sortDirection == SortDirection.TOGGLE) {
+      temp.sort(Collections.reverseOrder(new ResultTimeComparator()));
+    }
+    temp.stream().map(Result::getTimeInSeconds).forEach(System.out::print);
     if (sortDirection != SortDirection.ASC && toggleCounter == 0)
       toggleCounter++;
   }
