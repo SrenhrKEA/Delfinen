@@ -44,5 +44,30 @@
     "gender": "FEMALE",
     "type": "EXERCISE",
     "status": "PASSIVE"
+  },
+  {
+    "age": 45,
+    "name": "Knud",
+    "dateRegistration": "2022-05-19T12:15:31.076922500",
+    "id": "bc941834",
+    "email": "none",
+    "telephone": "none",
+    "address": "none",
+    "gender": "MALE",
+    "type": "COMPETITIVE",
+    "status": "ACTIVE",
+    "results": [
+      {
+        "discipline": "BUTTERFLY",
+        "date": "12/12/2012",
+        "time": "9:30.09"
+      },
+      {
+        "discipline": "BRYSTSVØMNING",
+        "date": "1/2/2022",
+        "time": "12:59.28"
+      }
+    ],
+    "disciplines": []
   }
 ]

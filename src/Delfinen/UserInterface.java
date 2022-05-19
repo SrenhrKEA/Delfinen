@@ -353,8 +353,8 @@ public record UserInterface(Controller application) {
 
     while (loop) {
       switch (menuCompetetiveDatabase()) {
-        case 0 -> loop = exitDatabase();//loop = false; //Insert exit method with save
-        case 1 -> System.out.println("Show result yet to be implemented"); //showResult((CompetitiveMember) findMember());
+        case 0 -> loop = exitDatabase();
+        case 1 -> showResult((CompetitiveMember) findMember());
         case 2 -> System.out.println("Show top 5 yet to be implemented");
         case 3 -> createResult((CompetitiveMember) findMember());
         case 4 -> System.out.println("Delete result yet to be implemented");
@@ -457,9 +457,17 @@ public record UserInterface(Controller application) {
 
   //TODO showResult()
   public void showResult(CompetitiveMember member) {
-    System.out.println(member.getName());
+    System.out.println("Name: " + member.getName());
+
+    System.out.printf("%-15s %-15s %-15s\n\n"
+        , "Time:", "Discipline:" ,"Date:");
     for (int i = 0; i < member.getResults().size(); i++) {
-      System.out.println(member.getResults().get(i).getTime());
+      Result result = member.getResults().get(i);
+
+      //if (result.getTournament() == null) {
+        System.out.printf("%-15s %-15s %-15s\n"
+        , result.getTime(), result.getDiscipline(), result.getDate());
+      //}
     }
   }
 
