@@ -58,6 +58,18 @@
     "status": "ACTIVE",
     "results": [
       {
+        "discipline": "CRAWL",
+        "date": "20/2/2022",
+        "time": "6:30.09"
+      },
+      {
+        "discipline": "BRYSTSVØMNING",
+        "date": "19/5/2021",
+        "time": "8:19.36",
+        "tournament": "GOGO Swimming",
+        "ranking": "3"
+      },
+      {
         "discipline": "BUTTERFLY",
         "date": "12/12/2012",
         "time": "9:30.09"

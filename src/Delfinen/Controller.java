@@ -169,7 +169,6 @@ public class Controller {
 
   public void sortResults( CompetitiveMember member) {
     member.getResults().sort(new ResultTimeComparator());
-    member.getResults().stream().map(Result::getTimeInSeconds).forEach(System.out::print);
   }
 
   public ExerciseMember createExerciseMember(int age, String name, String address, String email, String telephone, String dateRegistration, String ID, Gender gender, MembershipType type, MembershipStatus status) {
