@@ -128,7 +128,7 @@ public class UserInterface {
     boolean editable = false;
 
     for (Member member : application.getMembers()) {
-      if (member.getId().equals(id)) {
+      if (member.getMasterData().getId().equals(id)) {
         displayMemberData(member, true, false);
         System.out.println("""
             Editable data:
@@ -146,33 +146,33 @@ public class UserInterface {
         switch (data) {
           case "1", "name" -> {
             System.out.print("Name: ");
-            member.setName(console.nextLine());
+            member.getMasterData().setName(console.nextLine());
           }
           case "2", "age" -> {
             System.out.print("Age: ");
             Integer tempAge = application.tryParseInt(console.nextLine());
             if (tempAge != null)
-              member.setAge(tempAge);
+              member.getMasterData().setAge(tempAge);
           }
           case "3", "email" -> {
             System.out.print("Email: ");
-            member.setEmail(console.nextLine());
+            member.getMasterData().setEmail(console.nextLine());
           }
           case "4", "telephone" -> {
             System.out.print("Telephone: ");
-            member.setTelephone(console.nextLine());
+            member.getMasterData().setTelephone(console.nextLine());
           }
           case "5", "address" -> {
             System.out.print("Address: ");
-            member.setAddress(console.nextLine());
+            member.getMasterData().setAddress(console.nextLine());
           }
           case "6", "gender" -> {
             System.out.print("Gender (Male/Female): ");
             char genderChar = console.nextLine().toLowerCase().trim().charAt(0);
             if (genderChar == 'f') {
-              member.setGender(Gender.FEMALE);
+              member.getMasterData().setGender(Gender.FEMALE);
             } else if (genderChar == 'm') {
-              member.setGender(Gender.MALE);
+              member.getMasterData().setGender(Gender.MALE);
             }
           }
           case "7", "type" -> {
@@ -299,11 +299,16 @@ public class UserInterface {
     } else if (statusChar == 'p') {
       status = MembershipStatus.PASSIVE;
     }
+    MasterData masterData = new MasterData(age, name, ID, email, telephone, address,  dateRegistration,gender);
     Member member;
     if (type == MembershipType.COMPETITIVE) {
-      member = application.createCompetitiveMember(age, name, address, email, telephone, dateRegistration, ID, gender, type, status, new ArrayList<>(), new ArrayList<>());
+      //member = application.createCompetitiveMember(age, name, address, email, telephone, dateRegistration, ID, gender, type, status, new ArrayList<>(), new ArrayList<>());
+      member = application.createCompetitiveMember(masterData, type, status, new ArrayList<>(), new ArrayList<>());
+
     } else {
-      member = application.createExerciseMember(age, name, address, email, telephone, dateRegistration, ID, gender, type, status);
+      //member = application.createExerciseMember(age, name, address, email, telephone, dateRegistration, ID, gender, type, status);
+      member = application.createExerciseMember(masterData, type, status);
+
     }
     application.getMembers().add(member);
 
@@ -348,7 +353,7 @@ public class UserInterface {
         Name:                    %s
         Age:                     %s
         Gender:                  %s
-        """, member.getId(), member.getName(), member.getAge(), member.getGender());
+        """, member.getMasterData().getId(), member.getMasterData().getName(), member.getMasterData().getAge(), member.getMasterData().getGender());
     if (viewNormal) {
       System.out.printf("""
           Date of registration:    %s
@@ -357,7 +362,7 @@ public class UserInterface {
           Email:                   %s
           Telephone:               %s
           Address:                 %s
-          """, member.getDateRegistration(), member.getType(), member.getStatus(), member.getEmail(), member.getTelephone(), member.getAddress());
+          """, member.getMasterData().getDateRegistration(), member.getType(), member.getStatus(), member.getMasterData().getEmail(), member.getMasterData().getTelephone(), member.getMasterData().getAddress());
     }
     if (viewArrears) {
       System.out.println("NOT IMPLEMENTED YET!");
@@ -500,7 +505,7 @@ public class UserInterface {
     //Sort results from fastest to slowest time
     application.sortResults(member);
 
-    System.out.println("Name: " + member.getName());
+    System.out.println("Name: " + member.getMasterData().getName());
     System.out.printf("%-20s %-20s %-20s %-20s %-20s\n\n"
         , "Time", "Discipline" ,"Date", "Tournament", "Ranking");
 

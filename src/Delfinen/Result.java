@@ -68,21 +68,6 @@ public class Result {
     return minutes * 60 + seconds;
   }
 
-  /*
-  public Result(Discipline discipline, String result, String date) {
-    this.discipline = discipline;
-    this.result = result;
-    this.date = date;
-  }
-
-  public Result(Discipline discipline, String tournament, String ranking, String time) {
-    this.discipline = discipline;
-    this.tournament = tournament;
-    this.ranking = ranking;
-    this.time = time;
-  }
-   */
-
   //new constructors
   //constructor for tournament results
   public Result(Discipline discipline, String tournament, String ranking, String time, String date) {
