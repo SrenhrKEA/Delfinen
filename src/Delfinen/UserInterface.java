@@ -1,12 +1,18 @@
 package Delfinen;
 
 import Delfinen.Enums.*;
+import dnl.utils.text.table.TextTable;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public record UserInterface(Controller application) {
+public class UserInterface {
+  private final Controller application;
+
+  public UserInterface(Controller application) {
+    this.application = application;
+  }
 
   public void start() {
     System.out.println("Welcome to Dolphinbase 2022");
@@ -122,7 +128,7 @@ public record UserInterface(Controller application) {
     boolean editable = false;
 
     for (Member member : application.getMembers()) {
-      if (member.getId().equals(id)) {
+      if (member.getMasterData().getId().equals(id)) {
         displayMemberData(member, true, false);
         System.out.println("""
             Editable data:
@@ -140,33 +146,33 @@ public record UserInterface(Controller application) {
         switch (data) {
           case "1", "name" -> {
             System.out.print("Name: ");
-            member.setName(console.nextLine());
+            member.getMasterData().setName(console.nextLine());
           }
           case "2", "age" -> {
             System.out.print("Age: ");
             Integer tempAge = application.tryParseInt(console.nextLine());
             if (tempAge != null)
-              member.setAge(tempAge);
+              member.getMasterData().setAge(tempAge);
           }
           case "3", "email" -> {
             System.out.print("Email: ");
-            member.setEmail(console.nextLine());
+            member.getMasterData().setEmail(console.nextLine());
           }
           case "4", "telephone" -> {
             System.out.print("Telephone: ");
-            member.setTelephone(console.nextLine());
+            member.getMasterData().setTelephone(console.nextLine());
           }
           case "5", "address" -> {
             System.out.print("Address: ");
-            member.setAddress(console.nextLine());
+            member.getMasterData().setAddress(console.nextLine());
           }
           case "6", "gender" -> {
             System.out.print("Gender (Male/Female): ");
             char genderChar = console.nextLine().toLowerCase().trim().charAt(0);
             if (genderChar == 'f') {
-              member.setGender(Gender.FEMALE);
+              member.getMasterData().setGender(Gender.FEMALE);
             } else if (genderChar == 'm') {
-              member.setGender(Gender.MALE);
+              member.getMasterData().setGender(Gender.MALE);
             }
           }
           case "7", "type" -> {
@@ -293,11 +299,16 @@ public record UserInterface(Controller application) {
     } else if (statusChar == 'p') {
       status = MembershipStatus.PASSIVE;
     }
+    MasterData masterData = new MasterData(age, name, ID, email, telephone, address,  dateRegistration,gender);
     Member member;
     if (type == MembershipType.COMPETITIVE) {
-      member = application.createCompetitiveMember(age, name, address, email, telephone, dateRegistration, ID, gender, type, status, new ArrayList<>(), new ArrayList<>());
+      //member = application.createCompetitiveMember(age, name, address, email, telephone, dateRegistration, ID, gender, type, status, new ArrayList<>(), new ArrayList<>());
+      member = application.createCompetitiveMember(masterData, type, status, new ArrayList<>(), new ArrayList<>());
+
     } else {
-      member = application.createExerciseMember(age, name, address, email, telephone, dateRegistration, ID, gender, type, status);
+      //member = application.createExerciseMember(age, name, address, email, telephone, dateRegistration, ID, gender, type, status);
+      member = application.createExerciseMember(masterData, type, status);
+
     }
     application.getMembers().add(member);
 
@@ -342,7 +353,7 @@ public record UserInterface(Controller application) {
         Name:                    %s
         Age:                     %s
         Gender:                  %s
-        """, member.getId(), member.getName(), member.getAge(), member.getGender());
+        """, member.getMasterData().getId(), member.getMasterData().getName(), member.getMasterData().getAge(), member.getMasterData().getGender());
     if (viewNormal) {
       System.out.printf("""
           Date of registration:    %s
@@ -351,7 +362,7 @@ public record UserInterface(Controller application) {
           Email:                   %s
           Telephone:               %s
           Address:                 %s
-          """, member.getDateRegistration(), member.getType(), member.getStatus(), member.getEmail(), member.getTelephone(), member.getAddress());
+          """, member.getMasterData().getDateRegistration(), member.getType(), member.getStatus(), member.getMasterData().getEmail(), member.getMasterData().getTelephone(), member.getMasterData().getAddress());
     }
     if (viewArrears) {
       System.out.println("NOT IMPLEMENTED YET!");
@@ -367,7 +378,7 @@ public record UserInterface(Controller application) {
       switch (menuCompetetiveDatabase()) {
         case 0 -> loop = exitDatabase();
         case 1 -> chooseDiscipline((CompetitiveMember) findMember()); //printResults((CompetitiveMember) findMember());
-        case 2 -> System.out.println("Show top 5 yet to be implemented");
+        case 2 -> findTop5();
         case 3 -> createResult((CompetitiveMember) findMember());
         case 4 -> printNumberedResults((CompetitiveMember) findMember());
       }
@@ -385,7 +396,9 @@ public record UserInterface(Controller application) {
         0) Exit to main menu
         """);
     Scanner input = new Scanner(System.in);
-    int choice = input.nextInt();
+    Integer choice = application.tryParseInt(input.nextLine());
+    if (choice == null)
+      choice = 99;
     while (choice < 0 || choice > 4) {
       System.out.println("Only values 0-4 allowed");
       choice = input.nextInt();
@@ -406,7 +419,7 @@ public record UserInterface(Controller application) {
   public void createResult(CompetitiveMember member) {
     System.out.println("Create a result for a member");
     System.out.println("----------------------------");
-    System.out.printf("""
+    System.out.println("""
         Please select the Discipline in which the result was made.
         1) Butterfly
         2) Crawl
@@ -423,7 +436,7 @@ public record UserInterface(Controller application) {
       case "4" -> discipline = Discipline.BRYSTSVØMNING;
     }
 
-    System.out.printf("""
+    System.out.println("""
         Was the result made within a tournament?
         1) Yes
         2) No
@@ -492,8 +505,8 @@ public record UserInterface(Controller application) {
     //Sort results from fastest to slowest time
     application.sortResults(member);
 
-    System.out.println("Name: " + member.getName());
-    System.out.printf("%-20s%-20s%-20s%-20s%-20s\n\n"
+    System.out.println("Name: " + member.getMasterData().getName());
+    System.out.printf("%-20s %-20s %-20s %-20s %-20s\n\n"
         , "Time", "Discipline" ,"Date", "Tournament", "Ranking");
 
     for (int i = 0; i < member.getResults().size(); i++) {
@@ -559,20 +572,19 @@ public record UserInterface(Controller application) {
       case "4" -> discipline = Discipline.BRYSTSVØMNING;
     }
 
-    displayTop5(discipline);
+    TextTable tt = application.pickBestResults(discipline);
+    displayTop5(discipline, tt);
   }
 
-  private void displayTop5(Discipline discipline) {
-    ArrayList<Member> swimmers = new ArrayList<>();
-    ArrayList<Result> bestResult = new ArrayList<>();
+  private void displayTop5(Discipline discipline, TextTable tt) {
+    System.out.println("=======================TOP5=======================");
+    System.out.println("Top 5 i disciplinen - "+discipline);
+    // this adds the numbering on the left
+    tt.setAddRowNumbering(true);
+    // sort by the second column
+    tt.printTable();
+    System.out.println("=======================TOP5=======================");
 
-    for (int i = 0; i < application.getMembers().size(); i++) {
-      CompetitiveMember member = (CompetitiveMember) application.getMembers().get(i);
-      swimmers.add(member);
-      for (int j = 0; j < member.getResults().size(); j++) {
-        Result result = member.getResults().get(j);
-      }
-    }
   }
 
 //TODO maybe implement methods

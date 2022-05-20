@@ -1,7 +1,6 @@
 package Delfinen;
 
 import Delfinen.Enums.Discipline;
-import Delfinen.Enums.Gender;
 import Delfinen.Enums.MembershipStatus;
 import Delfinen.Enums.MembershipType;
 
@@ -9,12 +8,11 @@ import java.util.ArrayList;
 
 public class CompetitiveMember extends Member {
   //only for competitive swimmers
-  private ArrayList<Result> results;
-  private ArrayList<Discipline> disciplines;
+  private final ArrayList<Result> results;
+  private final ArrayList<Discipline> disciplines;
 
-
-  public CompetitiveMember(int age, String name, String address, String email, String telephone, String dateRegistration, String id, Gender gender, MembershipType type, MembershipStatus status, ArrayList<Result> results, ArrayList<Discipline> disciplines) {
-    super(age, name, address, email, telephone, dateRegistration, id, gender, type, status);
+  public CompetitiveMember(MasterData masterData, MembershipType type, MembershipStatus status, ArrayList<Result> results, ArrayList<Discipline> disciplines) {
+    super(masterData, type, status);
     this.results = results;
     this.disciplines = disciplines;
   }
@@ -48,6 +46,6 @@ public class CompetitiveMember extends Member {
 
   @Override
   public DTO convertToDTO() {
-    return new DTO(super.getAge(),super.getName(),super.getDateRegistration(),super.getId(),super.getEmail(),super.getTelephone(),super.getAddress(),super.getGender(),super.getType(),super.getStatus(),this.getResults(),this.getDisciplines());
+    return new DTO(super.getMasterData(),super.getType(),super.getStatus(),this.getResults(),this.getDisciplines());
   }
 }

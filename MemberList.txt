@@ -1,83 +1,25 @@
 [
   {
-    "age": 36,
-    "name": "Martin",
-    "dateRegistration": "2022-05-18T13:05:45.059703800",
-    "id": "e3f0eea8",
-    "email": "john@",
-    "telephone": "7575",
-    "address": "brønshøj",
-    "gender": "MALE",
+    "age": 0,
+    "masterData": {
+      "age": 31,
+      "name": "Søren",
+      "id": "0e6060dd",
+      "email": "srenhr@",
+      "telephone": "2084",
+      "address": "emdrup",
+      "dateRegistration": "2022-05-20T04:02:50.422547400",
+      "gender": "MALE"
+    },
     "type": "COMPETITIVE",
     "status": "ACTIVE",
     "results": [
       {
         "discipline": "BUTTERFLY",
-        "date": "18/05/2022",
-        "time": "1:30:08",
-        "tournament": "brønhøj svømmekokurrence",
+        "date": "20/05/2022",
+        "time": "0:30:01",
+        "tournament": "emdrup svømmestævne",
         "ranking": "1"
-      }
-    ],
-    "disciplines": []
-  },
-  {
-    "age": 31,
-    "name": "Søren",
-    "dateRegistration": "2022-05-18T13:13:50.778852900",
-    "id": "9a636881",
-    "email": "søren@",
-    "telephone": "208585",
-    "address": "Frederiksborgvej 193",
-    "gender": "MALE",
-    "type": "EXERCISE",
-    "status": "PASSIVE"
-  },
-  {
-    "age": 30,
-    "name": "Nanna",
-    "dateRegistration": "2022-05-18T13:28:18.513906500",
-    "id": "331dd735",
-    "email": "kdfkdf",
-    "telephone": "kdkf",
-    "address": "jfjfj",
-    "gender": "FEMALE",
-    "type": "EXERCISE",
-    "status": "PASSIVE"
-  },
-  {
-    "age": 45,
-    "name": "Knud",
-    "dateRegistration": "2022-05-19T12:15:31.076922500",
-    "id": "bc941834",
-    "email": "none",
-    "telephone": "none",
-    "address": "none",
-    "gender": "MALE",
-    "type": "COMPETITIVE",
-    "status": "ACTIVE",
-    "results": [
-      {
-        "discipline": "CRAWL",
-        "date": "20/2/2022",
-        "time": "6:30.09"
-      },
-      {
-        "discipline": "BRYSTSVØMNING",
-        "date": "19/5/2021",
-        "time": "8:19.36",
-        "tournament": "GOGO Swimming",
-        "ranking": "3"
-      },
-      {
-        "discipline": "BUTTERFLY",
-        "date": "12/12/2012",
-        "time": "9:30.09"
-      },
-      {
-        "discipline": "BRYSTSVØMNING",
-        "date": "1/2/2022",
-        "time": "12:59.28"
       }
     ],
     "disciplines": []

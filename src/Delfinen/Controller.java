@@ -15,6 +15,10 @@ import Delfinen.Comparators.ResultTimeComparator;
 import Delfinen.Enums.*;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+import dnl.utils.text.table.TextTable;
+
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 public class Controller {
   private ArrayList<Member> members;
@@ -73,12 +77,10 @@ public class Controller {
       }
       Member member;
       if (className == (MembershipType.COMPETITIVE)) {
-        member = createCompetitiveMember(dto.getAge(), dto.getName(), dto.getAddress(), dto.getEmail(),
-            dto.getTelephone(), dto.getDateRegistration(), dto.getId(), dto.getGender(), dto.getType(),
+        member = createCompetitiveMember(dto.getMasterData(), dto.getType(),
             dto.getStatus(), dto.getResults(), dto.getDisciplines());
       } else {
-        member = createExerciseMember(dto.getAge(), dto.getName(), dto.getAddress(), dto.getEmail(),
-            dto.getTelephone(), dto.getDateRegistration(), dto.getId(), dto.getGender(), dto.getType(),
+        member = createExerciseMember(dto.getMasterData(), dto.getType(),
             dto.getStatus());
       }
       temp.add(member);
@@ -117,14 +119,13 @@ public class Controller {
   }
 
   public void sortBy(String sortBy, SortDirection sortDirection) {
-    System.out.println("TODO: Sort the list of members by: " + sortBy);
     if (Objects.equals(sortBy, "name")) {
       if (sortDirection == SortDirection.ASC || (sortDirection == SortDirection.TOGGLE && toggleCounter % 2 != 0)) {
         members.sort(new MemberNameComparator());
       } else if (sortDirection == SortDirection.DESC || sortDirection == SortDirection.TOGGLE) {
         members.sort(Collections.reverseOrder(new MemberNameComparator()));
       }
-      members.stream().map(Member::getName).forEach(System.out::print);
+      //members.stream().map(Member::getName).forEach(System.out::print);
     }
     if (Objects.equals(sortBy, "age")) {
       if (sortDirection == SortDirection.ASC || (sortDirection == SortDirection.TOGGLE && toggleCounter % 2 != 0)) {
@@ -132,7 +133,7 @@ public class Controller {
       } else if (sortDirection == SortDirection.DESC || sortDirection == SortDirection.TOGGLE) {
         members.sort(Collections.reverseOrder(new MemberAgeComparator()));
       }
-      members.stream().map(Member::getAge).forEach(System.out::print);
+      //members.stream().map(Member::getAge).forEach(System.out::print);
     }
     if (Objects.equals(sortBy, "id")) {
       if (sortDirection == SortDirection.ASC || (sortDirection == SortDirection.TOGGLE && toggleCounter % 2 != 0)) {
@@ -140,43 +141,61 @@ public class Controller {
       } else if (sortDirection == SortDirection.DESC || sortDirection == SortDirection.TOGGLE) {
         members.sort(Collections.reverseOrder(new MemberIdComparator()));
       }
-      members.stream().map(Member::getId).forEach(System.out::print);
+      //members.stream().map(Member::getId).forEach(System.out::print);
     }
     if (sortDirection != SortDirection.ASC && toggleCounter == 0)
       toggleCounter++;
   }
 
-  /*
-  public void sortBestResults( SortDirection sortDirection) {
-    ArrayList<Result> results = new ArrayList<>();
+  public TextTable pickBestResults(Discipline discipline) {
+    String[] columnNames = {"Name", "Time"};
+    ArrayList<String> names = new ArrayList<>();
+    ArrayList<Double> times = new ArrayList<>();
+
     for (Member member : members) {
       if (member instanceof CompetitiveMember) {
-        ArrayList<Result>  temp = ((CompetitiveMember) member).getResults();
-        results.addAll(temp);
+        ArrayList<Result> Results = ((CompetitiveMember) member).getResults();
+        for (Result result : Results) {
+          if (result.getDiscipline() == discipline) {
+            names.add(member.getMasterData().getName());
+            times.add(result.getTimeInSeconds());
+          }
+        }
       }
     }
-    if (sortDirection == SortDirection.ASC || (sortDirection == SortDirection.TOGGLE && toggleCounter % 2 != 0)) {
-      results.sort(new ResultTimeComparator());
-    } else if (sortDirection == SortDirection.DESC || sortDirection == SortDirection.TOGGLE) {
-      results.sort(Collections.reverseOrder(new ResultTimeComparator()));
+    Object[][] data = new Object[names.size()][2];
+    for (int j = 0; j < names.size(); j++) {
+      data[j][0] = names.get(j);
+      data[j][1] = times.get(j);
     }
-    results.stream().map(Result::getTimeInSeconds).forEach(System.out::print);
-    if (sortDirection != SortDirection.ASC && toggleCounter == 0)
-      toggleCounter++;
+
+    Arrays.sort(data, Comparator.comparingDouble(o -> (Double) o[1]));
+    Object[][] copy = new Object[5][2];
+    System.arraycopy(data, 0, copy, 0, Math.min(data.length, 5));
+
+
+    TableModel model = new DefaultTableModel(copy, columnNames) {
+      @Override
+      public Class<?> getColumnClass(int columnIndex) {
+        if (columnIndex != 0) return Integer.class;
+        return super.getColumnClass(columnIndex);
+      }
+    };
+
+    return new TextTable(model);
   }
 
-   */
 
-  public void sortResults( CompetitiveMember member) {
+  public void sortResults(CompetitiveMember member) {
     member.getResults().sort(new ResultTimeComparator());
   }
 
-  public ExerciseMember createExerciseMember(int age, String name, String address, String email, String telephone, String dateRegistration, String ID, Gender gender, MembershipType type, MembershipStatus status) {
-    return new ExerciseMember(age, name, address, email, telephone, dateRegistration, ID, gender, type, status);
+  public ExerciseMember createExerciseMember(MasterData masterData, MembershipType type, MembershipStatus status) {
+    return new ExerciseMember(masterData, type, status);
   }
 
-  public CompetitiveMember createCompetitiveMember(int age, String name, String address, String email, String telephone, String dateRegistration, String ID, Gender gender, MembershipType type, MembershipStatus status, ArrayList<Result> results, ArrayList<Discipline> disciplines) {
-    return new CompetitiveMember(age, name, address, email, telephone, dateRegistration, ID, gender, type, status, results, disciplines);
+  public CompetitiveMember createCompetitiveMember(MasterData masterData, MembershipType type, MembershipStatus status, ArrayList<Result> results, ArrayList<Discipline> disciplines) {
+    return new CompetitiveMember(masterData, type, status, results, disciplines);
   }
 
   public boolean deleteMember(String id) {
@@ -192,7 +211,7 @@ public class Controller {
 
   private Member findMemberById(String id) {
     for (Member member : members) {
-      if (member.getId().equalsIgnoreCase(id)) {
+      if (member.getMasterData().getId().equalsIgnoreCase(id)) {
         return member;
       }
     }
@@ -201,7 +220,7 @@ public class Controller {
 
   public Member findMemberByName(String name) {
     for (Member member : members) {
-      if (member.getName().equalsIgnoreCase(name)) {
+      if (member.getMasterData().getName().equalsIgnoreCase(name)) {
         return member;
       }
     }

@@ -1,6 +1,5 @@
 package Delfinen.Comparators;
 
-import Delfinen.Member;
 import Delfinen.Result;
 
 import java.util.Comparator;
