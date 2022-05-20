@@ -369,7 +369,7 @@ public record UserInterface(Controller application) {
         case 1 -> chooseDiscipline((CompetitiveMember) findMember()); //printResults((CompetitiveMember) findMember());
         case 2 -> System.out.println("Show top 5 yet to be implemented");
         case 3 -> createResult((CompetitiveMember) findMember());
-        case 4 -> printNumberedResults((CompetitiveMember) findMember());
+        case 4 -> System.out.println("Delete result yet to be implemented");
       }
     }
   }
@@ -493,52 +493,22 @@ public record UserInterface(Controller application) {
     application.sortResults(member);
 
     System.out.println("Name: " + member.getName());
-    System.out.printf("%-20s%-20s%-20s%-20s%-20s\n\n"
+    System.out.printf("%-20s %-20s %-20s %-20s %-20s\n\n"
         , "Time", "Discipline" ,"Date", "Tournament", "Ranking");
 
     for (int i = 0; i < member.getResults().size(); i++) {
       Result result = member.getResults().get(i);
       if (discipline == null || discipline == result.getDiscipline()) {
         if (result.getTournament() == null) {
-          System.out.printf("%-20s%-20s%-20s\n"
+          System.out.printf("%-20s %-20s %-20s\n"
               , result.getTime(), result.getDiscipline(), result.getDate());
         } else {
-          System.out.printf("%-20s%-20s%-20s%-20s%-20s\n"
+          System.out.printf("%-20s %-20s %-20s %-20s %-20s\n"
               , result.getTime(), result.getDiscipline(), result.getDate(), result.getTournament(), result.getRanking());
         }
       }
     }
     System.out.println();
-  }
-
-  public void printNumberedResults(CompetitiveMember member) {
-    //Sort results from fastest to slowest time
-    application.sortResults(member);
-
-    System.out.println("Name: " + member.getName());
-    System.out.printf("%-5s%-20s%-20s%-20s%-20s%-20s\n\n"
-        ,"", "Time", "Discipline" ,"Date", "Tournament", "Ranking");
-
-    for (int i = 0; i < member.getResults().size(); i++) {
-      Result result = member.getResults().get(i);
-      if (result.getTournament() == null) {
-        System.out.printf("%-5s%-20s%-20s%-20s\n"
-            ,i + 1 + ")" ,result.getTime(), result.getDiscipline(), result.getDate());
-      } else {
-        System.out.printf("%-5s%-20s%-20s%-20s%-20s%-20s\n"
-            ,i + 1 + ")" ,result.getTime(), result.getDiscipline(), result.getDate(), result.getTournament(), result.getRanking());
-      }
-    }
-    System.out.println();
-    deleteResult(member);
-  }
-
-  public void deleteResult(CompetitiveMember member) {
-    System.out.println("Enter the number of the result you want to delete");
-    Scanner in = new Scanner(System.in);
-    int num = in.nextInt();
-    member.getResults().remove(num - 1);
-    System.out.println("You removed result number: " + num);
   }
 
   //TODO find top5
@@ -576,6 +546,19 @@ public record UserInterface(Controller application) {
   }
 
 //TODO maybe implement methods
+  /*
+  public Discipline chooseDiscipline() {
+    Scanner in = new Scanner(System.in);
+    Discipline discipline;
+    switch (in.nextLine()) {
+      case "1" -> discipline = Discipline.BUTTERFLY;
+      case "2" -> discipline = Discipline.CRAWL;
+      case "3" -> discipline = Discipline.RYGCRAWL;
+      case "4" -> discipline = Discipline.BRYSTSVØMNING;
+    }
+    return discipline;
+  }
+   */
   /*
   public int checkNumberIsWithinRange(int min, int max, int choice) {
     while (choice < min || choice > max) {
