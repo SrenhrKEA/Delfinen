@@ -1,25 +1,22 @@
 [
   {
-    "age": 0,
     "masterData": {
-      "age": 31,
-      "name": "Søren",
-      "id": "0e6060dd",
-      "email": "srenhr@",
-      "telephone": "2084",
-      "address": "emdrup",
-      "dateRegistration": "2022-05-20T04:02:50.422547400",
+      "age": 22,
+      "name": "Theo",
+      "id": "4837f58d",
+      "email": "theo@japan.jp",
+      "telephone": "-",
+      "address": "København N",
+      "dateRegistration": "2022-05-21T04:21:16.320790200",
       "gender": "MALE"
     },
     "type": "COMPETITIVE",
     "status": "ACTIVE",
     "results": [
       {
-        "discipline": "BUTTERFLY",
-        "date": "20/05/2022",
-        "time": "0:30:01",
-        "tournament": "emdrup svømmestævne",
-        "ranking": "1"
+        "discipline": "BRYSTSVØMNING",
+        "date": "21/05/2022",
+        "time": "9:30.08"
       }
     ],
     "disciplines": []

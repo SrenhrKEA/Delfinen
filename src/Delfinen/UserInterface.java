@@ -548,7 +548,7 @@ public class UserInterface {
 
   private void displayTop5(Discipline discipline, TextTable tt) {
     System.out.println("=======================TOP5=======================");
-    System.out.println("Top 5 i disciplinen - "+discipline);
+    System.out.println("Top 5 in the discipline - "+discipline);
     // this adds the numbering on the left
     tt.setAddRowNumbering(true);
     // sort by the second column

@@ -148,7 +148,7 @@ public class Controller {
   }
 
   public TextTable pickBestResults(Discipline discipline) {
-    String[] columnNames = {"Name", "Time"};
+    String[] columnNames = {"Name", "Time (sec)"};
     ArrayList<String> names = new ArrayList<>();
     ArrayList<Double> times = new ArrayList<>();
 
