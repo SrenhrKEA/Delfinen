@@ -228,13 +228,6 @@ public class UserInterface {
     // When sorted, show the list again
     list();
   }
-  /*
-  private void sortResults() {
-    CompetitiveMember member = (CompetitiveMember) findMember();
-    application.sortResults(member);
-    showResult(member);
-  }
-   */
 
   private SortDirection sortDirection() {
     Scanner input = new Scanner(System.in);
@@ -299,14 +292,12 @@ public class UserInterface {
     } else if (statusChar == 'p') {
       status = MembershipStatus.PASSIVE;
     }
-    MasterData masterData = new MasterData(age, name, ID, email, telephone, address,  dateRegistration,gender);
+    MasterData masterData = new MasterData(age, name, ID, email, telephone, address, dateRegistration, gender);
     Member member;
     if (type == MembershipType.COMPETITIVE) {
-      //member = application.createCompetitiveMember(age, name, address, email, telephone, dateRegistration, ID, gender, type, status, new ArrayList<>(), new ArrayList<>());
       member = application.createCompetitiveMember(masterData, type, status, new ArrayList<>(), new ArrayList<>());
 
     } else {
-      //member = application.createExerciseMember(age, name, address, email, telephone, dateRegistration, ID, gender, type, status);
       member = application.createExerciseMember(masterData, type, status);
 
     }
@@ -331,7 +322,6 @@ public class UserInterface {
     }
     System.out.println("--------------------------------------------------");
   }
-
 
   private void load() {
     System.out.println("Loading the database ...");
@@ -377,10 +367,11 @@ public class UserInterface {
     while (loop) {
       switch (menuCompetetiveDatabase()) {
         case 0 -> loop = exitDatabase();
-        case 1 -> chooseDiscipline((CompetitiveMember) findMember()); //printResults((CompetitiveMember) findMember());
+        case 1 -> displayTeams();
         case 2 -> findTop5();
         case 3 -> createResult((CompetitiveMember) findMember());
         case 4 -> System.out.println("Delete result yet to be implemented");
+        case 5 -> displayResultsByDiscipline((CompetitiveMember) findMember());
       }
     }
   }
@@ -389,18 +380,19 @@ public class UserInterface {
     System.out.println("""
         Menu
         ---------
-        1) Show all results specific to a member
+        1) Show teams
         2) Show top 5 results specific to a discipline
         3) Create a result
         4) Delete a result
+        5) Show all results specific to a member
         0) Exit to main menu
         """);
     Scanner input = new Scanner(System.in);
     Integer choice = application.tryParseInt(input.nextLine());
     if (choice == null)
       choice = 99;
-    while (choice < 0 || choice > 4) {
-      System.out.println("Only values 0-4 allowed");
+    while (choice < 0 || choice > 5) {
+      System.out.println("Only values 0-5 allowed");
       choice = input.nextInt();
     }
 
@@ -417,24 +409,10 @@ public class UserInterface {
   }
 
   public void createResult(CompetitiveMember member) {
+    Scanner in = new Scanner(System.in);
     System.out.println("Create a result for a member");
     System.out.println("----------------------------");
-    System.out.println("""
-        Please select the Discipline in which the result was made.
-        1) Butterfly
-        2) Crawl
-        3) Rygcrawl
-        4) Brystsvømning
-        """);
-    Discipline discipline;
-    discipline = null;
-    Scanner in = new Scanner(System.in);
-    switch (in.nextLine()) {
-      case "1" -> discipline = Discipline.BUTTERFLY;
-      case "2" -> discipline = Discipline.CRAWL;
-      case "3" -> discipline = Discipline.RYGCRAWL;
-      case "4" -> discipline = Discipline.BRYSTSVØMNING;
-    }
+    Discipline discipline = chooseDiscipline("Please select the Discipline in which the result was made.");
 
     System.out.println("""
         Was the result made within a tournament?
@@ -479,35 +457,18 @@ public class UserInterface {
   }
 
   //TODO working on
-  public void chooseDiscipline(CompetitiveMember member) {
-    System.out.print("""
-        For which discipline do you wish to show results?
-        1) Butterfly
-        2) Crawl
-        3) Rygcrawl
-        4) Brystsvømning
-        5) Show all results
-        """);
-
-    Scanner in = new Scanner(System.in);
-    Discipline discipline = null;
-    switch (in.nextLine()) {
-      case "1" -> discipline = Discipline.BUTTERFLY;
-      case "2" -> discipline = Discipline.CRAWL;
-      case "3" -> discipline = Discipline.RYGCRAWL;
-      case "4" -> discipline = Discipline.BRYSTSVØMNING;
-      case "5" -> discipline = null;
-    }
+  public void displayResultsByDiscipline(CompetitiveMember member) {
+    Discipline discipline = chooseDiscipline("For which discipline do you wish to show results?");
     printResults(member, discipline);
   }
 
   public void printResults(CompetitiveMember member, Discipline discipline) {
     //Sort results from fastest to slowest time
     application.sortResults(member);
-
+    System.out.println("--------------------------------------------------");
     System.out.println("Name: " + member.getMasterData().getName());
     System.out.printf("%-20s %-20s %-20s %-20s %-20s\n\n"
-        , "Time", "Discipline" ,"Date", "Tournament", "Ranking");
+        , "Time", "Discipline", "Date", "Tournament", "Ranking");
 
     for (int i = 0; i < member.getResults().size(); i++) {
       Result result = member.getResults().get(i);
@@ -521,56 +482,63 @@ public class UserInterface {
         }
       }
     }
-    System.out.println();
+    System.out.println("--------------------------------------------------");
   }
 
   //TODO find top5
   public void findTop5() {
-    System.out.println("""
-        Choose a discipline for which you want to show the top 5 swimmers
-        1) Butterfly
-        2) Crawl
-        3) Rygcrawl
-        4) Brystsvømning
-        """);
-    Scanner in = new Scanner(System.in);
-    Discipline discipline = null;
-    switch (in.nextLine()) {
-      case "1" -> discipline = Discipline.BUTTERFLY;
-      case "2" -> discipline = Discipline.CRAWL;
-      case "3" -> discipline = Discipline.RYGCRAWL;
-      case "4" -> discipline = Discipline.BRYSTSVØMNING;
-    }
-
-    TextTable tt = application.pickBestResults(discipline);
-    displayTop5(discipline, tt);
+    Discipline discipline = chooseDiscipline("Choose a discipline for which you want to show the top 5 swimmers");
+    TextTable ttSenior = application.creatTableModel(application.pickBestResults(discipline, true), new String[]{"Name      ", "Time (sec)"});
+    TextTable ttJunior = application.creatTableModel(application.pickBestResults(discipline, false), new String[]{"Name      ", "Time (sec)"});
+    displayTop5(discipline, ttSenior, ttJunior);
   }
 
-  private void displayTop5(Discipline discipline, TextTable tt) {
+  private void displayTop5(Discipline discipline, TextTable ttSenior, TextTable ttJunior) {
     System.out.println("=======================TOP5=======================");
-    System.out.println("Top 5 in the discipline - "+discipline);
+    System.out.println("Top 5 in the discipline - " + discipline);
+    System.out.println("**********************SENIOR**********************");
     // this adds the numbering on the left
-    tt.setAddRowNumbering(true);
+    ttSenior.setAddRowNumbering(true);
+    // sort by the second column
+    ttSenior.printTable();
+    System.out.println("**********************JUNIOR**********************");
+    ttJunior.setAddRowNumbering(true);
+    ttJunior.printTable();
+    System.out.println("=======================TOP5=======================");
+
+  }
+
+  private void displayTeams() {
+    System.out.println("=======================TOP5=======================");
+    System.out.println("Competitive Swimming Teams: ");
+    TextTable tt = application.creatTableModel(application.pickTeams(), new String[]{"Senior    ", "Junior    "});
+    // this adds the numbering on the left
+    //tt.setAddRowNumbering(true);
     // sort by the second column
     tt.printTable();
     System.out.println("=======================TOP5=======================");
 
   }
 
-//TODO maybe implement methods
-  /*
-  public Discipline chooseDiscipline() {
+  public Discipline chooseDiscipline(String menuHeader) {
+    System.out.println(menuHeader);
+    System.out.println("""
+        1) Butterfly
+        2) Crawl
+        3) Rygcrawl
+        4) Brystsvømning
+        """);
     Scanner in = new Scanner(System.in);
-    Discipline discipline;
-    switch (in.nextLine()) {
-      case "1" -> discipline = Discipline.BUTTERFLY;
-      case "2" -> discipline = Discipline.CRAWL;
-      case "3" -> discipline = Discipline.RYGCRAWL;
-      case "4" -> discipline = Discipline.BRYSTSVØMNING;
-    }
-    return discipline;
+    return switch (in.nextLine().toLowerCase()) {
+      case "1", "butterfly" -> Discipline.BUTTERFLY;
+      case "2", "crawl" -> Discipline.CRAWL;
+      case "3", "rygcrawl" -> Discipline.RYGCRAWL;
+      case "4", "brystsvømning" -> Discipline.BRYSTSVØMNING;
+      default -> null;
+    };
   }
-   */
+
+//TODO maybe implement methods
   /*
   public int checkNumberIsWithinRange(int min, int max, int choice) {
     while (choice < min || choice > max) {
