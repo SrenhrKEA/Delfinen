@@ -16,7 +16,7 @@ public class UserInterface {
 
   public void start() {
     System.out.println("Welcome to Dolphinbase 2022");
-    System.out.println("==================================================");
+    printDoubleLine();
     System.out.println("Java edition\n");
     boolean loop = true;
 
@@ -26,7 +26,7 @@ public class UserInterface {
         case 1 -> startMemberDatabase();
         case 2 -> System.out.println("PLACEHOLDER: VIEW FINANCIAL DATA");
         case 3 -> startCompetetiveDatabase();
-        default -> System.out.println("==================================================");
+        default -> printDoubleLine();
       }
     }
   }
@@ -54,7 +54,7 @@ public class UserInterface {
 
   public void startMemberDatabase() {
     boolean loop = true;
-    System.out.println("==================================================");
+    printDoubleLine();
 
     while (loop) {
       switch (menuMemberDatabase()) {
@@ -66,7 +66,7 @@ public class UserInterface {
         case 5 -> delete();
         case 6 -> load();
         case 7 -> save();
-        default -> System.out.println("==================================================");
+        default -> printDoubleLine();
       }
     }
   }
@@ -100,7 +100,7 @@ public class UserInterface {
     System.out.println("Saving the database ...");
     application.saveToFile(application.serializingJson(), "MemberList.txt");
     System.out.println("Saving database completed successfully");
-    System.out.println("--------------------------------------------------");
+    printSingleLineLong();
     return false;
   }
 
@@ -111,17 +111,17 @@ public class UserInterface {
 
   private void list() {
     System.out.println("List of all the members");
-    System.out.println("-------------------------");
+    printSingleLineShort();
     for (Member member : application.getAllMembers()) {
       displayMemberData(member, true, false);
     }
     System.out.println("There are " + application.getMemberCount() + " members in the list.");
-    System.out.println("--------------------------------------------------");
+    printSingleLineLong();
   }
 
   private void edit() {
     System.out.println("Edit member");
-    System.out.println("-------------------------");
+    printSingleLineShort();
     System.out.println("Please enter the ID of the member to be edited: ");
     Scanner console = new Scanner(System.in);
     String id = console.nextLine();
@@ -200,7 +200,7 @@ public class UserInterface {
     }
     if (!editable)
       System.out.println("Member with ID '" + id + "' does not exist, and cannot be edited");
-    System.out.println("--------------------------------------------------");
+    printSingleLineLong();
   }
 
   private void sort() {
@@ -259,7 +259,7 @@ public class UserInterface {
     MembershipType type = null;
 
     System.out.println("Create new member");
-    System.out.println("-------------------------");
+    printSingleLineShort();
     Scanner input = new Scanner(System.in);
     System.out.print("Name: ");
     String name = input.nextLine();
@@ -309,7 +309,7 @@ public class UserInterface {
 
   private void delete() {
     System.out.println("Delete member");
-    System.out.println("-------------------------");
+    printSingleLineShort();
     System.out.println("Please enter the ID of the member to be deleted: ");
     Scanner input = new Scanner(System.in);
     String id = input.nextLine();
@@ -320,21 +320,21 @@ public class UserInterface {
     } else {
       System.out.println("Member with ID '" + id + "' does not exist, and cannot be deleted");
     }
-    System.out.println("--------------------------------------------------");
+    printSingleLineLong();
   }
 
   private void load() {
     System.out.println("Loading the database ...");
     application.setMembers(application.deserializingJson(application.loadFromFile("MemberList.txt")));
     System.out.println("Loading database completed successfully");
-    System.out.println("--------------------------------------------------");
+    printSingleLineLong();
   }
 
   private void save() {
     System.out.println("Saving the database ...");
     application.saveToFile(application.serializingJson(), "MemberList.txt");
     System.out.println("Saving database completed successfully");
-    System.out.println("--------------------------------------------------");
+    printSingleLineLong();
   }
 
   public void displayMemberData(Member member, boolean viewNormal, boolean viewArrears) {
@@ -357,21 +357,22 @@ public class UserInterface {
     if (viewArrears) {
       System.out.println("NOT IMPLEMENTED YET!");
     }
-    System.out.println("-------------------------");
+    printSingleLineShort();
   }
 
   public void startCompetetiveDatabase() {
     boolean loop = true;
-    System.out.println("==================================================");
+    printDoubleLine();
 
     while (loop) {
       switch (menuCompetetiveDatabase()) {
         case 0 -> loop = exitDatabase();
-        case 1 -> displayTeams();
-        case 2 -> findTop5();
-        case 3 -> createResult((CompetitiveMember) findMember());
-        case 4 -> System.out.println("Delete result yet to be implemented");
-        case 5 -> displayResultsByDiscipline((CompetitiveMember) findMember());
+        case 1 -> findTop5();
+        case 2 -> displayTeams();
+        case 3 -> displayResultsByDiscipline((CompetitiveMember) findMember());
+        case 4 -> createResult((CompetitiveMember) findMember());
+        case 5 -> System.out.println("Delete result yet to be implemented");
+
       }
     }
   }
@@ -380,11 +381,11 @@ public class UserInterface {
     System.out.println("""
         Menu
         ---------
-        1) Show teams
-        2) Show top 5 results specific to a discipline
-        3) Create a result
-        4) Delete a result
-        5) Show all results specific to a member
+        1) Show top 5 results specific to a discipline
+        2) Show teams roster
+        3) Show all results specific to a member
+        4) Create a result
+        5) Delete a result
         0) Exit to main menu
         """);
     Scanner input = new Scanner(System.in);
@@ -411,61 +412,66 @@ public class UserInterface {
   public void createResult(CompetitiveMember member) {
     Scanner in = new Scanner(System.in);
     System.out.println("Create a result for a member");
-    System.out.println("----------------------------");
+    printSingleLineShort();
     Discipline discipline = chooseDiscipline("Please select the Discipline in which the result was made.");
 
-    System.out.println("""
-        Was the result made within a tournament?
-        1) Yes
-        2) No
-        """);
+    if (discipline != null) {
+      System.out.println("""
+          Was the result made within a tournament?
+          1) Yes
+          2) No
+          """);
 
-    boolean isTournament = true;
-    switch (in.nextLine()) {
-      case "1" -> isTournament = true;
-      case "2" -> isTournament = false;
-    }
+      boolean isTournament = true;
+      switch (in.nextLine()) {
+        case "1" -> isTournament = true;
+        case "2" -> isTournament = false;
+      }
 
-    String tournament;
-    tournament = null;
-    String ranking;
-    ranking = null;
-    if (isTournament) {
-      System.out.println("in which tournament did the contestant participate?");
-      tournament = in.nextLine();
+      String tournament;
+      tournament = null;
+      String ranking;
+      ranking = null;
+      if (isTournament) {
+        System.out.println("in which tournament did the contestant participate?");
+        tournament = in.nextLine();
 
-      System.out.println("Which place did the contestant make in the tournament?");
-      ranking = in.nextLine();
-    }
+        System.out.println("Which place did the contestant make in the tournament?");
+        ranking = in.nextLine();
+      }
 
-    System.out.println("Insert time [Minutes:Seconds.Milliseconds]");
-    System.out.println("Ex. 9:30.08");
-    String time;
-    time = in.nextLine();
+      System.out.println("Insert time [Minutes:Seconds.Milliseconds]");
+      System.out.println("Ex. 9:30.08");
+      String time;
+      time = in.nextLine();
 
-    System.out.println("Insert date [Day/Month/Year]");
-    String date;
-    date = in.nextLine();
+      System.out.println("Insert date [Day/Month/Year]");
+      String date;
+      date = in.nextLine();
 
-    Result result;
-    if (isTournament)
-      result = new Result(discipline, tournament, ranking, time, date);
-    else
-      result = new Result(discipline, time, date);
+      Result result;
+      if (isTournament)
+        result = new Result(discipline, tournament, ranking, time, date);
+      else
+        result = new Result(discipline, time, date);
 
-    member.addResult(result);
+      member.addResult(result);
+    } else
+      System.out.println("No discipline chosen!");
   }
 
   //TODO working on
   public void displayResultsByDiscipline(CompetitiveMember member) {
-    Discipline discipline = chooseDiscipline("For which discipline do you wish to show results?");
+    Discipline discipline = chooseDiscipline("For which discipline do you wish to show results?\n0) Show all results");
+    if (discipline == null)
+      System.out.println("Show all results.");
     printResults(member, discipline);
   }
 
   public void printResults(CompetitiveMember member, Discipline discipline) {
     //Sort results from fastest to slowest time
     application.sortResults(member);
-    System.out.println("--------------------------------------------------");
+    printSingleLineLong();
     System.out.println("Name: " + member.getMasterData().getName());
     System.out.printf("%-20s %-20s %-20s %-20s %-20s\n\n"
         , "Time", "Discipline", "Date", "Tournament", "Ranking");
@@ -482,41 +488,44 @@ public class UserInterface {
         }
       }
     }
-    System.out.println("--------------------------------------------------");
+    printSingleLineLong();
   }
 
   //TODO find top5
   public void findTop5() {
     Discipline discipline = chooseDiscipline("Choose a discipline for which you want to show the top 5 swimmers");
-    TextTable ttSenior = application.creatTableModel(application.pickBestResults(discipline, true), new String[]{"Name      ", "Time (sec)"});
-    TextTable ttJunior = application.creatTableModel(application.pickBestResults(discipline, false), new String[]{"Name      ", "Time (sec)"});
-    displayTop5(discipline, ttSenior, ttJunior);
+    if (discipline != null) {
+      TextTable ttSenior = application.creatTableModel(application.pickBestResults(discipline, true), new String[]{"Name      ", "Time (sec)"});
+      TextTable ttJunior = application.creatTableModel(application.pickBestResults(discipline, false), new String[]{"Name      ", "Time (sec)"});
+      displayTop5(discipline, ttSenior, ttJunior);
+    } else
+      System.out.println("No discipline chosen!");
   }
 
   private void displayTop5(Discipline discipline, TextTable ttSenior, TextTable ttJunior) {
-    System.out.println("=======================TOP5=======================");
+    printDoubleLineTop5();
     System.out.println("Top 5 in the discipline - " + discipline);
-    System.out.println("**********************SENIOR**********************");
+    printDoubleLineSenior();
     // this adds the numbering on the left
     ttSenior.setAddRowNumbering(true);
     // sort by the second column
     ttSenior.printTable();
-    System.out.println("**********************JUNIOR**********************");
+    printDoubleLineJunior();
     ttJunior.setAddRowNumbering(true);
     ttJunior.printTable();
-    System.out.println("=======================TOP5=======================");
+    printDoubleLineTop5();
 
   }
 
   private void displayTeams() {
-    System.out.println("=======================TOP5=======================");
-    System.out.println("Competitive Swimming Teams: ");
+    printDoubleLine();
+    printDoubleLineTeam();
     TextTable tt = application.creatTableModel(application.pickTeams(), new String[]{"Senior    ", "Junior    "});
     // this adds the numbering on the left
     //tt.setAddRowNumbering(true);
     // sort by the second column
     tt.printTable();
-    System.out.println("=======================TOP5=======================");
+    printDoubleLine();
 
   }
 
@@ -549,4 +558,33 @@ public class UserInterface {
     return choice;
   }
    */
+
+  //Utility print methods
+  private void printDoubleLine() {
+    System.out.println("==================================================");
+  }
+
+  private void printDoubleLineTop5() {
+    System.out.println("=======================TOP5=======================");
+  }
+
+  private void printDoubleLineTeam() {
+    System.out.println("**********************TEAMS***********************");
+  }
+
+  private void printDoubleLineSenior() {
+    System.out.println("**********************SENIOR**********************");
+  }
+
+  private void printDoubleLineJunior() {
+    System.out.println("**********************JUNIOR**********************");
+  }
+
+  private void printSingleLineLong() {
+    System.out.println("--------------------------------------------------");
+  }
+
+  private void printSingleLineShort() {
+    System.out.println("----------------------------");
+  }
 }
