@@ -1,6 +1,6 @@
 package Delfinen;
 
-import dnl.utils.text.table.TextTable;
+/*import dnl.utils.text.table.TextTable;
 
 public class Test {
   public static void main(String[] args) {
@@ -37,3 +37,6 @@ public class Test {
     }
   }
 }
+
+
+ */

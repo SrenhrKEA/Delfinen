@@ -1,11 +1,13 @@
 package Delfinen;
 
 import Delfinen.Enums.*;
-import dnl.utils.text.table.TextTable;
+//import dnl.utils.text.table.TextTable;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import static java.lang.Integer.parseInt;
 
 public class UserInterface {
   private final Controller application;
@@ -377,10 +379,10 @@ public class UserInterface {
     while (loop) {
       switch (menuCompetetiveDatabase()) {
         case 0 -> loop = exitDatabase();
-        case 1 -> chooseDiscipline((CompetitiveMember) findMember()); //printResults((CompetitiveMember) findMember());
-        case 2 -> findTop5();
-        case 3 -> createResult((CompetitiveMember) findMember());
-        case 4 -> printNumberedResults((CompetitiveMember) findMember());
+        case 1 -> chooseDiscipline((CompetitiveMember) findCompetetiveMember()); //printResults((CompetitiveMember) findMember());
+        //case 2 -> findTop5();
+        case 3 -> createResult((CompetitiveMember) findCompetetiveMember());
+        case 4 -> printNumberedResults((CompetitiveMember) findCompetetiveMember());
       }
     }
   }
@@ -406,13 +408,21 @@ public class UserInterface {
 
     return choice;
   }
+  //TODO WORKING ON
+  public Member findCompetetiveMember() {
+    boolean loop = true;
+    Member member = null;
+    while (loop) {
+      System.out.println("Enter a name");
+      Scanner in = new Scanner(System.in);
+      String name = in.nextLine();
+      member = application.findMemberByName(name);
+      if (tryCastToCompetetiveMember(member) != null)
+        loop = false;
+      else
+        System.out.println("The member you specified is not competing\nPlease Try again");
+    }
 
-  public Member findMember() {
-    System.out.println("Enter a name");
-    Scanner in = new Scanner(System.in);
-    String name = in.nextLine();
-    Member member;
-    member = application.findMemberByName(name);
     return member;
   }
 
@@ -478,7 +488,6 @@ public class UserInterface {
     member.addResult(result);
   }
 
-  //TODO working on
   public void chooseDiscipline(CompetitiveMember member) {
     System.out.print("""
         For which discipline do you wish to show results?
@@ -528,7 +537,7 @@ public class UserInterface {
     //Sort results from fastest to slowest time
     application.sortResults(member);
 
-    System.out.println("Name: " + member.getName());
+    System.out.println("Name: " + member.getMasterData().getName());
     System.out.printf("%-5s%-20s%-20s%-20s%-20s%-20s\n\n"
         ,"", "Time", "Discipline" ,"Date", "Tournament", "Ranking");
 
@@ -553,7 +562,7 @@ public class UserInterface {
     member.getResults().remove(num - 1);
     System.out.println("You removed result number: " + num);
   }
-
+/*
   //TODO find top5
   public void findTop5() {
     System.out.println("""
@@ -587,15 +596,23 @@ public class UserInterface {
 
   }
 
-//TODO maybe implement methods
-  /*
-  public int checkNumberIsWithinRange(int min, int max, int choice) {
-    while (choice < min || choice > max) {
-      System.out.println("Only values 0-7 allowed"); //setup to fit min + max
-      Scanner in = new Scanner(System.in);
-      choice = in.nextInt();
+ */
+
+  //TODO ERROR HANDLING
+  public Integer tryParseInteger(String string) {
+    try {
+      return parseInt(string);
+    } catch (NumberFormatException e) {
+      return null;
     }
-    return choice;
   }
-   */
+
+  public Member tryCastToCompetetiveMember(Member member) {
+    try {
+      member = (CompetitiveMember) member;
+      return member;
+    } catch (ClassCastException e) {
+      return null;
+    }
+  }
 }

@@ -1,6 +1,5 @@
 [
   {
-    "age": 0,
     "masterData": {
       "age": 31,
       "name": "Søren",
@@ -23,5 +22,19 @@
       }
     ],
     "disciplines": []
+  },
+  {
+    "masterData": {
+      "age": 65,
+      "name": "Per Jensen",
+      "id": "b265f8db",
+      "email": "None",
+      "telephone": "None",
+      "address": "None",
+      "dateRegistration": "2022-05-23T00:55:50.664951900",
+      "gender": "MALE"
+    },
+    "type": "EXERCISE",
+    "status": "PASSIVE"
   }
 ]

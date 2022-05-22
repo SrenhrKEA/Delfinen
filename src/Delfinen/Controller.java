@@ -15,7 +15,7 @@ import Delfinen.Comparators.ResultTimeComparator;
 import Delfinen.Enums.*;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import dnl.utils.text.table.TextTable;
+//import dnl.utils.text.table.TextTable;
 
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -146,7 +146,7 @@ public class Controller {
     if (sortDirection != SortDirection.ASC && toggleCounter == 0)
       toggleCounter++;
   }
-
+/*
   public TextTable pickBestResults(Discipline discipline) {
     String[] columnNames = {"Name", "Time"};
     ArrayList<String> names = new ArrayList<>();
@@ -184,6 +184,8 @@ public class Controller {
 
     return new TextTable(model);
   }
+
+ */
 
 
   public void sortResults(CompetitiveMember member) {
