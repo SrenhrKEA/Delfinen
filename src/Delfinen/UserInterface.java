@@ -408,7 +408,7 @@ public class UserInterface {
 
     return choice;
   }
-  //TODO WORKING ON
+
   public Member findCompetetiveMember() {
     boolean loop = true;
     Member member = null;
@@ -426,6 +426,7 @@ public class UserInterface {
     return member;
   }
 
+  //TODO
   public void createResult(CompetitiveMember member) {
     System.out.println("Create a result for a member");
     System.out.println("----------------------------");
@@ -436,14 +437,18 @@ public class UserInterface {
         3) Rygcrawl
         4) Brystsvømning
         """);
+
     Discipline discipline;
     discipline = null;
     Scanner in = new Scanner(System.in);
-    switch (in.nextLine()) {
-      case "1" -> discipline = Discipline.BUTTERFLY;
-      case "2" -> discipline = Discipline.CRAWL;
-      case "3" -> discipline = Discipline.RYGCRAWL;
-      case "4" -> discipline = Discipline.BRYSTSVØMNING;
+    Integer input = null;
+    input = validateInput(1,4, input);
+
+    switch (input) {
+      case 1 -> discipline = Discipline.BUTTERFLY;
+      case 2 -> discipline = Discipline.CRAWL;
+      case 3 -> discipline = Discipline.RYGCRAWL;
+      case 4 -> discipline = Discipline.BRYSTSVØMNING;
     }
 
     System.out.println("""
@@ -453,15 +458,19 @@ public class UserInterface {
         """);
 
     boolean isTournament = true;
-    switch (in.nextLine()) {
-      case "1" -> isTournament = true;
-      case "2" -> isTournament = false;
+    input = null;
+    input = validateInput(1,2, input);
+
+    switch (input) {
+      case 1 -> isTournament = true;
+      case 2 -> isTournament = false;
     }
 
     String tournament;
     tournament = null;
     String ranking;
     ranking = null;
+
     if (isTournament) {
       System.out.println("in which tournament did the contestant participate?");
       tournament = in.nextLine();
@@ -500,12 +509,15 @@ public class UserInterface {
 
     Scanner in = new Scanner(System.in);
     Discipline discipline = null;
-    switch (in.nextLine()) {
-      case "1" -> discipline = Discipline.BUTTERFLY;
-      case "2" -> discipline = Discipline.CRAWL;
-      case "3" -> discipline = Discipline.RYGCRAWL;
-      case "4" -> discipline = Discipline.BRYSTSVØMNING;
-      case "5" -> discipline = null;
+    Integer input = null;
+    input = validateInput(1,5, input);
+
+    switch (input) {
+      case 1 -> discipline = Discipline.BUTTERFLY;
+      case 2 -> discipline = Discipline.CRAWL;
+      case 3 -> discipline = Discipline.RYGCRAWL;
+      case 4 -> discipline = Discipline.BRYSTSVØMNING;
+      case 5 -> discipline = null;
     }
     printResults(member, discipline);
   }
@@ -515,7 +527,7 @@ public class UserInterface {
     application.sortResults(member);
 
     System.out.println("Name: " + member.getMasterData().getName());
-    System.out.printf("%-20s %-20s %-20s %-20s %-20s\n\n"
+    System.out.printf("%-20s%-20s%-20s%-20s%-20s\n\n"
         , "Time", "Discipline" ,"Date", "Tournament", "Ranking");
 
     for (int i = 0; i < member.getResults().size(); i++) {
@@ -558,9 +570,10 @@ public class UserInterface {
   public void deleteResult(CompetitiveMember member) {
     System.out.println("Enter the number of the result you want to delete");
     Scanner in = new Scanner(System.in);
-    int num = in.nextInt();
-    member.getResults().remove(num - 1);
-    System.out.println("You removed result number: " + num);
+    Integer input = null;
+    input = validateInput(1,member.getResults().size(), input);
+    member.getResults().remove(input - 1);
+    System.out.println("You removed result number: " + input);
   }
 /*
   //TODO find top5
@@ -599,12 +612,28 @@ public class UserInterface {
  */
 
   //TODO ERROR HANDLING
-  public Integer tryParseInteger(String string) {
-    try {
-      return parseInt(string);
-    } catch (NumberFormatException e) {
-      return null;
+  public Integer validateInput(Integer min, Integer max, Integer input) {
+    boolean loop = true;
+    while (loop) {
+      while (input == null || isIntegerWithinRange(min, max, input) == false) {
+        Scanner in = new Scanner(System.in);
+        input = application.tryParseInt(in.nextLine());
+      }
+      if (isIntegerWithinRange(min, max, input))
+        loop = false;
+      else
+        loop = true;
     }
+    return input;
+  }
+
+  public boolean isIntegerWithinRange(Integer min, Integer max, Integer input) {
+    if (input < min || input > max) {
+      System.out.printf("Only values %s-%s allowed\n"
+      , min, max);
+      return false;
+    }
+    return true;
   }
 
   public Member tryCastToCompetetiveMember(Member member) {
