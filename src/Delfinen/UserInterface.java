@@ -572,24 +572,25 @@ public class UserInterface {
 
   }
   //TODO NEEDS
-  public Discipline chooseDiscipline(String menuHeader, boolean canBeNull) {
+  public Discipline chooseDiscipline(String menuHeader, boolean disciplineCanBeNull) {
     System.out.println(menuHeader);
     System.out.println("""
         1) Butterfly
         2) Crawl
         3) Rygcrawl
         4) Brystsvømning""");
-    if (canBeNull)
+    if (disciplineCanBeNull)
       System.out.println("5) Show all results");
 
     Scanner in = new Scanner(System.in);
     Integer input = null;
     Integer maxInput;
-    if (canBeNull)
+    if (disciplineCanBeNull)
       maxInput = 5;
     else
       maxInput = 4;
     input = validateInput(1,maxInput, input);
+
     return switch (input) {
       case 1 -> Discipline.BUTTERFLY;
       case 2 -> Discipline.CRAWL;
@@ -598,7 +599,7 @@ public class UserInterface {
       default -> null;
     };
   }
-  //TODO ERROR HANDLING
+
   public Integer validateInput(Integer min, Integer max, Integer input) {
     boolean loop = true;
     while (loop) {
