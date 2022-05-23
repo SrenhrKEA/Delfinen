@@ -371,9 +371,9 @@ public class UserInterface {
         case 0 -> loop = exitDatabase();
         case 1 -> findTop5();
         case 2 -> displayTeams();
-        case 3 -> displayResultsByDiscipline((CompetitiveMember) findMember());
-        case 4 -> createResult((CompetitiveMember) findMember());
-        case 5 -> System.out.println("Delete result yet to be implemented");
+        case 3 -> displayResultsByDiscipline((CompetitiveMember) findCompetetiveMember());
+        case 4 -> createResult((CompetitiveMember) findCompetetiveMember());
+        case 5 -> printNumberedResults((CompetitiveMember) findCompetetiveMember());
 
       }
     }
@@ -419,12 +419,11 @@ public class UserInterface {
     return member;
   }
 
-  //TODO
   public void createResult(CompetitiveMember member) {
     Scanner in = new Scanner(System.in);
     System.out.println("Create a result for a member");
     printSingleLineShort();
-    Discipline discipline = chooseDiscipline("Please select the Discipline in which the result was made.");
+    Discipline discipline = chooseDiscipline("Please select the Discipline in which the result was made.", false);
 
     if (discipline != null) {
       System.out.println("""
@@ -434,7 +433,7 @@ public class UserInterface {
           """);
 
     boolean isTournament = true;
-    input = null;
+    Integer input = null;
     input = validateInput(1,2, input);
 
     switch (input) {
@@ -475,9 +474,8 @@ public class UserInterface {
       System.out.println("No discipline chosen!");
   }
 
-  //TODO working on
   public void displayResultsByDiscipline(CompetitiveMember member) {
-    Discipline discipline = chooseDiscipline("For which discipline do you wish to show results?\n0) Show all results");
+    Discipline discipline = chooseDiscipline("For which discipline do you wish to show results?", true);
     if (discipline == null)
       System.out.println("Show all results.");
     printResults(member, discipline);
@@ -538,7 +536,7 @@ public class UserInterface {
   }
 
   public void findTop5() {
-    Discipline discipline = chooseDiscipline("Choose a discipline for which you want to show the top 5 swimmers");
+    Discipline discipline = chooseDiscipline("Choose a discipline for which you want to show the top 5 swimmers", false);
     if (discipline != null) {
       TextTable ttSenior = application.creatTableModel(application.pickBestResults(discipline, true), new String[]{"Name      ", "Time (sec)"});
       TextTable ttJunior = application.creatTableModel(application.pickBestResults(discipline, false), new String[]{"Name      ", "Time (sec)"});
@@ -573,21 +571,30 @@ public class UserInterface {
     printDoubleLine();
 
   }
-
-  public Discipline chooseDiscipline(String menuHeader) {
+  //TODO NEEDS
+  public Discipline chooseDiscipline(String menuHeader, boolean canBeNull) {
     System.out.println(menuHeader);
     System.out.println("""
         1) Butterfly
         2) Crawl
         3) Rygcrawl
-        4) Brystsvømning
-        """);
+        4) Brystsvømning""");
+    if (canBeNull)
+      System.out.println("5) Show all results");
+
     Scanner in = new Scanner(System.in);
-    return switch (in.nextLine().toLowerCase()) {
-      case "1", "butterfly" -> Discipline.BUTTERFLY;
-      case "2", "crawl" -> Discipline.CRAWL;
-      case "3", "rygcrawl" -> Discipline.RYGCRAWL;
-      case "4", "brystsvømning" -> Discipline.BRYSTSVØMNING;
+    Integer input = null;
+    Integer maxInput;
+    if (canBeNull)
+      maxInput = 5;
+    else
+      maxInput = 4;
+    input = validateInput(1,maxInput, input);
+    return switch (input) {
+      case 1 -> Discipline.BUTTERFLY;
+      case 2 -> Discipline.CRAWL;
+      case 3 -> Discipline.RYGCRAWL;
+      case 4 -> Discipline.BRYSTSVØMNING;
       default -> null;
     };
   }
@@ -606,7 +613,6 @@ public class UserInterface {
     }
     return input;
   }
-   */
 
   //Utility print methods
   private void printDoubleLine() {
@@ -634,7 +640,6 @@ public class UserInterface {
       return null;
     }
   }
-}
 
   private void printDoubleLineTeam() {
     System.out.println("**********************TEAMS***********************");
