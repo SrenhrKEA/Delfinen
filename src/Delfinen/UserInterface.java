@@ -1,7 +1,7 @@
 package Delfinen;
 
 import Delfinen.Enums.*;
-//import dnl.utils.text.table.TextTable;
+import dnl.utils.text.table.TextTable;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -380,7 +380,7 @@ public class UserInterface {
       switch (menuCompetetiveDatabase()) {
         case 0 -> loop = exitDatabase();
         case 1 -> chooseDiscipline((CompetitiveMember) findCompetetiveMember()); //printResults((CompetitiveMember) findMember());
-        //case 2 -> findTop5();
+        case 2 -> findTop5();
         case 3 -> createResult((CompetitiveMember) findCompetetiveMember());
         case 4 -> printNumberedResults((CompetitiveMember) findCompetetiveMember());
       }
@@ -575,8 +575,7 @@ public class UserInterface {
     member.getResults().remove(input - 1);
     System.out.println("You removed result number: " + input);
   }
-/*
-  //TODO find top5
+
   public void findTop5() {
     System.out.println("""
         Choose a discipline for which you want to show the top 5 swimmers
@@ -608,9 +607,6 @@ public class UserInterface {
     System.out.println("=======================TOP5=======================");
 
   }
-
- */
-
   //TODO ERROR HANDLING
   public Integer validateInput(Integer min, Integer max, Integer input) {
     boolean loop = true;
