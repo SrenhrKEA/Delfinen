@@ -1,13 +1,83 @@
 [
   {
     "masterData": {
-      "age": 31,
-      "name": "Søren",
-      "id": "0e6060dd",
-      "email": "srenhr@",
-      "telephone": "2084",
-      "address": "emdrup",
-      "dateRegistration": "2022-05-20T04:02:50.422547400",
+      "age": 12,
+      "name": "Jessica",
+      "id": "30040a5f",
+      "email": "-",
+      "telephone": "-",
+      "address": "-",
+      "dateRegistration": "2022-05-22T04:42:04.768155100",
+      "gender": "FEMALE"
+    },
+    "type": "COMPETITIVE",
+    "status": "ACTIVE",
+    "results": [
+      {
+        "discipline": "BUTTERFLY",
+        "date": "22/02/2022",
+        "time": "9:30.06"
+      }
+    ],
+    "disciplines": []
+  },
+  {
+    "masterData": {
+      "age": 13,
+      "name": "Jenny",
+      "id": "bfaa3603",
+      "email": "-",
+      "telephone": "-",
+      "address": "-",
+      "dateRegistration": "2022-05-22T04:52:58.547315600",
+      "gender": "FEMALE"
+    },
+    "type": "COMPETITIVE",
+    "status": "ACTIVE",
+    "results": [],
+    "disciplines": []
+  },
+  {
+    "masterData": {
+      "age": 22,
+      "name": "Josh",
+      "id": "9947b79f",
+      "email": "-",
+      "telephone": "-",
+      "address": "-",
+      "dateRegistration": "2022-05-22T05:02:23.740762700",
+      "gender": "MALE"
+    },
+    "type": "COMPETITIVE",
+    "status": "PASSIVE",
+    "results": [],
+    "disciplines": []
+  },
+  {
+    "masterData": {
+      "age": 24,
+      "name": "Brittney",
+      "id": "d9e80e28",
+      "email": "-",
+      "telephone": "-",
+      "address": "-",
+      "dateRegistration": "2022-05-22T05:03:06.330117500",
+      "gender": "FEMALE"
+    },
+    "type": "COMPETITIVE",
+    "status": "PASSIVE",
+    "results": [],
+    "disciplines": []
+  },
+  {
+    "masterData": {
+      "age": 44,
+      "name": "John",
+      "id": "e32ff4b5",
+      "email": "-",
+      "telephone": "-",
+      "address": "-",
+      "dateRegistration": "2022-05-22T03:52:23.637219900",
       "gender": "MALE"
     },
     "type": "COMPETITIVE",
@@ -15,9 +85,9 @@
     "results": [
       {
         "discipline": "BUTTERFLY",
-        "date": "20/05/2022",
-        "time": "0:30:01",
-        "tournament": "emdrup svømmestævne",
+        "date": "22/05/2022",
+        "time": "9:30.08",
+        "tournament": "svømmestævne",
         "ranking": "1"
       }
     ],

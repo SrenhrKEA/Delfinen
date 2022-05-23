@@ -125,7 +125,6 @@ public class Controller {
       } else if (sortDirection == SortDirection.DESC || sortDirection == SortDirection.TOGGLE) {
         members.sort(Collections.reverseOrder(new MemberNameComparator()));
       }
-      //members.stream().map(Member::getName).forEach(System.out::print);
     }
     if (Objects.equals(sortBy, "age")) {
       if (sortDirection == SortDirection.ASC || (sortDirection == SortDirection.TOGGLE && toggleCounter % 2 != 0)) {
@@ -133,7 +132,6 @@ public class Controller {
       } else if (sortDirection == SortDirection.DESC || sortDirection == SortDirection.TOGGLE) {
         members.sort(Collections.reverseOrder(new MemberAgeComparator()));
       }
-      //members.stream().map(Member::getAge).forEach(System.out::print);
     }
     if (Objects.equals(sortBy, "id")) {
       if (sortDirection == SortDirection.ASC || (sortDirection == SortDirection.TOGGLE && toggleCounter % 2 != 0)) {
@@ -141,14 +139,12 @@ public class Controller {
       } else if (sortDirection == SortDirection.DESC || sortDirection == SortDirection.TOGGLE) {
         members.sort(Collections.reverseOrder(new MemberIdComparator()));
       }
-      //members.stream().map(Member::getId).forEach(System.out::print);
     }
     if (sortDirection != SortDirection.ASC && toggleCounter == 0)
       toggleCounter++;
   }
 
-  public TextTable pickBestResults(Discipline discipline) {
-    String[] columnNames = {"Name", "Time"};
+  public Object[][] pickBestResults(Discipline discipline, boolean senior) {
     ArrayList<String> names = new ArrayList<>();
     ArrayList<Double> times = new ArrayList<>();
 
@@ -156,7 +152,10 @@ public class Controller {
       if (member instanceof CompetitiveMember) {
         ArrayList<Result> Results = ((CompetitiveMember) member).getResults();
         for (Result result : Results) {
-          if (result.getDiscipline() == discipline) {
+          if (result.getDiscipline() == discipline && senior && member.getMasterData().getAge() >= 18) {
+            names.add(member.getMasterData().getName());
+            times.add(result.getTimeInSeconds());
+          } else if (result.getDiscipline() == discipline && !senior && member.getMasterData().getAge() < 18) {
             names.add(member.getMasterData().getName());
             times.add(result.getTimeInSeconds());
           }
@@ -173,8 +172,44 @@ public class Controller {
     Object[][] copy = new Object[5][2];
     System.arraycopy(data, 0, copy, 0, Math.min(data.length, 5));
 
+    return copy;
+  }
 
-    TableModel model = new DefaultTableModel(copy, columnNames) {
+  public Object[][] pickTeams() {
+    ArrayList<String> senior = new ArrayList<>();
+    ArrayList<String> junior = new ArrayList<>();
+
+    for (Member member : members) {
+      if (member instanceof CompetitiveMember) {
+        if (member.getMasterData().getAge() >= 18)
+          senior.add(member.getMasterData().getName());
+        else
+          junior.add(member.getMasterData().getName());
+      }
+    }
+
+    int biggest = Math.max(senior.size(), junior.size());
+
+    Object[][] data = new Object[biggest][2];
+    for (int j = 0; j < biggest; j++) {
+      try {
+        data[j][0] = senior.get(j);
+      } catch (Exception e) {
+        data[j][0] = "";
+      }
+      try {
+        data[j][1] = junior.get(j);
+      } catch (Exception e) {
+        data[j][1] = "";
+      }
+    }
+
+    return data;
+  }
+
+  public TextTable creatTableModel(Object[][] data, String[] columnNames) {
+
+    TableModel model = new DefaultTableModel(data, columnNames) {
       @Override
       public Class<?> getColumnClass(int columnIndex) {
         if (columnIndex != 0) return Integer.class;
@@ -184,7 +219,6 @@ public class Controller {
 
     return new TextTable(model);
   }
-
 
   public void sortResults(CompetitiveMember member) {
     member.getResults().sort(new ResultTimeComparator());

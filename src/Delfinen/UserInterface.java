@@ -18,7 +18,7 @@ public class UserInterface {
 
   public void start() {
     System.out.println("Welcome to Dolphinbase 2022");
-    System.out.println("==================================================");
+    printDoubleLine();
     System.out.println("Java edition\n");
     boolean loop = true;
 
@@ -28,7 +28,7 @@ public class UserInterface {
         case 1 -> startMemberDatabase();
         case 2 -> System.out.println("PLACEHOLDER: VIEW FINANCIAL DATA");
         case 3 -> startCompetetiveDatabase();
-        default -> System.out.println("==================================================");
+        default -> printDoubleLine();
       }
     }
   }
@@ -56,7 +56,7 @@ public class UserInterface {
 
   public void startMemberDatabase() {
     boolean loop = true;
-    System.out.println("==================================================");
+    printDoubleLine();
 
     while (loop) {
       switch (menuMemberDatabase()) {
@@ -68,7 +68,7 @@ public class UserInterface {
         case 5 -> delete();
         case 6 -> load();
         case 7 -> save();
-        default -> System.out.println("==================================================");
+        default -> printDoubleLine();
       }
     }
   }
@@ -102,7 +102,7 @@ public class UserInterface {
     System.out.println("Saving the database ...");
     application.saveToFile(application.serializingJson(), "MemberList.txt");
     System.out.println("Saving database completed successfully");
-    System.out.println("--------------------------------------------------");
+    printSingleLineLong();
     return false;
   }
 
@@ -113,17 +113,17 @@ public class UserInterface {
 
   private void list() {
     System.out.println("List of all the members");
-    System.out.println("-------------------------");
+    printSingleLineShort();
     for (Member member : application.getAllMembers()) {
       displayMemberData(member, true, false);
     }
     System.out.println("There are " + application.getMemberCount() + " members in the list.");
-    System.out.println("--------------------------------------------------");
+    printSingleLineLong();
   }
 
   private void edit() {
     System.out.println("Edit member");
-    System.out.println("-------------------------");
+    printSingleLineShort();
     System.out.println("Please enter the ID of the member to be edited: ");
     Scanner console = new Scanner(System.in);
     String id = console.nextLine();
@@ -202,7 +202,7 @@ public class UserInterface {
     }
     if (!editable)
       System.out.println("Member with ID '" + id + "' does not exist, and cannot be edited");
-    System.out.println("--------------------------------------------------");
+    printSingleLineLong();
   }
 
   private void sort() {
@@ -230,13 +230,6 @@ public class UserInterface {
     // When sorted, show the list again
     list();
   }
-  /*
-  private void sortResults() {
-    CompetitiveMember member = (CompetitiveMember) findMember();
-    application.sortResults(member);
-    showResult(member);
-  }
-   */
 
   private SortDirection sortDirection() {
     Scanner input = new Scanner(System.in);
@@ -268,7 +261,7 @@ public class UserInterface {
     MembershipType type = null;
 
     System.out.println("Create new member");
-    System.out.println("-------------------------");
+    printSingleLineShort();
     Scanner input = new Scanner(System.in);
     System.out.print("Name: ");
     String name = input.nextLine();
@@ -301,14 +294,12 @@ public class UserInterface {
     } else if (statusChar == 'p') {
       status = MembershipStatus.PASSIVE;
     }
-    MasterData masterData = new MasterData(age, name, ID, email, telephone, address,  dateRegistration,gender);
+    MasterData masterData = new MasterData(age, name, ID, email, telephone, address, dateRegistration, gender);
     Member member;
     if (type == MembershipType.COMPETITIVE) {
-      //member = application.createCompetitiveMember(age, name, address, email, telephone, dateRegistration, ID, gender, type, status, new ArrayList<>(), new ArrayList<>());
       member = application.createCompetitiveMember(masterData, type, status, new ArrayList<>(), new ArrayList<>());
 
     } else {
-      //member = application.createExerciseMember(age, name, address, email, telephone, dateRegistration, ID, gender, type, status);
       member = application.createExerciseMember(masterData, type, status);
 
     }
@@ -320,7 +311,7 @@ public class UserInterface {
 
   private void delete() {
     System.out.println("Delete member");
-    System.out.println("-------------------------");
+    printSingleLineShort();
     System.out.println("Please enter the ID of the member to be deleted: ");
     Scanner input = new Scanner(System.in);
     String id = input.nextLine();
@@ -331,22 +322,21 @@ public class UserInterface {
     } else {
       System.out.println("Member with ID '" + id + "' does not exist, and cannot be deleted");
     }
-    System.out.println("--------------------------------------------------");
+    printSingleLineLong();
   }
-
 
   private void load() {
     System.out.println("Loading the database ...");
     application.setMembers(application.deserializingJson(application.loadFromFile("MemberList.txt")));
     System.out.println("Loading database completed successfully");
-    System.out.println("--------------------------------------------------");
+    printSingleLineLong();
   }
 
   private void save() {
     System.out.println("Saving the database ...");
     application.saveToFile(application.serializingJson(), "MemberList.txt");
     System.out.println("Saving database completed successfully");
-    System.out.println("--------------------------------------------------");
+    printSingleLineLong();
   }
 
   public void displayMemberData(Member member, boolean viewNormal, boolean viewArrears) {
@@ -369,20 +359,22 @@ public class UserInterface {
     if (viewArrears) {
       System.out.println("NOT IMPLEMENTED YET!");
     }
-    System.out.println("-------------------------");
+    printSingleLineShort();
   }
 
   public void startCompetetiveDatabase() {
     boolean loop = true;
-    System.out.println("==================================================");
+    printDoubleLine();
 
     while (loop) {
       switch (menuCompetetiveDatabase()) {
         case 0 -> loop = exitDatabase();
-        case 1 -> chooseDiscipline((CompetitiveMember) findCompetetiveMember()); //printResults((CompetitiveMember) findMember());
-        case 2 -> findTop5();
-        case 3 -> createResult((CompetitiveMember) findCompetetiveMember());
-        case 4 -> printNumberedResults((CompetitiveMember) findCompetetiveMember());
+        case 1 -> findTop5();
+        case 2 -> displayTeams();
+        case 3 -> displayResultsByDiscipline((CompetitiveMember) findMember());
+        case 4 -> createResult((CompetitiveMember) findMember());
+        case 5 -> System.out.println("Delete result yet to be implemented");
+
       }
     }
   }
@@ -391,18 +383,19 @@ public class UserInterface {
     System.out.println("""
         Menu
         ---------
-        1) Show all results specific to a member
-        2) Show top 5 results specific to a discipline
-        3) Create a result
-        4) Delete a result
+        1) Show top 5 results specific to a discipline
+        2) Show teams roster
+        3) Show all results specific to a member
+        4) Create a result
+        5) Delete a result
         0) Exit to main menu
         """);
     Scanner input = new Scanner(System.in);
     Integer choice = application.tryParseInt(input.nextLine());
     if (choice == null)
       choice = 99;
-    while (choice < 0 || choice > 4) {
-      System.out.println("Only values 0-4 allowed");
+    while (choice < 0 || choice > 5) {
+      System.out.println("Only values 0-5 allowed");
       choice = input.nextInt();
     }
 
@@ -428,34 +421,17 @@ public class UserInterface {
 
   //TODO
   public void createResult(CompetitiveMember member) {
-    System.out.println("Create a result for a member");
-    System.out.println("----------------------------");
-    System.out.println("""
-        Please select the Discipline in which the result was made.
-        1) Butterfly
-        2) Crawl
-        3) Rygcrawl
-        4) Brystsvømning
-        """);
-
-    Discipline discipline;
-    discipline = null;
     Scanner in = new Scanner(System.in);
-    Integer input = null;
-    input = validateInput(1,4, input);
+    System.out.println("Create a result for a member");
+    printSingleLineShort();
+    Discipline discipline = chooseDiscipline("Please select the Discipline in which the result was made.");
 
-    switch (input) {
-      case 1 -> discipline = Discipline.BUTTERFLY;
-      case 2 -> discipline = Discipline.CRAWL;
-      case 3 -> discipline = Discipline.RYGCRAWL;
-      case 4 -> discipline = Discipline.BRYSTSVØMNING;
-    }
-
-    System.out.println("""
-        Was the result made within a tournament?
-        1) Yes
-        2) No
-        """);
+    if (discipline != null) {
+      System.out.println("""
+          Was the result made within a tournament?
+          1) Yes
+          2) No
+          """);
 
     boolean isTournament = true;
     input = null;
@@ -475,57 +451,42 @@ public class UserInterface {
       System.out.println("in which tournament did the contestant participate?");
       tournament = in.nextLine();
 
-      System.out.println("Which place did the contestant make in the tournament?");
-      ranking = in.nextLine();
-    }
+        System.out.println("Which place did the contestant make in the tournament?");
+        ranking = in.nextLine();
+      }
 
-    System.out.println("Insert time [Minutes:Seconds.Milliseconds]");
-    System.out.println("Ex. 9:30.08");
-    String time;
-    time = in.nextLine();
+      System.out.println("Insert time [Minutes:Seconds.Milliseconds]");
+      System.out.println("Ex. 9:30.08");
+      String time;
+      time = in.nextLine();
 
-    System.out.println("Insert date [Day/Month/Year]");
-    String date;
-    date = in.nextLine();
+      System.out.println("Insert date [Day/Month/Year]");
+      String date;
+      date = in.nextLine();
 
-    Result result;
-    if (isTournament)
-      result = new Result(discipline, tournament, ranking, time, date);
-    else
-      result = new Result(discipline, time, date);
+      Result result;
+      if (isTournament)
+        result = new Result(discipline, tournament, ranking, time, date);
+      else
+        result = new Result(discipline, time, date);
 
-    member.addResult(result);
+      member.addResult(result);
+    } else
+      System.out.println("No discipline chosen!");
   }
 
-  public void chooseDiscipline(CompetitiveMember member) {
-    System.out.print("""
-        For which discipline do you wish to show results?
-        1) Butterfly
-        2) Crawl
-        3) Rygcrawl
-        4) Brystsvømning
-        5) Show all results
-        """);
-
-    Scanner in = new Scanner(System.in);
-    Discipline discipline = null;
-    Integer input = null;
-    input = validateInput(1,5, input);
-
-    switch (input) {
-      case 1 -> discipline = Discipline.BUTTERFLY;
-      case 2 -> discipline = Discipline.CRAWL;
-      case 3 -> discipline = Discipline.RYGCRAWL;
-      case 4 -> discipline = Discipline.BRYSTSVØMNING;
-      case 5 -> discipline = null;
-    }
+  //TODO working on
+  public void displayResultsByDiscipline(CompetitiveMember member) {
+    Discipline discipline = chooseDiscipline("For which discipline do you wish to show results?\n0) Show all results");
+    if (discipline == null)
+      System.out.println("Show all results.");
     printResults(member, discipline);
   }
 
   public void printResults(CompetitiveMember member, Discipline discipline) {
     //Sort results from fastest to slowest time
     application.sortResults(member);
-
+    printSingleLineLong();
     System.out.println("Name: " + member.getMasterData().getName());
     System.out.printf("%-20s%-20s%-20s%-20s%-20s\n\n"
         , "Time", "Discipline" ,"Date", "Tournament", "Ranking");
@@ -542,7 +503,7 @@ public class UserInterface {
         }
       }
     }
-    System.out.println();
+    printSingleLineLong();
   }
 
   public void printNumberedResults(CompetitiveMember member) {
@@ -577,35 +538,58 @@ public class UserInterface {
   }
 
   public void findTop5() {
+    Discipline discipline = chooseDiscipline("Choose a discipline for which you want to show the top 5 swimmers");
+    if (discipline != null) {
+      TextTable ttSenior = application.creatTableModel(application.pickBestResults(discipline, true), new String[]{"Name      ", "Time (sec)"});
+      TextTable ttJunior = application.creatTableModel(application.pickBestResults(discipline, false), new String[]{"Name      ", "Time (sec)"});
+      displayTop5(discipline, ttSenior, ttJunior);
+    } else
+      System.out.println("No discipline chosen!");
+  }
+
+  private void displayTop5(Discipline discipline, TextTable ttSenior, TextTable ttJunior) {
+    printDoubleLineTop5();
+    System.out.println("Top 5 in the discipline - " + discipline);
+    printDoubleLineSenior();
+    // this adds the numbering on the left
+    ttSenior.setAddRowNumbering(true);
+    // sort by the second column
+    ttSenior.printTable();
+    printDoubleLineJunior();
+    ttJunior.setAddRowNumbering(true);
+    ttJunior.printTable();
+    printDoubleLineTop5();
+
+  }
+
+  private void displayTeams() {
+    printDoubleLine();
+    printDoubleLineTeam();
+    TextTable tt = application.creatTableModel(application.pickTeams(), new String[]{"Senior    ", "Junior    "});
+    // this adds the numbering on the left
+    //tt.setAddRowNumbering(true);
+    // sort by the second column
+    tt.printTable();
+    printDoubleLine();
+
+  }
+
+  public Discipline chooseDiscipline(String menuHeader) {
+    System.out.println(menuHeader);
     System.out.println("""
-        Choose a discipline for which you want to show the top 5 swimmers
         1) Butterfly
         2) Crawl
         3) Rygcrawl
         4) Brystsvømning
         """);
     Scanner in = new Scanner(System.in);
-    Discipline discipline = null;
-    switch (in.nextLine()) {
-      case "1" -> discipline = Discipline.BUTTERFLY;
-      case "2" -> discipline = Discipline.CRAWL;
-      case "3" -> discipline = Discipline.RYGCRAWL;
-      case "4" -> discipline = Discipline.BRYSTSVØMNING;
-    }
-
-    TextTable tt = application.pickBestResults(discipline);
-    displayTop5(discipline, tt);
-  }
-
-  private void displayTop5(Discipline discipline, TextTable tt) {
-    System.out.println("=======================TOP5=======================");
-    System.out.println("Top 5 i disciplinen - "+discipline);
-    // this adds the numbering on the left
-    tt.setAddRowNumbering(true);
-    // sort by the second column
-    tt.printTable();
-    System.out.println("=======================TOP5=======================");
-
+    return switch (in.nextLine().toLowerCase()) {
+      case "1", "butterfly" -> Discipline.BUTTERFLY;
+      case "2", "crawl" -> Discipline.CRAWL;
+      case "3", "rygcrawl" -> Discipline.RYGCRAWL;
+      case "4", "brystsvømning" -> Discipline.BRYSTSVØMNING;
+      default -> null;
+    };
   }
   //TODO ERROR HANDLING
   public Integer validateInput(Integer min, Integer max, Integer input) {
@@ -621,6 +605,16 @@ public class UserInterface {
         loop = true;
     }
     return input;
+  }
+   */
+
+  //Utility print methods
+  private void printDoubleLine() {
+    System.out.println("==================================================");
+  }
+
+  private void printDoubleLineTop5() {
+    System.out.println("=======================TOP5=======================");
   }
 
   public boolean isIntegerWithinRange(Integer min, Integer max, Integer input) {
@@ -639,5 +633,26 @@ public class UserInterface {
     } catch (ClassCastException e) {
       return null;
     }
+  }
+}
+
+  private void printDoubleLineTeam() {
+    System.out.println("**********************TEAMS***********************");
+  }
+
+  private void printDoubleLineSenior() {
+    System.out.println("**********************SENIOR**********************");
+  }
+
+  private void printDoubleLineJunior() {
+    System.out.println("**********************JUNIOR**********************");
+  }
+
+  private void printSingleLineLong() {
+    System.out.println("--------------------------------------------------");
+  }
+
+  private void printSingleLineShort() {
+    System.out.println("----------------------------");
   }
 }
