@@ -29,6 +29,32 @@ public class CompetitiveMember extends Member {
     return disciplines;
   }
 
+  public boolean hasDiscipline(Discipline discipline) {
+    boolean hasDiscipline = false;
+
+    for (int i = 0; i < getDisciplines().size(); i++) {
+      if (discipline == getDisciplines().get(i)) {
+        hasDiscipline = true;
+        return hasDiscipline;
+      }
+    }
+    return hasDiscipline;
+  }
+
+  public void toggleDiscipline(Discipline discipline) {
+    boolean hasDiscipline = false;
+
+    for (int i = 0; i < getDisciplines().size(); i++) {
+      if (discipline == getDisciplines().get(i)) {
+        hasDiscipline = true;
+        getDisciplines().remove(i);
+      }
+    }
+    if (hasDiscipline == false) {
+      getDisciplines().add(discipline);
+    }
+  }
+
   //TODO make error proof if null
   public Result getBestResult() {
     Result bestResult = null;

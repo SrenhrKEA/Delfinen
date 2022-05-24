@@ -91,7 +91,10 @@
         "ranking": "1"
       }
     ],
-    "disciplines": []
+    "disciplines": [
+      "RYGCRAWL",
+      "BUTTERFLY"
+    ]
   },
   {
     "masterData": {

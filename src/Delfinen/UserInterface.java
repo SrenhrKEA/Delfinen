@@ -12,6 +12,11 @@ import static java.lang.Integer.parseInt;
 public class UserInterface {
   private final Controller application;
 
+  //Text color
+  private final String TEXT_RESET = "\u001B[0m";
+  private final String TEXT_RED = "\u001B[31m";
+  private final String TEXT_GREEN = "\u001B[32m";
+
   public UserInterface(Controller application) {
     this.application = application;
   }
@@ -374,7 +379,8 @@ public class UserInterface {
         case 3 -> displayResultsByDiscipline((CompetitiveMember) findCompetetiveMember());
         case 4 -> createResult((CompetitiveMember) findCompetetiveMember());
         case 5 -> printNumberedResults((CompetitiveMember) findCompetetiveMember());
-
+        case 6 -> printDisciplines((CompetitiveMember) findCompetetiveMember(), false);
+        case 7 -> editCompetitorDisciplines((CompetitiveMember) findCompetetiveMember());
       }
     }
   }
@@ -388,13 +394,15 @@ public class UserInterface {
         3) Show all results specific to a member
         4) Create a result
         5) Delete a result
+        6) Show a competitors Disciplines
+        7) Edit a Competitors Disciplines
         0) Exit to main menu
         """);
     Scanner input = new Scanner(System.in);
     Integer choice = application.tryParseInt(input.nextLine());
     if (choice == null)
       choice = 99;
-    while (choice < 0 || choice > 5) {
+    while (choice < 0 || choice > 7) {
       System.out.println("Only values 0-5 allowed");
       choice = input.nextInt();
     }
@@ -571,7 +579,7 @@ public class UserInterface {
     printDoubleLine();
 
   }
-  //TODO NEEDS
+
   public Discipline chooseDiscipline(String menuHeader, boolean disciplineCanBeNull) {
     System.out.println(menuHeader);
     System.out.println("""
@@ -600,6 +608,65 @@ public class UserInterface {
     };
   }
 
+  public void editCompetitorDisciplines(Member member) {
+    boolean loop = true;
+
+    while (loop) {
+      printDisciplines(member, true);
+
+      Scanner in = new Scanner(System.in);
+      Integer input = null;
+      input = validateInput(0, 4, input);
+
+      switch (input) {
+        case 1 -> ((CompetitiveMember) member).toggleDiscipline(Discipline.BUTTERFLY);
+        case 2 -> ((CompetitiveMember) member).toggleDiscipline(Discipline.CRAWL);
+        case 3 -> ((CompetitiveMember) member).toggleDiscipline(Discipline.RYGCRAWL);
+        case 4 -> ((CompetitiveMember) member).toggleDiscipline(Discipline.BRYSTSVØMNING);
+        case 0 -> loop = false;
+      }
+    }
+    printSingleLineShort();
+  }
+
+  public void printDisciplines(Member member, boolean canEdit) {
+    boolean hasButterfly = ((CompetitiveMember) member).hasDiscipline(Discipline.BUTTERFLY);
+    boolean hasCrawl = ((CompetitiveMember) member).hasDiscipline(Discipline.CRAWL);
+    boolean hasRygcrawl = ((CompetitiveMember) member).hasDiscipline(Discipline.RYGCRAWL);
+    boolean hasBrystsvømning = ((CompetitiveMember) member).hasDiscipline(Discipline.BRYSTSVØMNING);
+
+    printSingleLineShort();
+    if (canEdit) {
+      System.out.print("1) Butterfly: ");
+      printActiveOrInactive(hasButterfly);
+      System.out.print("2) Crawl: ");
+      printActiveOrInactive(hasCrawl);
+      System.out.print("3) Rygcrawl: ");
+      printActiveOrInactive(hasRygcrawl);
+      System.out.print("4) Brystsvømning: ");
+      printActiveOrInactive(hasBrystsvømning);
+      System.out.println("0) Exit");
+      System.out.println("Enter a number to toggle corresponding discipline between ACTIVE and INACTIVE");
+    } else {
+      System.out.print("Butterfly: ");
+      printActiveOrInactive(hasButterfly);
+      System.out.print("Crawl: ");
+      printActiveOrInactive(hasCrawl);
+      System.out.print("Rygcrawl: ");
+      printActiveOrInactive(hasRygcrawl);
+      System.out.print("Brystsvømning: ");
+      printActiveOrInactive(hasBrystsvømning);
+      printSingleLineShort();
+    }
+  }
+
+  public void printActiveOrInactive(Boolean isActive) {
+    if (isActive)
+      System.out.println(TEXT_GREEN + "ACTIVE" + TEXT_RESET);
+    else
+      System.out.println(TEXT_RED + "INACTIVE" + TEXT_RESET);
+  }
+
   public Integer validateInput(Integer min, Integer max, Integer input) {
     boolean loop = true;
     while (loop) {
@@ -615,19 +682,10 @@ public class UserInterface {
     return input;
   }
 
-  //Utility print methods
-  private void printDoubleLine() {
-    System.out.println("==================================================");
-  }
-
-  private void printDoubleLineTop5() {
-    System.out.println("=======================TOP5=======================");
-  }
-
   public boolean isIntegerWithinRange(Integer min, Integer max, Integer input) {
     if (input < min || input > max) {
       System.out.printf("Only values %s-%s allowed\n"
-      , min, max);
+          , min, max);
       return false;
     }
     return true;
@@ -640,6 +698,15 @@ public class UserInterface {
     } catch (ClassCastException e) {
       return null;
     }
+  }
+
+  //Utility print methods
+  private void printDoubleLine() {
+    System.out.println("==================================================");
+  }
+
+  private void printDoubleLineTop5() {
+    System.out.println("=======================TOP5=======================");
   }
 
   private void printDoubleLineTeam() {
