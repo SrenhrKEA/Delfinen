@@ -1,114 +1,41 @@
 package Delfinen;
 
-import java.util.ArrayList;
+import Delfinen.Enums.MembershipStatus;
+import Delfinen.Enums.MembershipType;
 
-public class Member {
-  //For all swimmers
-  private int age;
-  private String name;
-  private String dateRegistration;
-  //private String dateWithdrawal;
-  private boolean genderMale;
-  private boolean membershipActive;
-  private boolean membershipJunior;
-  private boolean membershipCompetitive;
 
-  //only for competitive swimmers
-  private String nameTrainer;
-  private ArrayList<Result> results;// = new ArrayList<>();
-  private ArrayList<Discipline> disciplines;// = new ArrayList<>();
+public abstract class Member {
+  private MembershipType type;
+  private MembershipStatus status;
+  private final MasterData masterData;
 
-  public int getAge() {
-    return age;
+  public MembershipType getType() {
+    return type;
   }
 
-  public void setAge(int age) {
-    this.age = age;
+  public void setType(MembershipType type) {
+    this.type = type;
   }
 
-  public String getName() {
-    return name;
+  public MembershipStatus getStatus() {
+    return status;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setStatus(MembershipStatus status) {
+    this.status = status;
   }
 
-  public String getDateRegistration() {
-    return dateRegistration;
+  public MasterData getMasterData() {
+    return masterData;
   }
 
-  public void setDateRegistration(String dateRegistration) {
-    this.dateRegistration = dateRegistration;
+  public Member(MasterData masterData, MembershipType type, MembershipStatus status) {
+    this.masterData = masterData;
+    this.type = type;
+    this.status = status;
   }
 
-  public boolean isGenderMale() {
-    return genderMale;
+  public DTO convertToDTO() {
+    return new DTO(this.masterData,this.type,this.status);
   }
-
-  public void setGenderMale(boolean genderMale) {
-    this.genderMale = genderMale;
-  }
-
-  public boolean isMembershipActive() {
-    return membershipActive;
-  }
-
-  public void setMembershipActive(boolean membershipActive) {
-    this.membershipActive = membershipActive;
-  }
-
-  public boolean isMembershipJunior() {
-    return membershipJunior;
-  }
-
-  public void setMembershipJunior(boolean membershipJunior) {
-    this.membershipJunior = membershipJunior;
-  }
-
-  public boolean isMembershipCompetitive() {
-    return membershipCompetitive;
-  }
-
-  public void setMembershipCompetitive(boolean membershipCompetitive) {
-    this.membershipCompetitive = membershipCompetitive;
-  }
-
-  public String getNameTrainer() {
-    return nameTrainer;
-  }
-
-  public void setNameTrainer(String nameTrainer) {
-    this.nameTrainer = nameTrainer;
-  }
-
-  public ArrayList<Result> getResults() {
-    return results;
-  }
-  public ArrayList<Discipline> getDisciplines() {
-    return disciplines;
-  }
-  public Member(int age, String name, String dateRegistration, boolean genderMale, boolean membershipActive, boolean membershipJunior, boolean membershipCompetitive, String nameTrainer, ArrayList<Result> results, ArrayList<Discipline> disciplines) {
-    this.age = age;
-    this.name = name;
-    this.dateRegistration = dateRegistration;
-    this.genderMale = genderMale;
-    this.membershipActive = membershipActive;
-    this.membershipJunior = membershipJunior;
-    this.membershipCompetitive = membershipCompetitive;
-    this.nameTrainer = nameTrainer;
-    this.results = results;
-    this.disciplines = disciplines;
-  }
-  public Member(int age, String name, String dateRegistration, boolean genderMale, boolean membershipActive, boolean membershipJunior, boolean membershipCompetitive) {
-    this.age = age;
-    this.name = name;
-    this.dateRegistration = dateRegistration;
-    this.genderMale = genderMale;
-    this.membershipActive = membershipActive;
-    this.membershipJunior = membershipJunior;
-    this.membershipCompetitive = membershipCompetitive;
-  }
-
-
 }

@@ -1,12 +1,16 @@
 package Delfinen;
 
+import Delfinen.Enums.Discipline;
+
+import static java.lang.Double.parseDouble;
+
 public class Result {
   private Discipline discipline;
   private String result;
   private String date;
+  private String time;
   private String tournament;
   private String ranking;
-  private String time;
 
   public Discipline getDiscipline() {
     return discipline;
@@ -56,16 +60,28 @@ public class Result {
     this.time = time;
   }
 
-  public Result(Discipline discipline, String result, String date) {
-    this.discipline = discipline;
-    this.result = result;
-    this.date = date;
+  public double getTimeInSeconds() {
+    String[] substrings = getTime().split(":");
+    double minutes = parseDouble(substrings[0]);
+    double seconds = parseDouble(substrings[1]);
+
+    return minutes * 60 + seconds;
   }
 
-  public Result(Discipline discipline, String tournament, String ranking, String time) {
+  //new constructors
+  //constructor for tournament results
+  public Result(Discipline discipline, String tournament, String ranking, String time, String date) {
     this.discipline = discipline;
     this.tournament = tournament;
     this.ranking = ranking;
     this.time = time;
+    this.date = date;
   }
+  //constructor for training results
+  public Result(Discipline discipline, String time, String date) {
+    this.discipline = discipline;
+    this.time = time;
+    this.date = date;
+  }
+
 }

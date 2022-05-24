@@ -1,80 +1,42 @@
 package Delfinen;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+/*import dnl.utils.text.table.TextTable;
 
 public class Test {
-  private ArrayList<Member> memberList = new ArrayList<>();
-
-  public ArrayList<Member> getMemberList() {
-    return memberList;
-  }
-
   public static void main(String[] args) {
-    new Test().runTest();
+    new Test().runProgram();
   }
 
-  private void runTest() {
-    Member person1 = new Member(31,"Søren", LocalDateTime.now().toString(),true,true,false,true,"john",new ArrayList<>(),new ArrayList<>());
-    person1.getDisciplines().add(Discipline.BRYSTSVØMNING);
-    person1.getDisciplines().add(Discipline.CRAWL);
-    Member person2 = new Member(37,"Martin", LocalDateTime.now().toString(),true,true,false,true,"john",new ArrayList<>(),new ArrayList<>());
-    memberList.add(person1);
-    memberList.add(person2);
-    saveToFile(serializingJson());
-    memberList.clear();
-    memberList = deserializingJson(loadFromFile());
-    System.out.println("//TEST1");
-    System.out.println(memberList);
+  private void runProgram() {
+    String[] columnNames = {
+        "First Name",
+        "Last Name",
+        "Sport"};
 
-    System.out.println("//TEST2");
-    System.out.println(person1.getDisciplines());
-    System.out.println(person1.getResults());
-  }
+    Object[][] data = {
+        {"Kathy", "Smith",
+            "Snowboarding"},
+        {"John", "Doe",
+            "Rowing"},
+        {"Sue", "Black",
+            "Knitting"},
+        {"Jane", "White",
+            "Speed reading"}, {"Joe", "Brown",
+        "Pool"}
+    };
 
-  private String serializingJson() {
-    Gson gson = new GsonBuilder()
-        .setPrettyPrinting()
-        .create();
-    return gson.toJson(memberList);
-  }
-
-  private ArrayList<Member> deserializingJson(String json) {
-    Gson gson = new Gson();
-    return gson.fromJson(json, new TypeToken<ArrayList<Member>>(){}.getType());
-  }
-
-  private void saveToFile( String data) {
+    TextTable tt = new TextTable(columnNames, data);
+// this adds the numbering on the left
+    //tt.setAddRowNumbering(true);
+// sort by the first column
+    //tt.setSort(0);
     try {
-      File fileName = new File("newfile.txt");
-      PrintStream out = new PrintStream(fileName);
-      out.println(data);
-      out.close();
-    } catch (FileNotFoundException fnfe) {
-      System.out.println("File not found!, try again");
+      tt.printTable();
+    } catch (Exception e) {
+      System.out.println("virker ikke!");
     }
   }
-
-  private String loadFromFile() {
-    try {
-      Path filePath = Path.of("newfile.txt");
-      return Files.readString(filePath);
-    }
-     catch (IOException e) {
-      e.printStackTrace();
-       System.out.println("File not found!, try again");
-       return null;
-    }
-  }
-
 }
+
+
+ */

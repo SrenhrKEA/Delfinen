@@ -1,0 +1,165 @@
+[
+  {
+    "masterData": {
+      "age": 12,
+      "name": "Jessica",
+      "id": "30040a5f",
+      "email": "-",
+      "telephone": "-",
+      "address": "-",
+      "dateRegistration": "2022-05-22T04:42:04.768155100",
+      "gender": "FEMALE"
+    },
+    "type": "COMPETITIVE",
+    "status": "ACTIVE",
+    "results": [
+      {
+        "discipline": "BUTTERFLY",
+        "date": "22/02/2022",
+        "time": "9:30.06"
+      }
+    ],
+    "disciplines": []
+  },
+  {
+    "masterData": {
+      "age": 13,
+      "name": "Jenny",
+      "id": "bfaa3603",
+      "email": "-",
+      "telephone": "-",
+      "address": "-",
+      "dateRegistration": "2022-05-22T04:52:58.547315600",
+      "gender": "FEMALE"
+    },
+    "type": "COMPETITIVE",
+    "status": "ACTIVE",
+    "results": [
+      {
+        "discipline": "BUTTERFLY",
+        "date": "22/05/2022",
+        "time": "9:11.08",
+        "tournament": "svømmestævne",
+        "ranking": "1"
+      }
+    ],
+    "disciplines": []
+  },
+  {
+    "masterData": {
+      "age": 22,
+      "name": "Josh",
+      "id": "9947b79f",
+      "email": "-",
+      "telephone": "-",
+      "address": "-",
+      "dateRegistration": "2022-05-22T05:02:23.740762700",
+      "gender": "MALE"
+    },
+    "type": "COMPETITIVE",
+    "status": "PASSIVE",
+    "results": [
+      {
+        "discipline": "BUTTERFLY",
+        "date": "22/05/2022",
+        "time": "9:27.08",
+        "tournament": "svømmestævne",
+        "ranking": "1"
+      }
+    ],
+    "disciplines": []
+  },
+  {
+    "masterData": {
+      "age": 24,
+      "name": "Brittney",
+      "id": "d9e80e28",
+      "email": "-",
+      "telephone": "-",
+      "address": "-",
+      "dateRegistration": "2022-05-22T05:03:06.330117500",
+      "gender": "FEMALE"
+    },
+    "type": "COMPETITIVE",
+    "status": "PASSIVE",
+    "results": [
+      {
+        "discipline": "BUTTERFLY",
+        "date": "22/05/2022",
+        "time": "9:02.08",
+        "tournament": "svømmestævne",
+        "ranking": "1"
+      }
+    ],
+    "disciplines": []
+  },
+  {
+    "masterData": {
+      "age": 44,
+      "name": "John",
+      "id": "e32ff4b5",
+      "email": "-",
+      "telephone": "-",
+      "address": "-",
+      "dateRegistration": "2022-05-22T03:52:23.637219900",
+      "gender": "MALE"
+    },
+    "type": "COMPETITIVE",
+    "status": "ACTIVE",
+    "results": [
+      {
+        "discipline": "BUTTERFLY",
+        "date": "22/05/2022",
+        "time": "9:30.08",
+        "tournament": "svømmestævne",
+        "ranking": "1"
+      },
+      {
+        "discipline": "BUTTERFLY",
+        "date": "22/05/2022",
+        "time": "9:40.08",
+        "tournament": "svømmestævne",
+        "ranking": "1"
+      },
+      {
+        "discipline": "BUTTERFLY",
+        "date": "1/2/2020",
+        "time": "9:45.39"
+      }
+    ],
+    "disciplines": [
+      "RYGCRAWL",
+      "BUTTERFLY"
+    ]
+  },
+  {
+    "masterData": {
+      "age": 65,
+      "name": "Per Jensen",
+      "id": "b265f8db",
+      "email": "None",
+      "telephone": "None",
+      "address": "None",
+      "dateRegistration": "2022-05-23T00:55:50.664951900",
+      "gender": "MALE"
+    },
+    "type": "EXERCISE",
+    "status": "PASSIVE"
+  },
+  {
+    "masterData": {
+      "age": 22,
+      "name": "JohnTwo",
+      "id": "39d7ec71",
+      "email": "none",
+      "telephone": "none",
+      "address": "none",
+      "dateRegistration": "2022-05-24T12:39:32.802915600",
+      "gender": "MALE"
+    },
+    "type": "COMPETITIVE",
+    "status": "ACTIVE",
+    "results": [],
+    "disciplines": []
+  }
+]
