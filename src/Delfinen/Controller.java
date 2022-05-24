@@ -21,6 +21,18 @@ public class Controller {
     new Controller().runProgram();
   }
 
+
+  public void TotalIncome()
+  {
+
+
+
+
+double MaxIncome = 0;
+
+
+  }
+
   private void runProgram() {
     //load member list from file upon startup
   }
