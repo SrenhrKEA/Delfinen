@@ -34,7 +34,15 @@
     },
     "type": "COMPETITIVE",
     "status": "ACTIVE",
-    "results": [],
+    "results": [
+      {
+        "discipline": "BUTTERFLY",
+        "date": "22/05/2022",
+        "time": "9:11.08",
+        "tournament": "svømmestævne",
+        "ranking": "1"
+      }
+    ],
     "disciplines": []
   },
   {
@@ -50,7 +58,15 @@
     },
     "type": "COMPETITIVE",
     "status": "PASSIVE",
-    "results": [],
+    "results": [
+      {
+        "discipline": "BUTTERFLY",
+        "date": "22/05/2022",
+        "time": "9:27.08",
+        "tournament": "svømmestævne",
+        "ranking": "1"
+      }
+    ],
     "disciplines": []
   },
   {
@@ -66,7 +82,15 @@
     },
     "type": "COMPETITIVE",
     "status": "PASSIVE",
-    "results": [],
+    "results": [
+      {
+        "discipline": "BUTTERFLY",
+        "date": "22/05/2022",
+        "time": "9:02.08",
+        "tournament": "svømmestævne",
+        "ranking": "1"
+      }
+    ],
     "disciplines": []
   },
   {
@@ -89,6 +113,18 @@
         "time": "9:30.08",
         "tournament": "svømmestævne",
         "ranking": "1"
+      },
+      {
+        "discipline": "BUTTERFLY",
+        "date": "22/05/2022",
+        "time": "9:40.08",
+        "tournament": "svømmestævne",
+        "ranking": "1"
+      },
+      {
+        "discipline": "BUTTERFLY",
+        "date": "1/2/2020",
+        "time": "9:45.39"
       }
     ],
     "disciplines": [
@@ -109,5 +145,21 @@
     },
     "type": "EXERCISE",
     "status": "PASSIVE"
+  },
+  {
+    "masterData": {
+      "age": 22,
+      "name": "JohnTwo",
+      "id": "39d7ec71",
+      "email": "none",
+      "telephone": "none",
+      "address": "none",
+      "dateRegistration": "2022-05-24T12:39:32.802915600",
+      "gender": "MALE"
+    },
+    "type": "COMPETITIVE",
+    "status": "ACTIVE",
+    "results": [],
+    "disciplines": []
   }
 ]
