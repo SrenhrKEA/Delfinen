@@ -31,7 +31,7 @@ public class UserInterface {
       switch (mainMenu()) {
         case 0 -> loop = exit();
         case 1 -> startMemberDatabase();
-        case 2 -> System.out.println("PLACEHOLDER: VIEW FINANCIAL DATA");
+        case 2 -> financeCalculator();//System.out.println("PLACEHOLDER: VIEW FINANCIAL DATA");
         case 3 -> startCompetetiveDatabase();
         default -> printDoubleLine();
       }
@@ -665,6 +665,47 @@ public class UserInterface {
       System.out.println(TEXT_GREEN + "ACTIVE" + TEXT_RESET);
     else
       System.out.println(TEXT_RED + "INACTIVE" + TEXT_RESET);
+  }
+
+  //TODO
+  public void financeCalculator() {
+    int seniorkredit;
+
+    Scanner sc = new Scanner(System.in);
+
+    System.out.println("Hvor mange senior i klubben?");
+    int x = sc.nextInt();
+    seniorkredit = x*1200;
+    System.out.println("Indkomst for senior " + seniorkredit + " DKK");
+
+
+
+    int voksenkredit;
+    System.out.println("Hvor mange voksne i klubben?");
+    int y = sc.nextInt();
+    voksenkredit = y*1600;
+    System.out.println("Indkomst for voksne "+voksenkredit+" DKK");
+
+
+    int juniorkredit;
+    System.out.println("Hvor mange junior i klubben?");
+    int h = sc.nextInt();
+    juniorkredit = h*1000;
+    System.out.println("Indkomst for Junior: "+juniorkredit+" DKK");
+
+
+    int PassivMedlem;
+    System.out.println("Hvor mange passive medlemmer i klubben?");
+    int t = sc.nextInt();
+    PassivMedlem = t*500;
+    System.out.println("Indkomst for passiv: " + PassivMedlem + "DKK");
+
+
+
+
+    int timmykredit = seniorkredit + voksenkredit + juniorkredit + PassivMedlem;
+    System.out.println("Den totale kredit for klubben: " + timmykredit+ " DKK");
+    System.out.println("Baseret på årligt kontigent");
   }
 
   public Integer validateInput(Integer min, Integer max, Integer input) {

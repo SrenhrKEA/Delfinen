@@ -92,12 +92,13 @@ public class KASSERER {
 
 
 
-
+        /*
         public static void main(String[] args) {
             Delfinen.KASSERER k = new Delfinen.KASSERER();
 
            k.kasserer();
         }
+         */
 
 
     }
